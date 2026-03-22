@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ollie — Panasonic NN-SC73LS Microwave Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #1a6b5a;
+      --teal-dark: #134d41;
+      --orange: #e8710a;
+      --orange-light: #fff3e6;
+      --green-light: #e8f5e9;
+      --blue-light: #e3f2fd;
+      --purple-light: #f3e5f5;
+      --bg: #faf6f1;
+      --text: #202124;
+      --text-light: #5f6368;
+      --border: #e0dcd7;
+      --radius: 14px;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Scrollable content */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hero banner */
+    .hero {
+      margin: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1a6b5a 0%, #0f4a3e 60%, #0a3a30 100%);
+      color: white;
+      padding: 24px 20px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .hero-logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .hero-text h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .hero-text h1 span {
+      color: #f5b731;
+    }
+    .hero-text p {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .hero-badge {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .ai-gradient {
+      background: linear-gradient(135deg, #f5b731, #ff6fd8, #7dd3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      font-size: 110%;
+    }
+
+    /* Section labels */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      padding: 16px 16px 10px;
+    }
+
+    /* Quick question cards - 2x2 grid */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 16px;
+    }
+    .quick-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 14px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      transition: transform 0.1s;
+    }
+    .quick-card:active { transform: scale(0.97); }
+    .quick-card.orange { border-color: #f5c28a; background: var(--orange-light); }
+    .quick-card.blue { border-color: #90caf9; background: var(--blue-light); }
+    .quick-card.green { border-color: #a5d6a7; background: var(--green-light); }
+    .quick-card.purple { border-color: #ce93d8; background: var(--purple-light); }
+
+    .quick-card-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+    .quick-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .quick-card.orange .quick-card-title { color: #c45100; }
+    .quick-card.blue .quick-card-title { color: #1565c0; }
+    .quick-card.green .quick-card-title { color: #2e7d32; }
+    .quick-card.purple .quick-card-title { color: #7b1fa2; }
+
+    .quick-card-desc {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+    .quick-card-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--orange);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* Quick reference button */
+    .ref-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 16px 0;
+      padding: 16px;
+      background: linear-gradient(135deg, #1a6b5a, #0f4a3e);
+      color: white;
+      border-radius: var(--radius);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s;
+    }
+    .ref-btn:active { transform: scale(0.97); }
+    .ref-btn-icon { font-size: 28px; flex-shrink: 0; }
+    .ref-btn-text { flex: 1; }
+    .ref-btn-title { font-size: 16px; font-weight: 700; }
+    .ref-btn-desc { font-size: 13px; opacity: 0.8; }
+    .ref-btn-chevron { font-size: 20px; opacity: 0.6; }
+
+    /* Reference overlay */
+    .ref-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--bg);
+      flex-direction: column;
+    }
+    .ref-overlay.active { display: flex; }
+    .ref-overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .ref-overlay-title { font-size: 18px; font-weight: 700; }
+    .ref-overlay-close {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+    }
+    .ref-overlay-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 16px 40px;
+    }
+    .ref-section-header {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .ref-section-header:first-child { margin-top: 0; }
+    .ref-section-header.blue { background: #1a73e8; }
+    .ref-section-header.green { background: #1e7d45; }
+    .ref-section-header.brown { background: #8d6e1f; }
+    .ref-section-header.red { background: #b71c1c; }
+    .ref-section-header.black { background: #222; }
+    .ref-row {
+      display: flex;
+      padding: 10px 0;
+      border-bottom: 1px solid #ebe7e2;
+      gap: 8px;
+    }
+    .ref-row:last-child { border-bottom: none; }
+    .ref-label {
+      font-weight: 700;
+      font-size: 14px;
+      min-width: 95px;
+      flex-shrink: 0;
+    }
+    .ref-value {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+    .ref-codes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 0 4px;
+    }
+    .ref-code {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .ref-code strong {
+      color: var(--teal);
+    }
+
+    /* People also asked */
+    .paa-list {
+      padding: 0 16px;
+    }
+    .paa-item {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s;
+    }
+    .paa-item:active { transform: scale(0.98); }
+    .paa-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .paa-dot.orange { background: var(--orange); }
+    .paa-dot.teal { background: var(--teal); }
+    .paa-dot.purple { background: #9c27b0; }
+    .paa-dot.yellow { background: #f9a825; }
+    .paa-text {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .paa-chevron {
+      color: #bbb;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Chat view (hidden by default, shown when user asks) */
+    .chat-view {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+    .chat-view.active {
+      display: flex;
+    }
+    .content.hidden { display: none; }
+
+    .chat-back {
+      padding: 12px 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chat-bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+    .chat-bubble.assistant {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      margin-right: auto;
+    }
+    .chat-bubble.user {
+      background: var(--teal);
+      color: white;
+      border-bottom-right-radius: 4px;
+      margin-left: auto;
+    }
+    .chat-bubble.typing {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      margin-right: auto;
+      color: var(--text-light);
+    }
+
+    /* Input bar */
+    .chat-input-label {
+      padding: 10px 16px 0;
+      background: white;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--teal);
+      text-align: center;
+    }
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px;
+      background: white;
+      flex-shrink: 0;
+      padding-bottom: env(safe-area-inset-bottom, 10px);
+    }
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      font-size: 16px;
+      outline: none;
+      font-family: inherit;
+      background: var(--bg);
+      transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: var(--teal); }
+    .chat-send {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .chat-send:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .chat-send:active:not(:disabled) { background: #d06000; }
+
+    /* Bottom spacing */
+    .bottom-spacer { height: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- ===== HOME VIEW ===== -->
+<div class="content" id="homeView">
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="mainlogo.png" alt="Ollie" class="hero-logo">
+    <div class="hero-text">
+      <h1>Hey! I'm <span>Ollie.</span></h1>
+      <p>Your <span class="ai-gradient">AI</span> assistant for this microwave. I've read every page of the manual — ask me anything.</p>
+    </div>
+  </div>
+
+  <!-- Quick Questions -->
+  <div class="section-label">Quick Questions</div>
+  <div class="quick-grid">
+    <div class="quick-card orange" onclick="askQuestion('How do I reheat soup safely?')">
+      <div class="quick-card-badge">TOP</div>
+      <div class="quick-card-icon">&#x1F35C;</div>
+      <div class="quick-card-title">Reheat soup safely</div>
+      <div class="quick-card-desc">Best power &amp; time</div>
+    </div>
+    <div class="quick-card blue" onclick="askQuestion('How do I defrost chicken?')">
+      <div class="quick-card-icon">&#x1F357;</div>
+      <div class="quick-card-title">Defrost chicken</div>
+      <div class="quick-card-desc">By weight</div>
+    </div>
+    <div class="quick-card green" onclick="askQuestion('What do the beeps mean?')">
+      <div class="quick-card-icon">&#x1F514;</div>
+      <div class="quick-card-title">What do beeps mean?</div>
+      <div class="quick-card-desc">Error codes explained</div>
+    </div>
+    <div class="quick-card purple" onclick="askQuestion('How do I set the clock?')">
+      <div class="quick-card-icon">&#x1F570;</div>
+      <div class="quick-card-title">Set the clock</div>
+      <div class="quick-card-desc">Step-by-step</div>
+    </div>
+  </div>
+
+  <!-- Quick Reference Button -->
+  <div class="ref-btn" onclick="openRef()">
+    <div class="ref-btn-icon">&#x1F4CB;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Quick Reference</div>
+      <div class="ref-btn-desc">All buttons &amp; functions at a glance</div>
+    </div>
+    <div class="ref-btn-chevron">&#x203A;</div>
+  </div>
+
+  <!-- People Also Asked -->
+  <div class="section-label">People Also Asked</div>
+  <div class="paa-list">
+    <div class="paa-item" onclick="askQuestion('Why is my food unevenly heated?')">
+      <div class="paa-dot orange"></div>
+      <div class="paa-text">Why is my food unevenly heated?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('How do I turn off the beep sound?')">
+      <div class="paa-dot teal"></div>
+      <div class="paa-text">How do I turn off the beep sound?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('Is the turntable supposed to stop?')">
+      <div class="paa-dot purple"></div>
+      <div class="paa-text">Is the turntable supposed to stop?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('Can I use metal in this microwave?')">
+      <div class="paa-dot yellow"></div>
+      <div class="paa-text">Can I use metal in this microwave?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+  </div>
+
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- ===== REFERENCE OVERLAY ===== -->
+<div class="ref-overlay" id="refOverlay">
+  <div class="ref-overlay-header">
+    <div class="ref-overlay-title">Quick Reference</div>
+    <button class="ref-overlay-close" onclick="closeRef()">&#x2715;</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <div class="ref-section-header blue">Cook &amp; Reheat</div>
+    <div class="ref-row"><div class="ref-label">Reheat food</div><div class="ref-value">Sensor Reheat &#x2192; Start</div></div>
+    <div class="ref-row"><div class="ref-label">Cook (manual)</div><div class="ref-value">Enter time &#x2192; Start</div></div>
+    <div class="ref-row"><div class="ref-label">Lower power</div><div class="ref-value">Power Level (press repeatedly) &#x2192; enter time &#x2192; Start</div></div>
+    <div class="ref-row"><div class="ref-label">Add 30 sec</div><div class="ref-value">Press Quick 30 &mdash; press again to add more</div></div>
+    <div class="ref-row"><div class="ref-label">Keep warm</div><div class="ref-value">Keep Warm &#x2192; enter minutes (max 30) &#x2192; Start</div></div>
+
+    <div class="ref-section-header green">Auto &amp; Defrost</div>
+    <div class="ref-row"><div class="ref-label">Auto by food</div><div class="ref-value">Sensor Cook &#x2192; press until # shows &#x2192; Start</div></div>
+    <div class="ref-row"><div class="ref-label">Defrost</div><div class="ref-value">Turbo Defrost &#x2192; enter lbs &#x2192; Start &middot; Turn food at 2 beeps</div></div>
+    <div class="ref-row"><div class="ref-label">Popcorn</div><div class="ref-value">Popcorn: 1x=3.5 oz &middot; 2x=3 oz &middot; 3x=1.75 oz &#x2192; Start</div></div>
+
+    <div class="ref-section-header brown">Clock &amp; Timer</div>
+    <div class="ref-row"><div class="ref-label">Set clock</div><div class="ref-value">Clock &#x2192; enter time &#x2192; Clock again</div></div>
+    <div class="ref-row"><div class="ref-label">Kitchen timer</div><div class="ref-value">Timer &#x2192; enter time &#x2192; Start (no heating)</div></div>
+
+    <div class="ref-section-header red">Controls</div>
+    <div class="ref-row"><div class="ref-label">Pause</div><div class="ref-value">Stop/Reset once</div></div>
+    <div class="ref-row"><div class="ref-label">Cancel all</div><div class="ref-value">Stop/Reset twice</div></div>
+    <div class="ref-row"><div class="ref-label">Child lock</div><div class="ref-value">Lock: Start x3 &middot; Unlock: Stop/Reset x3</div></div>
+
+    <div class="ref-section-header black">Sensor Cook Codes</div>
+    <div class="ref-codes">
+      <div class="ref-code"><strong>1</strong> Potato</div>
+      <div class="ref-code"><strong>2</strong> Fresh veg</div>
+      <div class="ref-code"><strong>3</strong> Frozen veg</div>
+      <div class="ref-code"><strong>4</strong> Frozen pizza</div>
+      <div class="ref-code"><strong>5</strong> Frozen entr&eacute;e</div>
+      <div class="ref-code"><strong>6</strong> Casserole</div>
+      <div class="ref-code"><strong>7</strong> Ground meat</div>
+      <div class="ref-code"><strong>8</strong> Lasagna</div>
+      <div class="ref-code"><strong>9</strong> Soup</div>
+      <div class="ref-code"><strong>10</strong> Rice</div>
+      <div class="ref-code"><strong>11</strong> Pasta</div>
+      <div class="ref-code"><strong>12</strong> Fish</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CHAT VIEW ===== -->
+<div class="chat-view" id="chatView">
+  <div class="chat-back" onclick="goHome()">&#x2039; Back</div>
+  <div class="chat-messages" id="chatMessages"></div>
+</div>
+
+<!-- Input (always visible) -->
+<div class="chat-input-label">&#x1F4AC; Ask Ollie anything about your microwave</div>
+<div class="chat-input-row">
+  <input type="text" class="chat-input" id="chatInput"
+         placeholder="Ask Ollie anything..."
+         enterkeyhint="send"
+         autocomplete="off">
+  <button class="chat-send" id="chatSend" onclick="sendMessage()">&#x27A4;</button>
+</div>
+
+<script>
+  const API_KEY = "YOUR_API_KEY_HERE";
+
+  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Panasonic NN-SC73LS microwave oven.
+
+Your job is to help users — especially older adults and people who find electronics confusing — understand how to use their microwave. Always be warm, patient, and encouraging. Never be condescending.
+
+RULES:
+- Give short, clear, numbered steps. Maximum 5 steps per answer.
+- Use plain English. Say "press" not "actuate". Say "the green START button" not "initiate cooking sequence".
+- When describing a button, say where it is on the panel (e.g. "the wide green START button at the bottom right").
+- If the user seems frustrated or confused, acknowledge it warmly before answering.
+- Only answer questions about this microwave. For anything else, say: "I'm only set up to help with this Panasonic microwave — for other questions, a quick web search should help!"
+- Never guess. If you don't know, say so and suggest they check the manual.
+- Keep answers under 150 words. Be concise.
+- Your name is Ollie.
+
+DEVICE INFO:
+Model: Panasonic NN-SC73LS, 1200W
+
+PANEL LAYOUT:
+[Door Release] on left edge
+[Display Window] — green LCD
+Row 1: [Popcorn] [Sensor Reheat] [Sensor Cook] [Power Level]
+Row 2: [Turbo Defrost] [Keep Warm] [Quick 30]
+Number pad: 0-9
+Right column: [MORE] [LESS] [TIMER] [CLOCK]
+Bottom: [STOP/RESET] (wide) and [START] (wide, green)
+
+FUNCTION REFERENCE:
+- Manual Cook: Enter time → START. Full power by default.
+- Quick 30: Each press = +30 sec at full power. Starts immediately. Works during cooking.
+- Power Level: Press repeatedly: PL10=full, PL7=reheat, PL6=dense, PL3=defrost, PL1=gentle
+- Sensor Reheat: Press → START. Don't open door until 2 beeps. Not for bread/beverages/frozen.
+- Sensor Cook: Press until food code appears → START. Codes: 1=Potato, 2=Fresh veg, 3=Frozen veg, 4=Frozen pizza, 5=Frozen entrée, 6=Casserole, 7=Ground meat, 8=Lasagna, 9=Soup, 10=Rice, 11=Pasta, 12=Fish
+- More/Less: ±20% on sensor cooking. Press before START.
+- Popcorn: 1×=3.5oz, 2×=3oz, 3×=1.75oz → START. Stop when pops slow to 2-3 sec apart.
+- Keep Warm: Enter minutes (max 30) → START. Cannot combine with sensor features.
+- Turbo Defrost: Enter weight in lbs (max 6) → START. Flip food when it beeps twice.
+- Timer: Press TIMER → enter time → START. Counts down, no heat.
+- Clock: Press CLOCK → enter time → CLOCK. 12-hour format.
+- Child Lock: Lock = START ×3. Unlock = STOP/RESET ×3 (within 10 sec).
+- Stop/Reset: 1× = pause, 2× = cancel all.
+- Beeps: 1=accepted, 2=open door/flip food, 5=done, none=error.
+
+SAFETY:
+- No metal, foil, or wire twist-ties
+- Pierce potatoes, sausages, sealed pouches before cooking
+- Never heat whole eggs (will explode)
+- Keep 3" clearance on sides, 12" above`;
+
+  const homeView = document.getElementById("homeView");
+  const chatView = document.getElementById("chatView");
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const chatSend = document.getElementById("chatSend");
+
+  let conversationHistory = [];
+  let isWaiting = false;
+
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  function openRef() {
+    document.getElementById("refOverlay").classList.add("active");
+  }
+  function closeRef() {
+    document.getElementById("refOverlay").classList.remove("active");
+  }
+
+  function showChat() {
+    homeView.classList.add("hidden");
+    chatView.classList.add("active");
+  }
+
+  function goHome() {
+    chatView.classList.remove("active");
+    homeView.classList.remove("hidden");
+  }
+
+  function askQuestion(text) {
+    chatInput.value = text;
+    showChat();
+    sendMessage();
+  }
+
+  function addBubble(text, role) {
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble ${role}`;
+    bubble.innerHTML = formatMessage(text);
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return bubble;
+  }
+
+  function formatMessage(text) {
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    text = text.replace(/\n(\d+)\.\s/g, "<br>$1. ");
+    text = text.replace(/\n/g, "<br>");
+    return text;
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || isWaiting) return;
+
+    showChat();
+
+    addBubble(text, "user");
+    chatInput.value = "";
+    isWaiting = true;
+    chatSend.disabled = true;
+
+    conversationHistory.push({ role: "user", content: text });
+
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble typing";
+    typing.textContent = "Thinking...";
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true"
+        },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 512,
+          system: SYSTEM_PROMPT,
+          messages: conversationHistory
+        })
+      });
+
+      typing.remove();
+
+      if (!response.ok) {
+        const err = await response.text();
+        throw new Error(`API error ${response.status}: ${err}`);
+      }
+
+      const data = await response.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: "assistant", content: reply });
+      addBubble(reply, "assistant");
+
+    } catch (err) {
+      typing.remove();
+      addBubble("Sorry, I couldn't connect right now. Please try again in a moment.", "assistant");
+      console.error("Chat error:", err);
+    }
+
+    isWaiting = false;
+    chatSend.disabled = false;
+  }
+</script>
+
+</body>
+</html>

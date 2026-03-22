@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ollie — Nespresso Vertuo Next Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #1a6b5a;
+      --teal-dark: #134d41;
+      --orange: #e8710a;
+      --orange-light: #fff3e6;
+      --green-light: #e8f5e9;
+      --blue-light: #e3f2fd;
+      --purple-light: #f3e5f5;
+      --brown-light: #efebe9;
+      --bg: #faf6f1;
+      --text: #202124;
+      --text-light: #5f6368;
+      --border: #e0dcd7;
+      --radius: 14px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+    /* Hero */
+    .hero {
+      margin: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #3c2415 0%, #5c3a1e 50%, #2e1a0e 100%);
+      color: white;
+      padding: 24px 20px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .hero-logo { width: 90px; height: 90px; object-fit: contain; flex-shrink: 0; }
+    .hero-text h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .hero-text h1 span { color: #f5b731; }
+    .hero-text p { font-size: 14px; opacity: 0.9; line-height: 1.4; }
+    .ai-gradient {
+      background: linear-gradient(135deg, #f5b731, #ff6fd8, #7dd3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      font-size: 110%;
+    }
+
+    .section-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-light);
+      padding: 16px 16px 10px;
+    }
+
+    /* Quick question cards */
+    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px; }
+    .quick-card {
+      background: white; border-radius: var(--radius); padding: 14px;
+      border: 2px solid transparent; cursor: pointer;
+      -webkit-tap-highlight-color: transparent; position: relative;
+      transition: transform 0.1s;
+    }
+    .quick-card:active { transform: scale(0.97); }
+    .quick-card.orange { border-color: #f5c28a; background: var(--orange-light); }
+    .quick-card.blue { border-color: #90caf9; background: var(--blue-light); }
+    .quick-card.green { border-color: #a5d6a7; background: var(--green-light); }
+    .quick-card.purple { border-color: #ce93d8; background: var(--purple-light); }
+    .quick-card.brown { border-color: #bcaaa4; background: var(--brown-light); }
+    .quick-card-icon { font-size: 28px; margin-bottom: 6px; }
+    .quick-card-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .quick-card.orange .quick-card-title { color: #c45100; }
+    .quick-card.blue .quick-card-title { color: #1565c0; }
+    .quick-card.green .quick-card-title { color: #2e7d32; }
+    .quick-card.purple .quick-card-title { color: #7b1fa2; }
+    .quick-card.brown .quick-card-title { color: #5d4037; }
+    .quick-card-desc { font-size: 13px; color: var(--text-light); }
+    .quick-card-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: var(--orange); color: white; font-size: 10px;
+      font-weight: 700; padding: 2px 8px; border-radius: 10px;
+    }
+
+    /* Reference button */
+    .ref-btn {
+      display: flex; align-items: center; gap: 12px;
+      margin: 12px 16px 0; padding: 16px;
+      background: linear-gradient(135deg, #5c3a1e, #3c2415);
+      color: white; border-radius: var(--radius); cursor: pointer;
+      -webkit-tap-highlight-color: transparent; transition: transform 0.1s;
+    }
+    .ref-btn:active { transform: scale(0.97); }
+    .ref-btn-icon { font-size: 28px; flex-shrink: 0; }
+    .ref-btn-text { flex: 1; }
+    .ref-btn-title { font-size: 16px; font-weight: 700; }
+    .ref-btn-desc { font-size: 13px; opacity: 0.8; }
+    .ref-btn-chevron { font-size: 20px; opacity: 0.6; }
+
+    /* Reference overlay */
+    .ref-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: var(--bg); flex-direction: column;
+    }
+    .ref-overlay.active { display: flex; }
+    .ref-overlay-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px; background: white; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .ref-overlay-title { font-size: 18px; font-weight: 700; }
+    .ref-overlay-close {
+      background: none; border: none; font-size: 28px;
+      color: var(--text-light); cursor: pointer; padding: 0 4px; line-height: 1;
+    }
+    .ref-overlay-body {
+      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px 40px;
+    }
+    .ref-section-header {
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: white; padding: 8px 12px;
+      border-radius: 6px; margin-top: 16px; margin-bottom: 8px;
+    }
+    .ref-section-header:first-child { margin-top: 0; }
+    .ref-section-header.brown { background: #5d4037; }
+    .ref-section-header.green { background: #1e7d45; }
+    .ref-section-header.gold { background: #8d6e1f; }
+    .ref-section-header.red { background: #b71c1c; }
+    .ref-section-header.black { background: #222; }
+    .ref-row {
+      display: flex; padding: 10px 0; border-bottom: 1px solid #ebe7e2; gap: 8px;
+    }
+    .ref-row:last-child { border-bottom: none; }
+    .ref-label { font-weight: 700; font-size: 14px; min-width: 100px; flex-shrink: 0; }
+    .ref-value { font-size: 14px; color: var(--text-light); }
+    .ref-codes { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 0 4px; }
+    .ref-code {
+      background: white; border: 1px solid var(--border); border-radius: 8px;
+      padding: 4px 10px; font-size: 13px; white-space: nowrap;
+    }
+    .ref-code strong { color: #5d4037; }
+
+    /* People also asked */
+    .paa-list { padding: 0 16px; }
+    .paa-item {
+      background: white; border-radius: 12px; padding: 16px;
+      margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s;
+    }
+    .paa-item:active { transform: scale(0.98); }
+    .paa-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .paa-dot.orange { background: var(--orange); }
+    .paa-dot.teal { background: var(--teal); }
+    .paa-dot.purple { background: #9c27b0; }
+    .paa-dot.yellow { background: #f9a825; }
+    .paa-dot.brown { background: #5d4037; }
+    .paa-text { flex: 1; font-size: 15px; font-weight: 600; }
+    .paa-chevron { color: #bbb; font-size: 18px; flex-shrink: 0; }
+
+    /* Chat */
+    .chat-view {
+      display: none; flex-direction: column; flex: 1; overflow: hidden;
+    }
+    .chat-view.active { display: flex; }
+    .content.hidden { display: none; }
+    .chat-back {
+      padding: 12px 16px; background: white; border-bottom: 1px solid var(--border);
+      font-size: 15px; font-weight: 600; color: #5d4037; cursor: pointer;
+      -webkit-tap-highlight-color: transparent; flex-shrink: 0;
+    }
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch;
+    }
+    .chat-bubble {
+      max-width: 85%; padding: 12px 16px; border-radius: 18px;
+      margin-bottom: 8px; font-size: 16px; line-height: 1.5; word-wrap: break-word;
+    }
+    .chat-bubble.assistant {
+      background: white; border: 1px solid var(--border);
+      border-bottom-left-radius: 4px; margin-right: auto;
+    }
+    .chat-bubble.user {
+      background: #5d4037; color: white;
+      border-bottom-right-radius: 4px; margin-left: auto;
+    }
+    .chat-bubble.typing {
+      background: white; border: 1px solid var(--border);
+      border-bottom-left-radius: 4px; margin-right: auto; color: var(--text-light);
+    }
+
+    /* Input */
+    .chat-input-label {
+      padding: 10px 16px 0; background: white; border-top: 1px solid var(--border);
+      flex-shrink: 0; font-size: 15px; font-weight: 700; color: #5d4037; text-align: center;
+    }
+    .chat-input-row {
+      display: flex; gap: 8px; padding: 8px 16px; background: white;
+      flex-shrink: 0; padding-bottom: env(safe-area-inset-bottom, 10px);
+    }
+    .chat-input {
+      flex: 1; padding: 12px 16px; border: 2px solid var(--border);
+      border-radius: 24px; font-size: 16px; outline: none; font-family: inherit;
+      background: var(--bg); transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: #5d4037; }
+    .chat-send {
+      width: 48px; height: 48px; border-radius: 50%; background: var(--orange);
+      color: white; border: none; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.2s;
+    }
+    .chat-send:disabled { background: #ccc; cursor: not-allowed; }
+    .chat-send:active:not(:disabled) { background: #d06000; }
+
+    .bottom-spacer { height: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="content" id="homeView">
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="mainlogo.png" alt="Ollie" class="hero-logo">
+    <div class="hero-text">
+      <h1>Hey! I'm <span>Ollie.</span></h1>
+      <p>Your <span class="ai-gradient">AI</span> assistant for this coffee machine. I've read every page of the manual — ask me anything.</p>
+    </div>
+  </div>
+
+  <!-- Quick Questions -->
+  <div class="section-label">Quick Questions</div>
+  <div class="quick-grid">
+    <div class="quick-card orange" onclick="askQuestion('How do I make a coffee?')">
+      <div class="quick-card-badge">TOP</div>
+      <div class="quick-card-icon">&#x2615;</div>
+      <div class="quick-card-title">Make a coffee</div>
+      <div class="quick-card-desc">Step by step</div>
+    </div>
+    <div class="quick-card blue" onclick="askQuestion('What do the blinking lights mean?')">
+      <div class="quick-card-icon">&#x1F4A1;</div>
+      <div class="quick-card-title">Blinking lights</div>
+      <div class="quick-card-desc">What they mean</div>
+    </div>
+    <div class="quick-card green" onclick="askQuestion('How do I clean the machine?')">
+      <div class="quick-card-icon">&#x1F9F9;</div>
+      <div class="quick-card-title">Clean the machine</div>
+      <div class="quick-card-desc">Cleaning procedure</div>
+    </div>
+    <div class="quick-card brown" onclick="askQuestion('How do I descale the machine?')">
+      <div class="quick-card-icon">&#x1F4A7;</div>
+      <div class="quick-card-title">Descale</div>
+      <div class="quick-card-desc">Remove mineral buildup</div>
+    </div>
+  </div>
+
+  <!-- Quick Reference Button -->
+  <div class="ref-btn" onclick="openRef()">
+    <div class="ref-btn-icon">&#x1F4CB;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Quick Reference</div>
+      <div class="ref-btn-desc">All functions at a glance</div>
+    </div>
+    <div class="ref-btn-chevron">&#x203A;</div>
+  </div>
+
+  <!-- People Also Asked -->
+  <div class="section-label">People Also Asked</div>
+  <div class="paa-list">
+    <div class="paa-item" onclick="askQuestion('How do I change the cup size?')">
+      <div class="paa-dot orange"></div>
+      <div class="paa-text">How do I change the cup size?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('Why is my coffee not hot enough?')">
+      <div class="paa-dot teal"></div>
+      <div class="paa-text">Why is my coffee not hot enough?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('How do I connect Bluetooth and WiFi?')">
+      <div class="paa-dot purple"></div>
+      <div class="paa-text">How do I connect Bluetooth and WiFi?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('How do I reset to factory settings?')">
+      <div class="paa-dot brown"></div>
+      <div class="paa-text">How do I reset to factory settings?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+    <div class="paa-item" onclick="askQuestion('The machine has no water flow, what do I do?')">
+      <div class="paa-dot yellow"></div>
+      <div class="paa-text">No water flow — what do I do?</div>
+      <div class="paa-chevron">&#x203A;</div>
+    </div>
+  </div>
+
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- Reference Overlay -->
+<div class="ref-overlay" id="refOverlay">
+  <div class="ref-overlay-header">
+    <div class="ref-overlay-title">Quick Reference</div>
+    <button class="ref-overlay-close" onclick="closeRef()">&#x2715;</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <div class="ref-section-header brown">Making Coffee</div>
+    <div class="ref-row"><div class="ref-label">Brew coffee</div><div class="ref-value">Fill water &#x2192; Insert capsule dome-down &#x2192; Close &amp; lock &#x2192; Press button</div></div>
+    <div class="ref-row"><div class="ref-label">Stop early</div><div class="ref-value">Press the button during brewing</div></div>
+    <div class="ref-row"><div class="ref-label">Add more water</div><div class="ref-value">Press button after brew ends (within 45 sec) &#x2192; press again to stop</div></div>
+    <div class="ref-row"><div class="ref-label">Eject capsule</div><div class="ref-value">Turn handle right to unlock &#x2192; open head &#x2192; capsule drops automatically</div></div>
+
+    <div class="ref-section-header green">Cup Sizes (Factory Settings)</div>
+    <div class="ref-row"><div class="ref-label">Alto</div><div class="ref-value">14 fl oz / 414 ml</div></div>
+    <div class="ref-row"><div class="ref-label">Mug</div><div class="ref-value">7.77 fl oz / 230 ml</div></div>
+    <div class="ref-row"><div class="ref-label">Gran Lungo</div><div class="ref-value">5.07 fl oz / 150 ml</div></div>
+    <div class="ref-row"><div class="ref-label">Double Espresso</div><div class="ref-value">2.7 fl oz / 80 ml</div></div>
+    <div class="ref-row"><div class="ref-label">Espresso</div><div class="ref-value">1.35 fl oz / 40 ml</div></div>
+    <div class="ref-row"><div class="ref-label">Reprogram size</div><div class="ref-value">Insert capsule &#x2192; hold button until desired volume &#x2192; saved for that capsule type</div></div>
+
+    <div class="ref-section-header gold">Machine Controls</div>
+    <div class="ref-row"><div class="ref-label">Turn on</div><div class="ref-value">Close &amp; lock the head, or press the button</div></div>
+    <div class="ref-row"><div class="ref-label">Turn off</div><div class="ref-value">Hold button 3 seconds</div></div>
+    <div class="ref-row"><div class="ref-label">Auto off</div><div class="ref-value">Turns off after 2 min of no use</div></div>
+    <div class="ref-row"><div class="ref-label">Cup support</div><div class="ref-value">3 height positions &middot; can be removed for large cups</div></div>
+
+    <div class="ref-section-header red">Maintenance</div>
+    <div class="ref-row"><div class="ref-label">Clean</div><div class="ref-value">No capsule inside &#x2192; lock machine &#x2192; press button 3x in 2 sec &#x2192; runs ~7 min</div></div>
+    <div class="ref-row"><div class="ref-label">Descale</div><div class="ref-value">Add descaling liquid + 0.5L water &#x2192; eject capsule &#x2192; leave unlocked &#x2192; hold 7 sec &#x2192; lock/unlock &#x2192; hold 7 sec &#x2192; lock &amp; press button</div></div>
+    <div class="ref-row"><div class="ref-label">Factory reset</div><div class="ref-value">Eject capsule &#x2192; close head, leave unlocked &#x2192; press button 5x in 3 sec</div></div>
+    <div class="ref-row"><div class="ref-label">Empty system</div><div class="ref-value">Empty tank &#x2192; unplug &#x2192; eject capsule &#x2192; close &amp; lock &#x2192; hold button + plug in &#x2192; ~30 sec</div></div>
+
+    <div class="ref-section-header black">Light Signals</div>
+    <div class="ref-codes">
+      <div class="ref-code"><strong>Steady white</strong> = Ready</div>
+      <div class="ref-code"><strong>White pulse</strong> = Heating up</div>
+      <div class="ref-code"><strong>White blink 1x/sec</strong> = Brewing</div>
+      <div class="ref-code"><strong>Orange 2x/sec</strong> = Cleaning</div>
+      <div class="ref-code"><strong>Orange 3x/sec</strong> = Descaling</div>
+      <div class="ref-code"><strong>Orange pulse down</strong> = Cooling</div>
+      <div class="ref-code"><strong>Orange 2 blinks + pause</strong> = Error</div>
+      <div class="ref-code"><strong>Orange on 1.5s / off 0.5s</strong> = Empty tank</div>
+      <div class="ref-code"><strong>Orange/white alternating</strong> = Descale needed</div>
+      <div class="ref-code"><strong>No light</strong> = Machine off</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Chat View -->
+<div class="chat-view" id="chatView">
+  <div class="chat-back" onclick="goHome()">&#x2039; Back</div>
+  <div class="chat-messages" id="chatMessages"></div>
+</div>
+
+<!-- Input -->
+<div class="chat-input-label">&#x1F4AC; Ask Ollie anything about your Nespresso</div>
+<div class="chat-input-row">
+  <input type="text" class="chat-input" id="chatInput"
+         placeholder="Ask Ollie anything..."
+         enterkeyhint="send" autocomplete="off">
+  <button class="chat-send" id="chatSend" onclick="sendMessage()">&#x27A4;</button>
+</div>
+
+<script>
+  const API_KEY = "YOUR_API_KEY_HERE";
+
+  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Nespresso Vertuo Next coffee machine by De'Longhi.
+
+Your job is to help users — especially people who find electronics confusing — understand how to use their coffee machine. Always be warm, patient, and encouraging. Never be condescending.
+
+RULES:
+- Give short, clear, numbered steps. Maximum 5 steps per answer.
+- Use plain English. Say "press the button" not "actuate the control".
+- If the user seems frustrated or confused, acknowledge it warmly before answering.
+- Only answer questions about this coffee machine. For anything else, say: "I'm only set up to help with this Nespresso Vertuo Next — for other questions, a quick web search should help!"
+- Never guess. If you don't know, say so and suggest they contact Nespresso Club.
+- Keep answers under 150 words. Be concise.
+- Your name is Ollie.
+
+DEVICE INFO:
+Model: Nespresso Vertuo Next (GCV1 / GDV1) by De'Longhi
+Power: 1500W (US/CA), Water tank: 37 fl oz / 1.1L
+Uses only Nespresso Vertuo capsules (NOT classic capsules)
+
+MACHINE PARTS:
+- Water tank and lid (rear)
+- ON/OFF and coffee button (single button on top)
+- Locking/Unlocking handle (on top)
+- Coffee outlet (front)
+- Drip grid, drip tray
+- Capsule container (holds used capsules)
+- Adjustable cup support (3 height positions, removable)
+
+HOW TO MAKE COFFEE:
+1. Fill water tank with fresh drinking water
+2. Turn on: close and lock machine (push head down, turn handle left to lock symbol), or press button if already closed
+3. Wait for steady white light = ready (blinking = heating up)
+4. Open head (turn handle right), insert Vertuo capsule dome-side down
+5. Close head and lock (push down, turn handle left)
+6. Place cup under outlet (adjust cup support height if needed)
+7. Press button to brew — machine reads barcode and auto-selects size
+8. To stop early: press button. To add more water: press button within 45 sec after brewing, press again to stop.
+9. After brewing: turn handle right, open head to eject capsule automatically
+
+CUP SIZES (factory defaults — machine auto-selects from capsule barcode):
+- Alto: 14 fl oz / 414 ml
+- Mug: 7.77 fl oz / 230 ml
+- Gran Lungo: 5.07 fl oz / 150 ml
+- Double Espresso: 2.7 fl oz / 80 ml
+- Espresso: 1.35 fl oz / 40 ml
+
+REPROGRAM CUP SIZE:
+Insert capsule → close & lock → when ready, hold button until desired volume → release → saved for that capsule type.
+Reset all volumes: factory reset (see below).
+
+POWER / ENERGY:
+- Turn off manually: hold button 3 seconds
+- Auto off: machine turns off after 2 minutes of non-use
+- You can start brewing even while machine is still heating — it will brew automatically when ready
+
+CLEANING (do regularly, no capsule inside):
+1. Rinse water tank, fill with fresh water
+2. Open head, eject any capsule, empty capsule container, rinse drip tray
+3. Close head, lock machine
+4. Wait for steady white light
+5. Press button 3 times within 2 seconds
+6. Runs automatically for up to 7 minutes
+7. Press button to stop/resume if needed
+
+DESCALING (~20 minutes, cannot be interrupted):
+1. Empty drip tray and capsule container
+2. Fill water tank with 1 unit Nespresso descaling liquid + 17 fl oz / 0.5L water
+3. Turn machine on, wait for steady white light
+4. Open head, eject capsule
+5. Close head, leave handle UNLOCKED
+6. Hold button 7 seconds (light blinks rapidly)
+7. Within 45 sec: lock then unlock the handle, hold button 7 seconds in unlocked position
+8. Place 1L container under outlet
+9. Lock machine, press button to start descaling — machine stops when done
+10. Empty container, rinse tank, fill with fresh water
+11. Press button to rinse — machine stops when done
+12. Let dry 10 minutes before using
+
+FACTORY RESET (resets all custom cup volumes):
+1. Open head, eject capsule
+2. Close head, leave handle UNLOCKED
+3. Press button 5 times within 3 seconds
+4. Button blinks orange 5 times, then steady white
+
+EMPTYING SYSTEM (before storage/travel/repair):
+1. Empty water tank, put back in place
+2. Place container under coffee outlet
+3. Unplug power cord
+4. Open head, eject capsule, empty capsule container/drip tray
+5. Close head, lock
+6. Hold button while plugging in — release when emptying starts
+7. Takes ~30 seconds, machine turns off when done
+
+BLUETOOTH/WIFI TOGGLE:
+1. Unplug, wait 10 sec
+2. Leave handle unlocked
+3. Hold button, plug in while holding
+4. White blink = ON, Orange blink = OFF (default is ON)
+
+LIGHT SIGNALS:
+- No light = machine off
+- Steady white = ready
+- White pulsing up = heating up
+- White blinking 1x/second = brewing coffee
+- Orange blinking 2x/second = cleaning mode
+- Orange blinking 3x/second = descaling/emptying
+- Orange pulsing down = cooling after overheating (wait ~20 min)
+- Orange 2 blinks + pause = error (check capsule, handle lock, water tank; unplug 10 sec and retry)
+- Orange on 1.5s / off 0.5s = water tank empty
+- Orange/white alternating 3x then steady = descaling needed soon
+- Orange blinks 5x in 10 sec = factory reset confirmed
+- White blinking 2x/second = software update in progress
+
+TROUBLESHOOTING:
+- No coffee/water: check water tank, check capsule inserted correctly dome-down, handle locked. Descale if needed.
+- Coffee not hot enough: preheat cup with hot tap water. Descale if needed.
+- Coffee grounds in cup: run cleaning procedure twice.
+- Machine won't start, light steady: check handle is locked, check capsule is fresh and correct position.
+- Machine won't start, light blinks 1+pause: fill water tank, check handle locked.
+- Leakage: check water tank is properly positioned.
+- Machine stuck in descaling mode: hold button 7 seconds to exit.
+
+IMPORTANT SAFETY:
+- Only use Nespresso Vertuo capsules (NOT classic capsules)
+- Never open machine during brewing — risk of hot liquid splash
+- Insert capsule dome-side down
+- Always use fresh, unused capsules
+- Don't put fingers in capsule compartment
+- Empty capsule container regularly
+- Use only Nespresso descaling kit`;
+
+  const homeView = document.getElementById("homeView");
+  const chatView = document.getElementById("chatView");
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const chatSend = document.getElementById("chatSend");
+
+  let conversationHistory = [];
+  let isWaiting = false;
+
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  function openRef() { document.getElementById("refOverlay").classList.add("active"); }
+  function closeRef() { document.getElementById("refOverlay").classList.remove("active"); }
+
+  function showChat() {
+    homeView.classList.add("hidden");
+    chatView.classList.add("active");
+  }
+  function goHome() {
+    chatView.classList.remove("active");
+    homeView.classList.remove("hidden");
+  }
+  function askQuestion(text) {
+    chatInput.value = text;
+    showChat();
+    sendMessage();
+  }
+
+  function addBubble(text, role) {
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble ${role}`;
+    bubble.innerHTML = formatMessage(text);
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return bubble;
+  }
+  function formatMessage(text) {
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    text = text.replace(/\n(\d+)\.\s/g, "<br>$1. ");
+    text = text.replace(/\n/g, "<br>");
+    return text;
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || isWaiting) return;
+    showChat();
+    addBubble(text, "user");
+    chatInput.value = "";
+    isWaiting = true;
+    chatSend.disabled = true;
+    conversationHistory.push({ role: "user", content: text });
+
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble typing";
+    typing.textContent = "Thinking...";
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true"
+        },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 512,
+          system: SYSTEM_PROMPT,
+          messages: conversationHistory
+        })
+      });
+      typing.remove();
+      if (!response.ok) { throw new Error(`API error ${response.status}`); }
+      const data = await response.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: "assistant", content: reply });
+      addBubble(reply, "assistant");
+    } catch (err) {
+      typing.remove();
+      addBubble("Sorry, I couldn't connect right now. Please try again in a moment.", "assistant");
+      console.error("Chat error:", err);
+    }
+    isWaiting = false;
+    chatSend.disabled = false;
+  }
+</script>
+
+</body>
+</html>
