@@ -579,8 +579,6 @@
 </div>
 
 <script>
-  const API_KEY = "YOUR_API_KEY_HERE";
-
   const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Panasonic NN-SC73LS microwave oven.
 
 Your job is to help users — especially older adults and people who find electronics confusing — understand how to use their microwave. Always be warm, patient, and encouraging. Never be condescending.
@@ -704,14 +702,9 @@ SAFETY:
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 512,
