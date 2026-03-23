@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ollie — Nespresso Vertuo Next Guide</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,6 +16,7 @@
       --blue-light: #e3f2fd;
       --purple-light: #f3e5f5;
       --brown-light: #efebe9;
+      --brown: #5d4037;
       --bg: #faf6f1;
       --text: #202124;
       --text-light: #5f6368;
@@ -34,6 +35,32 @@
       -webkit-font-smoothing: antialiased;
       display: flex;
       flex-direction: column;
+    }
+
+    /* Skip nav */
+    .skip-nav {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      background: var(--brown);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      z-index: 2000;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-nav:focus { top: 0; }
+
+    /* Focus styles */
+    :focus-visible {
+      outline: 3px solid var(--brown);
+      outline-offset: 2px;
+    }
+    button:focus-visible {
+      outline: 3px solid var(--brown);
+      outline-offset: 2px;
     }
 
     .content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -64,7 +91,7 @@
     .hero-text h1 span { color: #f5b731; }
     .hero-text p { font-size: 14px; opacity: 0.9; line-height: 1.4; }
     .ai-gradient {
-      background: linear-gradient(135deg, #f5b731, #ff6fd8, #7dd3fc);
+      background: linear-gradient(135deg, #ffd000, #ff85e0, #90e0ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 900;
@@ -76,6 +103,7 @@
       text-transform: uppercase; color: var(--text-light);
       padding: 16px 16px 10px;
     }
+    h2.section-label { font-size: 12px; }
 
     /* Quick question cards */
     .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px; }
@@ -84,6 +112,8 @@
       border: 2px solid transparent; cursor: pointer;
       -webkit-tap-highlight-color: transparent; position: relative;
       transition: transform 0.1s;
+      text-align: left; font-family: inherit; font-size: inherit;
+      color: inherit; width: 100%;
     }
     .quick-card:active { transform: scale(0.97); }
     .quick-card.orange { border-color: #f5c28a; background: var(--orange-light); }
@@ -112,8 +142,11 @@
       background: linear-gradient(135deg, #5c3a1e, #3c2415);
       color: white; border-radius: var(--radius); cursor: pointer;
       -webkit-tap-highlight-color: transparent; transition: transform 0.1s;
+      border: none; width: calc(100% - 32px);
+      text-align: left; font-family: inherit; font-size: inherit;
     }
     .ref-btn:active { transform: scale(0.97); }
+    .ref-btn:focus-visible { outline-color: #f5b731; }
     .ref-btn-icon { font-size: 28px; flex-shrink: 0; }
     .ref-btn-text { flex: 1; }
     .ref-btn-title { font-size: 16px; font-weight: 700; }
@@ -133,7 +166,8 @@
     .ref-overlay-title { font-size: 18px; font-weight: 700; }
     .ref-overlay-close {
       background: none; border: none; font-size: 28px;
-      color: var(--text-light); cursor: pointer; padding: 0 4px; line-height: 1;
+      color: var(--text); cursor: pointer; padding: 4px 8px;
+      line-height: 1; border-radius: 6px;
     }
     .ref-overlay-body {
       flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px 40px;
@@ -163,11 +197,13 @@
     .ref-code strong { color: #5d4037; }
 
     /* People also asked */
-    .paa-list { padding: 0 16px; }
+    .paa-list { padding: 0 16px; list-style: none; }
     .paa-item {
       background: white; border-radius: 12px; padding: 16px;
       margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
       cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.1s;
+      border: none; width: 100%; text-align: left;
+      font-family: inherit; font-size: inherit; color: inherit;
     }
     .paa-item:active { transform: scale(0.98); }
     .paa-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -177,7 +213,7 @@
     .paa-dot.yellow { background: #f9a825; }
     .paa-dot.brown { background: #5d4037; }
     .paa-text { flex: 1; font-size: 15px; font-weight: 600; }
-    .paa-chevron { color: #bbb; font-size: 18px; flex-shrink: 0; }
+    .paa-chevron { color: #888; font-size: 18px; flex-shrink: 0; }
 
     /* Chat */
     .chat-view {
@@ -186,9 +222,11 @@
     .chat-view.active { display: flex; }
     .content.hidden { display: none; }
     .chat-back {
-      padding: 12px 16px; background: white; border-bottom: 1px solid var(--border);
+      padding: 12px 16px; background: white;
+      border: none; border-bottom: 1px solid var(--border);
       font-size: 15px; font-weight: 600; color: #5d4037; cursor: pointer;
       -webkit-tap-highlight-color: transparent; flex-shrink: 0;
+      width: 100%; text-align: left; font-family: inherit;
     }
     .chat-messages {
       flex: 1; overflow-y: auto; padding: 16px; -webkit-overflow-scrolling: touch;
@@ -224,7 +262,8 @@
       border-radius: 24px; font-size: 16px; outline: none; font-family: inherit;
       background: var(--bg); transition: border-color 0.2s;
     }
-    .chat-input:focus { border-color: #5d4037; }
+    .chat-input:focus { border-color: #5d4037; outline: none; }
+    .chat-input:focus-visible { outline: none; border-color: #5d4037; box-shadow: 0 0 0 3px rgba(93,64,55,0.3); }
     .chat-send {
       width: 48px; height: 48px; border-radius: 50%; background: var(--orange);
       color: white; border: none; font-size: 20px; cursor: pointer;
@@ -239,11 +278,13 @@
 </head>
 <body>
 
-<div class="content" id="homeView">
+<a href="#main-input" class="skip-nav">Skip to chat</a>
+
+<div class="content" id="homeView" role="main">
 
   <!-- Hero -->
   <div class="hero">
-    <img src="mainlogo.png" alt="Ollie" class="hero-logo">
+    <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
     <div class="hero-text">
       <h1>Hey! I'm <span>Ollie.</span></h1>
       <p>Your <span class="ai-gradient">AI</span> assistant for this coffee machine. I've read every page of the manual — ask me anything.</p>
@@ -251,89 +292,99 @@
   </div>
 
   <!-- Quick Questions -->
-  <div class="section-label">Quick Questions</div>
+  <h2 class="section-label">Quick Questions</h2>
   <div class="quick-grid">
-    <div class="quick-card orange" onclick="askQuestion('How do I make a coffee?')">
-      <div class="quick-card-badge">TOP</div>
-      <div class="quick-card-icon">&#x2615;</div>
+    <button class="quick-card orange" onclick="askQuestion('How do I make a coffee?')">
+      <div class="quick-card-badge" aria-hidden="true">TOP</div>
+      <div class="quick-card-icon" aria-hidden="true">&#x2615;</div>
       <div class="quick-card-title">Make a coffee</div>
       <div class="quick-card-desc">Step by step</div>
-    </div>
-    <div class="quick-card blue" onclick="askQuestion('What do the blinking lights mean?')">
-      <div class="quick-card-icon">&#x1F4A1;</div>
+    </button>
+    <button class="quick-card blue" onclick="askQuestion('What do the blinking lights mean?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F4A1;</div>
       <div class="quick-card-title">Blinking lights</div>
       <div class="quick-card-desc">What they mean</div>
-    </div>
-    <div class="quick-card green" onclick="askQuestion('How do I clean the machine?')">
-      <div class="quick-card-icon">&#x1F9F9;</div>
+    </button>
+    <button class="quick-card green" onclick="askQuestion('How do I clean the machine?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F9F9;</div>
       <div class="quick-card-title">Clean the machine</div>
       <div class="quick-card-desc">Cleaning procedure</div>
-    </div>
-    <div class="quick-card brown" onclick="askQuestion('How do I descale the machine?')">
-      <div class="quick-card-icon">&#x1F4A7;</div>
+    </button>
+    <button class="quick-card brown" onclick="askQuestion('How do I descale the machine?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F4A7;</div>
       <div class="quick-card-title">Descale</div>
       <div class="quick-card-desc">Remove mineral buildup</div>
-    </div>
+    </button>
   </div>
 
   <!-- Quick Reference Button -->
-  <div class="ref-btn" onclick="openRef()">
-    <div class="ref-btn-icon">&#x1F4CB;</div>
+  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Quick Reference</div>
       <div class="ref-btn-desc">All functions at a glance</div>
     </div>
-    <div class="ref-btn-chevron">&#x203A;</div>
-  </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
 
   <!-- People Also Asked -->
-  <div class="section-label">People Also Asked</div>
-  <div class="paa-list">
-    <div class="paa-item" onclick="askQuestion('How do I change the cup size?')">
-      <div class="paa-dot orange"></div>
-      <div class="paa-text">How do I change the cup size?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('Why is my coffee not hot enough?')">
-      <div class="paa-dot teal"></div>
-      <div class="paa-text">Why is my coffee not hot enough?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('How do I connect Bluetooth and WiFi?')">
-      <div class="paa-dot purple"></div>
-      <div class="paa-text">How do I connect Bluetooth and WiFi?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('How do I reset to factory settings?')">
-      <div class="paa-dot brown"></div>
-      <div class="paa-text">How do I reset to factory settings?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('The machine has no water flow, what do I do?')">
-      <div class="paa-dot yellow"></div>
-      <div class="paa-text">No water flow — what do I do?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-  </div>
+  <h2 class="section-label">People Also Asked</h2>
+  <ul class="paa-list">
+    <li>
+      <button class="paa-item" onclick="askQuestion('How do I change the cup size?')">
+        <span class="paa-dot orange" aria-hidden="true"></span>
+        <span class="paa-text">How do I change the cup size?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('Why is my coffee not hot enough?')">
+        <span class="paa-dot teal" aria-hidden="true"></span>
+        <span class="paa-text">Why is my coffee not hot enough?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('How do I connect Bluetooth and WiFi?')">
+        <span class="paa-dot purple" aria-hidden="true"></span>
+        <span class="paa-text">How do I connect Bluetooth and WiFi?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('How do I reset to factory settings?')">
+        <span class="paa-dot brown" aria-hidden="true"></span>
+        <span class="paa-text">How do I reset to factory settings?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('The machine has no water flow, what do I do?')">
+        <span class="paa-dot yellow" aria-hidden="true"></span>
+        <span class="paa-text">No water flow — what do I do?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+  </ul>
 
   <div class="bottom-spacer"></div>
 </div>
 
 <!-- Reference Overlay -->
-<div class="ref-overlay" id="refOverlay">
+<div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
   <div class="ref-overlay-header">
-    <div class="ref-overlay-title">Quick Reference</div>
-    <button class="ref-overlay-close" onclick="closeRef()">&#x2715;</button>
+    <h2 class="ref-overlay-title">Quick Reference</h2>
+    <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2715;</button>
   </div>
   <div class="ref-overlay-body">
 
-    <div class="ref-section-header brown">Making Coffee</div>
+    <h3 class="ref-section-header brown">Making Coffee</h3>
     <div class="ref-row"><div class="ref-label">Brew coffee</div><div class="ref-value">Fill water &#x2192; Insert capsule dome-down &#x2192; Close &amp; lock &#x2192; Press button</div></div>
     <div class="ref-row"><div class="ref-label">Stop early</div><div class="ref-value">Press the button during brewing</div></div>
     <div class="ref-row"><div class="ref-label">Add more water</div><div class="ref-value">Press button after brew ends (within 45 sec) &#x2192; press again to stop</div></div>
     <div class="ref-row"><div class="ref-label">Eject capsule</div><div class="ref-value">Turn handle right to unlock &#x2192; open head &#x2192; capsule drops automatically</div></div>
 
-    <div class="ref-section-header green">Cup Sizes (Factory Settings)</div>
+    <h3 class="ref-section-header green">Cup Sizes (Factory Settings)</h3>
     <div class="ref-row"><div class="ref-label">Alto</div><div class="ref-value">14 fl oz / 414 ml</div></div>
     <div class="ref-row"><div class="ref-label">Mug</div><div class="ref-value">7.77 fl oz / 230 ml</div></div>
     <div class="ref-row"><div class="ref-label">Gran Lungo</div><div class="ref-value">5.07 fl oz / 150 ml</div></div>
@@ -341,19 +392,19 @@
     <div class="ref-row"><div class="ref-label">Espresso</div><div class="ref-value">1.35 fl oz / 40 ml</div></div>
     <div class="ref-row"><div class="ref-label">Reprogram size</div><div class="ref-value">Insert capsule &#x2192; hold button until desired volume &#x2192; saved for that capsule type</div></div>
 
-    <div class="ref-section-header gold">Machine Controls</div>
+    <h3 class="ref-section-header gold">Machine Controls</h3>
     <div class="ref-row"><div class="ref-label">Turn on</div><div class="ref-value">Close &amp; lock the head, or press the button</div></div>
     <div class="ref-row"><div class="ref-label">Turn off</div><div class="ref-value">Hold button 3 seconds</div></div>
     <div class="ref-row"><div class="ref-label">Auto off</div><div class="ref-value">Turns off after 2 min of no use</div></div>
     <div class="ref-row"><div class="ref-label">Cup support</div><div class="ref-value">3 height positions &middot; can be removed for large cups</div></div>
 
-    <div class="ref-section-header red">Maintenance</div>
+    <h3 class="ref-section-header red">Maintenance</h3>
     <div class="ref-row"><div class="ref-label">Clean</div><div class="ref-value">No capsule inside &#x2192; lock machine &#x2192; press button 3x in 2 sec &#x2192; runs ~7 min</div></div>
     <div class="ref-row"><div class="ref-label">Descale</div><div class="ref-value">Add descaling liquid + 0.5L water &#x2192; eject capsule &#x2192; leave unlocked &#x2192; hold 7 sec &#x2192; lock/unlock &#x2192; hold 7 sec &#x2192; lock &amp; press button</div></div>
     <div class="ref-row"><div class="ref-label">Factory reset</div><div class="ref-value">Eject capsule &#x2192; close head, leave unlocked &#x2192; press button 5x in 3 sec</div></div>
     <div class="ref-row"><div class="ref-label">Empty system</div><div class="ref-value">Empty tank &#x2192; unplug &#x2192; eject capsule &#x2192; close &amp; lock &#x2192; hold button + plug in &#x2192; ~30 sec</div></div>
 
-    <div class="ref-section-header black">Light Signals</div>
+    <h3 class="ref-section-header black">Light Signals</h3>
     <div class="ref-codes">
       <div class="ref-code"><strong>Steady white</strong> = Ready</div>
       <div class="ref-code"><strong>White pulse</strong> = Heating up</div>
@@ -372,17 +423,18 @@
 
 <!-- Chat View -->
 <div class="chat-view" id="chatView">
-  <div class="chat-back" onclick="goHome()">&#x2039; Back</div>
-  <div class="chat-messages" id="chatMessages"></div>
+  <button class="chat-back" onclick="goHome()">&#x2039; Back</button>
+  <div class="chat-messages" id="chatMessages" aria-live="polite" aria-relevant="additions"></div>
 </div>
 
 <!-- Input -->
-<div class="chat-input-label">&#x1F4AC; Ask Ollie anything about your Nespresso</div>
+<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Ollie anything about your Nespresso</label>
 <div class="chat-input-row">
   <input type="text" class="chat-input" id="chatInput"
          placeholder="Ask Ollie anything..."
-         enterkeyhint="send" autocomplete="off">
-  <button class="chat-send" id="chatSend" onclick="sendMessage()">&#x27A4;</button>
+         enterkeyhint="send" autocomplete="off"
+         id="main-input">
+  <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
 </div>
 
 <script>
@@ -529,8 +581,31 @@ IMPORTANT SAFETY:
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
 
-  function openRef() { document.getElementById("refOverlay").classList.add("active"); }
-  function closeRef() { document.getElementById("refOverlay").classList.remove("active"); }
+  function openRef() {
+    const overlay = document.getElementById("refOverlay");
+    overlay.classList.add("active");
+    overlay.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapRefFocus);
+  }
+  function closeRef() {
+    const overlay = document.getElementById("refOverlay");
+    overlay.classList.remove("active");
+    document.removeEventListener("keydown", trapRefFocus);
+    document.querySelector(".ref-btn").focus();
+  }
+  function trapRefFocus(e) {
+    if (e.key === "Escape") { closeRef(); return; }
+    if (e.key !== "Tab") return;
+    const overlay = document.getElementById("refOverlay");
+    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
 
   function showChat() {
     homeView.classList.add("hidden");
@@ -549,16 +624,18 @@ IMPORTANT SAFETY:
   function addBubble(text, role) {
     const bubble = document.createElement("div");
     bubble.className = `chat-bubble ${role}`;
-    bubble.innerHTML = formatMessage(text);
+    bubble.textContent = text;
     chatMessages.appendChild(bubble);
     chatMessages.scrollTop = chatMessages.scrollHeight;
     return bubble;
   }
-  function formatMessage(text) {
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    text = text.replace(/\n(\d+)\.\s/g, "<br>$1. ");
-    text = text.replace(/\n/g, "<br>");
-    return text;
+
+  function formatBubble(bubble, text) {
+    let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\n(\d+)\.\s/g, "<br>$1. ");
+    html = html.replace(/\n/g, "<br>");
+    bubble.innerHTML = html;
   }
 
   async function sendMessage() {
@@ -573,6 +650,7 @@ IMPORTANT SAFETY:
 
     const typing = document.createElement("div");
     typing.className = "chat-bubble typing";
+    typing.setAttribute("role", "status");
     typing.textContent = "Thinking...";
     chatMessages.appendChild(typing);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -593,7 +671,8 @@ IMPORTANT SAFETY:
       const data = await response.json();
       const reply = data.content[0].text;
       conversationHistory.push({ role: "assistant", content: reply });
-      addBubble(reply, "assistant");
+      const bubble = addBubble("", "assistant");
+      formatBubble(bubble, reply);
     } catch (err) {
       typing.remove();
       addBubble("Sorry, I couldn't connect right now. Please try again in a moment.", "assistant");
@@ -601,6 +680,7 @@ IMPORTANT SAFETY:
     }
     isWaiting = false;
     chatSend.disabled = false;
+    chatInput.focus();
   }
 </script>
 

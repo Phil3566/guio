@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ollie — Panasonic NN-SC73LS Microwave Guide</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,6 +35,34 @@
       -webkit-font-smoothing: antialiased;
       display: flex;
       flex-direction: column;
+    }
+
+    /* Skip nav */
+    .skip-nav {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      background: var(--teal);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      z-index: 2000;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-nav:focus {
+      top: 0;
+    }
+
+    /* Focus styles */
+    :focus-visible {
+      outline: 3px solid var(--teal);
+      outline-offset: 2px;
+    }
+    button:focus-visible {
+      outline: 3px solid var(--teal);
+      outline-offset: 2px;
     }
 
     /* Scrollable content */
@@ -106,7 +134,7 @@
     }
 
     .ai-gradient {
-      background: linear-gradient(135deg, #f5b731, #ff6fd8, #7dd3fc);
+      background: linear-gradient(135deg, #ffd000, #ff85e0, #90e0ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 900;
@@ -121,6 +149,9 @@
       text-transform: uppercase;
       color: var(--text-light);
       padding: 16px 16px 10px;
+    }
+    h2.section-label {
+      font-size: 12px;
     }
 
     /* Quick question cards - 2x2 grid */
@@ -139,6 +170,11 @@
       -webkit-tap-highlight-color: transparent;
       position: relative;
       transition: transform 0.1s;
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      width: 100%;
     }
     .quick-card:active { transform: scale(0.97); }
     .quick-card.orange { border-color: #f5c28a; background: var(--orange-light); }
@@ -189,8 +225,14 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.1s;
+      border: none;
+      width: calc(100% - 32px);
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
     }
     .ref-btn:active { transform: scale(0.97); }
+    .ref-btn:focus-visible { outline-color: #f5b731; }
     .ref-btn-icon { font-size: 28px; flex-shrink: 0; }
     .ref-btn-text { flex: 1; }
     .ref-btn-title { font-size: 16px; font-weight: 700; }
@@ -221,10 +263,11 @@
       background: none;
       border: none;
       font-size: 28px;
-      color: var(--text-light);
+      color: var(--text);
       cursor: pointer;
-      padding: 0 4px;
+      padding: 4px 8px;
       line-height: 1;
+      border-radius: 6px;
     }
     .ref-overlay-body {
       flex: 1;
@@ -287,6 +330,7 @@
     /* People also asked */
     .paa-list {
       padding: 0 16px;
+      list-style: none;
     }
     .paa-item {
       background: white;
@@ -299,6 +343,12 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.1s;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
     }
     .paa-item:active { transform: scale(0.98); }
     .paa-dot {
@@ -317,7 +367,7 @@
       font-weight: 600;
     }
     .paa-chevron {
-      color: #bbb;
+      color: #888;
       font-size: 18px;
       flex-shrink: 0;
     }
@@ -344,6 +394,11 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
     }
     .chat-messages {
       flex: 1;
@@ -410,7 +465,8 @@
       background: var(--bg);
       transition: border-color 0.2s;
     }
-    .chat-input:focus { border-color: var(--teal); }
+    .chat-input:focus { border-color: var(--teal); outline: none; }
+    .chat-input:focus-visible { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,107,90,0.3); }
     .chat-send {
       width: 48px;
       height: 48px;
@@ -438,12 +494,14 @@
 </head>
 <body>
 
+<a href="#main-input" class="skip-nav">Skip to chat</a>
+
 <!-- ===== HOME VIEW ===== -->
-<div class="content" id="homeView">
+<div class="content" id="homeView" role="main">
 
   <!-- Hero -->
   <div class="hero">
-    <img src="mainlogo.png" alt="Ollie" class="hero-logo">
+    <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
     <div class="hero-text">
       <h1>Hey! I'm <span>Ollie.</span></h1>
       <p>Your <span class="ai-gradient">AI</span> assistant for this microwave. I've read every page of the manual — ask me anything.</p>
@@ -451,99 +509,107 @@
   </div>
 
   <!-- Quick Questions -->
-  <div class="section-label">Quick Questions</div>
+  <h2 class="section-label">Quick Questions</h2>
   <div class="quick-grid">
-    <div class="quick-card orange" onclick="askQuestion('How do I reheat soup safely?')">
-      <div class="quick-card-badge">TOP</div>
-      <div class="quick-card-icon">&#x1F35C;</div>
+    <button class="quick-card orange" onclick="askQuestion('How do I reheat soup safely?')">
+      <div class="quick-card-badge" aria-hidden="true">TOP</div>
+      <div class="quick-card-icon" aria-hidden="true">&#x1F35C;</div>
       <div class="quick-card-title">Reheat soup safely</div>
       <div class="quick-card-desc">Best power &amp; time</div>
-    </div>
-    <div class="quick-card blue" onclick="askQuestion('How do I defrost chicken?')">
-      <div class="quick-card-icon">&#x1F357;</div>
+    </button>
+    <button class="quick-card blue" onclick="askQuestion('How do I defrost chicken?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F357;</div>
       <div class="quick-card-title">Defrost chicken</div>
       <div class="quick-card-desc">By weight</div>
-    </div>
-    <div class="quick-card green" onclick="askQuestion('What do the beeps mean?')">
-      <div class="quick-card-icon">&#x1F514;</div>
+    </button>
+    <button class="quick-card green" onclick="askQuestion('What do the beeps mean?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F514;</div>
       <div class="quick-card-title">What do beeps mean?</div>
       <div class="quick-card-desc">Error codes explained</div>
-    </div>
-    <div class="quick-card purple" onclick="askQuestion('How do I set the clock?')">
-      <div class="quick-card-icon">&#x1F570;</div>
+    </button>
+    <button class="quick-card purple" onclick="askQuestion('How do I set the clock?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F570;</div>
       <div class="quick-card-title">Set the clock</div>
       <div class="quick-card-desc">Step-by-step</div>
-    </div>
+    </button>
   </div>
 
   <!-- Quick Reference Button -->
-  <div class="ref-btn" onclick="openRef()">
-    <div class="ref-btn-icon">&#x1F4CB;</div>
+  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Quick Reference</div>
       <div class="ref-btn-desc">All buttons &amp; functions at a glance</div>
     </div>
-    <div class="ref-btn-chevron">&#x203A;</div>
-  </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
 
   <!-- People Also Asked -->
-  <div class="section-label">People Also Asked</div>
-  <div class="paa-list">
-    <div class="paa-item" onclick="askQuestion('Why is my food unevenly heated?')">
-      <div class="paa-dot orange"></div>
-      <div class="paa-text">Why is my food unevenly heated?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('How do I turn off the beep sound?')">
-      <div class="paa-dot teal"></div>
-      <div class="paa-text">How do I turn off the beep sound?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('Is the turntable supposed to stop?')">
-      <div class="paa-dot purple"></div>
-      <div class="paa-text">Is the turntable supposed to stop?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-    <div class="paa-item" onclick="askQuestion('Can I use metal in this microwave?')">
-      <div class="paa-dot yellow"></div>
-      <div class="paa-text">Can I use metal in this microwave?</div>
-      <div class="paa-chevron">&#x203A;</div>
-    </div>
-  </div>
+  <h2 class="section-label">People Also Asked</h2>
+  <ul class="paa-list">
+    <li>
+      <button class="paa-item" onclick="askQuestion('Why is my food unevenly heated?')">
+        <span class="paa-dot orange" aria-hidden="true"></span>
+        <span class="paa-text">Why is my food unevenly heated?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('How do I turn off the beep sound?')">
+        <span class="paa-dot teal" aria-hidden="true"></span>
+        <span class="paa-text">How do I turn off the beep sound?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('Is the turntable supposed to stop?')">
+        <span class="paa-dot purple" aria-hidden="true"></span>
+        <span class="paa-text">Is the turntable supposed to stop?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+    <li>
+      <button class="paa-item" onclick="askQuestion('Can I use metal in this microwave?')">
+        <span class="paa-dot yellow" aria-hidden="true"></span>
+        <span class="paa-text">Can I use metal in this microwave?</span>
+        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
+      </button>
+    </li>
+  </ul>
 
   <div class="bottom-spacer"></div>
 </div>
 
 <!-- ===== REFERENCE OVERLAY ===== -->
-<div class="ref-overlay" id="refOverlay">
+<div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
   <div class="ref-overlay-header">
-    <div class="ref-overlay-title">Quick Reference</div>
-    <button class="ref-overlay-close" onclick="closeRef()">&#x2715;</button>
+    <h2 class="ref-overlay-title">Quick Reference</h2>
+    <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2715;</button>
   </div>
   <div class="ref-overlay-body">
 
-    <div class="ref-section-header blue">Cook &amp; Reheat</div>
+    <h3 class="ref-section-header blue">Cook &amp; Reheat</h3>
     <div class="ref-row"><div class="ref-label">Reheat food</div><div class="ref-value">Sensor Reheat &#x2192; Start</div></div>
     <div class="ref-row"><div class="ref-label">Cook (manual)</div><div class="ref-value">Enter time &#x2192; Start</div></div>
     <div class="ref-row"><div class="ref-label">Lower power</div><div class="ref-value">Power Level (press repeatedly) &#x2192; enter time &#x2192; Start</div></div>
     <div class="ref-row"><div class="ref-label">Add 30 sec</div><div class="ref-value">Press Quick 30 &mdash; press again to add more</div></div>
     <div class="ref-row"><div class="ref-label">Keep warm</div><div class="ref-value">Keep Warm &#x2192; enter minutes (max 30) &#x2192; Start</div></div>
 
-    <div class="ref-section-header green">Auto &amp; Defrost</div>
+    <h3 class="ref-section-header green">Auto &amp; Defrost</h3>
     <div class="ref-row"><div class="ref-label">Auto by food</div><div class="ref-value">Sensor Cook &#x2192; press until # shows &#x2192; Start</div></div>
     <div class="ref-row"><div class="ref-label">Defrost</div><div class="ref-value">Turbo Defrost &#x2192; enter lbs &#x2192; Start &middot; Turn food at 2 beeps</div></div>
     <div class="ref-row"><div class="ref-label">Popcorn</div><div class="ref-value">Popcorn: 1x=3.5 oz &middot; 2x=3 oz &middot; 3x=1.75 oz &#x2192; Start</div></div>
 
-    <div class="ref-section-header brown">Clock &amp; Timer</div>
+    <h3 class="ref-section-header brown">Clock &amp; Timer</h3>
     <div class="ref-row"><div class="ref-label">Set clock</div><div class="ref-value">Clock &#x2192; enter time &#x2192; Clock again</div></div>
     <div class="ref-row"><div class="ref-label">Kitchen timer</div><div class="ref-value">Timer &#x2192; enter time &#x2192; Start (no heating)</div></div>
 
-    <div class="ref-section-header red">Controls</div>
+    <h3 class="ref-section-header red">Controls</h3>
     <div class="ref-row"><div class="ref-label">Pause</div><div class="ref-value">Stop/Reset once</div></div>
     <div class="ref-row"><div class="ref-label">Cancel all</div><div class="ref-value">Stop/Reset twice</div></div>
     <div class="ref-row"><div class="ref-label">Child lock</div><div class="ref-value">Lock: Start x3 &middot; Unlock: Stop/Reset x3</div></div>
 
-    <div class="ref-section-header black">Sensor Cook Codes</div>
+    <h3 class="ref-section-header black">Sensor Cook Codes</h3>
     <div class="ref-codes">
       <div class="ref-code"><strong>1</strong> Potato</div>
       <div class="ref-code"><strong>2</strong> Fresh veg</div>
@@ -564,18 +630,19 @@
 
 <!-- ===== CHAT VIEW ===== -->
 <div class="chat-view" id="chatView">
-  <div class="chat-back" onclick="goHome()">&#x2039; Back</div>
-  <div class="chat-messages" id="chatMessages"></div>
+  <button class="chat-back" onclick="goHome()">&#x2039; Back</button>
+  <div class="chat-messages" id="chatMessages" aria-live="polite" aria-relevant="additions"></div>
 </div>
 
 <!-- Input (always visible) -->
-<div class="chat-input-label">&#x1F4AC; Ask Ollie anything about your microwave</div>
+<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Ollie anything about your microwave</label>
 <div class="chat-input-row">
   <input type="text" class="chat-input" id="chatInput"
          placeholder="Ask Ollie anything..."
          enterkeyhint="send"
-         autocomplete="off">
-  <button class="chat-send" id="chatSend" onclick="sendMessage()">&#x27A4;</button>
+         autocomplete="off"
+         id="main-input">
+  <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
 </div>
 
 <script>
@@ -644,10 +711,29 @@ SAFETY:
   });
 
   function openRef() {
-    document.getElementById("refOverlay").classList.add("active");
+    const overlay = document.getElementById("refOverlay");
+    overlay.classList.add("active");
+    overlay.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapRefFocus);
   }
   function closeRef() {
-    document.getElementById("refOverlay").classList.remove("active");
+    const overlay = document.getElementById("refOverlay");
+    overlay.classList.remove("active");
+    document.removeEventListener("keydown", trapRefFocus);
+    document.querySelector(".ref-btn").focus();
+  }
+  function trapRefFocus(e) {
+    if (e.key === "Escape") { closeRef(); return; }
+    if (e.key !== "Tab") return;
+    const overlay = document.getElementById("refOverlay");
+    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   }
 
   function showChat() {
@@ -669,17 +755,18 @@ SAFETY:
   function addBubble(text, role) {
     const bubble = document.createElement("div");
     bubble.className = `chat-bubble ${role}`;
-    bubble.innerHTML = formatMessage(text);
+    bubble.textContent = text;
     chatMessages.appendChild(bubble);
     chatMessages.scrollTop = chatMessages.scrollHeight;
     return bubble;
   }
 
-  function formatMessage(text) {
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    text = text.replace(/\n(\d+)\.\s/g, "<br>$1. ");
-    text = text.replace(/\n/g, "<br>");
-    return text;
+  function formatBubble(bubble, text) {
+    let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\n(\d+)\.\s/g, "<br>$1. ");
+    html = html.replace(/\n/g, "<br>");
+    bubble.innerHTML = html;
   }
 
   async function sendMessage() {
@@ -697,6 +784,7 @@ SAFETY:
 
     const typing = document.createElement("div");
     typing.className = "chat-bubble typing";
+    typing.setAttribute("role", "status");
     typing.textContent = "Thinking...";
     chatMessages.appendChild(typing);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -723,7 +811,8 @@ SAFETY:
       const data = await response.json();
       const reply = data.content[0].text;
       conversationHistory.push({ role: "assistant", content: reply });
-      addBubble(reply, "assistant");
+      const bubble = addBubble("", "assistant");
+      formatBubble(bubble, reply);
 
     } catch (err) {
       typing.remove();
@@ -733,6 +822,7 @@ SAFETY:
 
     isWaiting = false;
     chatSend.disabled = false;
+    chatInput.focus();
   }
 </script>
 
