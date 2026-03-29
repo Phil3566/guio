@@ -4,12 +4,14 @@
   "description": "Ollie — AI-powered device guides",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node db/seed-panasonic.js"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "better-sqlite3": "^12.8.0",
     "express": "^4.21.0"
   }
 }
