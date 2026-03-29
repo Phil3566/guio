@@ -74,13 +74,13 @@
 
     /* Hero banner */
     .hero {
-      margin: 16px;
-      border-radius: 18px;
+      margin: 10px 12px 4px;
+      border-radius: 14px;
       background: linear-gradient(135deg, #1a6b5a 0%, #0f4a3e 60%, #0a3a30 100%);
       color: white;
-      padding: 24px 20px 16px;
+      padding: 14px 16px 10px;
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: flex-start;
       position: relative;
       overflow: hidden;
@@ -96,15 +96,15 @@
       border-radius: 50%;
     }
     .hero-logo {
-      width: 90px;
-      height: 90px;
+      width: 60px;
+      height: 60px;
       object-fit: contain;
       flex-shrink: 0;
     }
     .hero-text h1 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .hero-text h1 span {
       color: #f5b731;
@@ -116,12 +116,47 @@
     }
     .hero-product {
       text-align: center;
-      margin: -8px 16px 12px;
+      margin: 0 12px 4px;
     }
     .hero-product-img {
-      width: 180px;
+      width: 200px;
       height: auto;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .hero-product-img:active { transform: scale(0.97); }
+
+    /* Fullscreen image overlay */
+    .img-fullscreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .img-fullscreen.active { display: flex; }
+    .img-fullscreen img {
+      max-width: 92vw;
+      max-height: 88vh;
       border-radius: 12px;
+      object-fit: contain;
+    }
+    .img-fullscreen-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.9);
+      color: #202124;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
     }
     .hero-badges {
       display: flex;
@@ -225,27 +260,27 @@
     .ref-btn {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin: 12px 16px 0;
-      padding: 16px;
+      gap: 10px;
+      margin: 6px 12px 0;
+      padding: 10px 14px;
       background: linear-gradient(135deg, #1a6b5a, #0f4a3e);
       color: white;
-      border-radius: var(--radius);
+      border-radius: 10px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.1s;
       border: none;
-      width: calc(100% - 32px);
+      width: calc(100% - 24px);
       text-align: left;
       font-family: inherit;
       font-size: inherit;
     }
     .ref-btn:active { transform: scale(0.97); }
     .ref-btn:focus-visible { outline-color: #f5b731; }
-    .ref-btn-icon { font-size: 28px; flex-shrink: 0; }
+    .ref-btn-icon { font-size: 22px; flex-shrink: 0; }
     .ref-btn-text { flex: 1; }
-    .ref-btn-title { font-size: 16px; font-weight: 700; }
-    .ref-btn-desc { font-size: 13px; opacity: 0.8; }
+    .ref-btn-title { font-size: 15px; font-weight: 700; }
+    .ref-btn-desc { font-size: 12px; opacity: 0.8; }
     .ref-btn-chevron { font-size: 20px; opacity: 0.6; }
 
     /* Reference overlay */
@@ -269,15 +304,20 @@
     }
     .ref-overlay-title { font-size: 18px; font-weight: 700; }
     .ref-overlay-close {
-      background: none;
+      background: var(--teal);
+      color: white;
       border: none;
-      font-size: 28px;
-      color: var(--text);
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
-      padding: 4px 8px;
+      padding: 8px 16px;
       line-height: 1;
-      border-radius: 6px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+    .ref-overlay-close:active { opacity: 0.8; }
     .ref-overlay-body {
       flex: 1;
       overflow-y: auto;
@@ -593,7 +633,7 @@
     }
 
     /* Bottom spacing */
-    .bottom-spacer { height: 8px; }
+    .bottom-spacer { height: 4px; }
   </style>
 </head>
 <body>
@@ -612,55 +652,61 @@
     </div>
   </div>
   <div class="hero-product">
-    <img src="microwave.jpg" alt="Panasonic NN-SC73LS microwave" class="hero-product-img">
+    <img src="microwave.jpg" alt="Panasonic NN-SC73LS microwave — tap to enlarge" class="hero-product-img" onclick="document.getElementById('imgFullscreen').classList.add('active')">
+  </div>
+
+  <!-- Fullscreen image overlay -->
+  <div class="img-fullscreen" id="imgFullscreen" onclick="this.classList.remove('active')">
+    <button class="img-fullscreen-close" aria-label="Close image">&#x2190; Back</button>
+    <img src="microwave.jpg" alt="Panasonic NN-SC73LS microwave full size">
   </div>
 
   <!-- Button Guide Button -->
-  <button class="ref-btn" onclick="openButtonGuide()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#2d2d2d,#1a1a1a);">
+  <button class="ref-btn" onclick="openButtonGuide()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9); color:#2e7d32;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F518;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Button Guide</div>
-      <div class="ref-btn-desc">What every button on the panel does</div>
+      <div class="ref-btn-desc" style="opacity:0.7;">What every button on the panel does</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
   <!-- Quick Reference Button -->
-  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog">
+  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb); color:#1565c0;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Quick Reference</div>
-      <div class="ref-btn-desc">How to do common tasks step by step</div>
+      <div class="ref-btn-desc" style="opacity:0.7;">How to do common tasks step by step</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
   <!-- Snap & Ask Ollie Button -->
-  <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#5c4033,#3e2a1e);">
+  <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2); color:#e65100;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F4F7;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Snap &amp; Ask Ollie</div>
-      <div class="ref-btn-desc">Take a photo of a dish or food for advice</div>
+      <div class="ref-btn-desc" style="opacity:0.7;">Take a photo of a dish or food for advice</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
   <!-- Food Tips Button -->
-  <button class="ref-btn" onclick="openFoodTips()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e65100,#bf360c);">
+  <button class="ref-btn" onclick="openFoodTips()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0); color:#c62828;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F966;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Food Tips</div>
-      <div class="ref-btn-desc">How food behaves in the microwave</div>
+      <div class="ref-btn-desc" style="opacity:0.7;">How food behaves in the microwave</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
   <!-- Care & Info Button -->
-  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#37474f,#263238);">
+  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7); color:#6a1b9a;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F9F9;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Care &amp; Info</div>
-      <div class="ref-btn-desc">Cleaning, specs, parts &amp; troubleshooting</div>
+      <div class="ref-btn-desc" style="opacity:0.7;">Cleaning, specs, parts &amp; troubleshooting</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
@@ -672,7 +718,7 @@
 <div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
   <div class="ref-overlay-header">
     <h2 class="ref-overlay-title">Quick Reference</h2>
-    <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2715;</button>
+    <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
 
@@ -718,7 +764,7 @@
 <div class="ref-overlay" id="buttonGuideOverlay" role="dialog" aria-label="Button Guide" aria-modal="true">
   <div class="ref-overlay-header">
     <h2 class="ref-overlay-title">Button Guide</h2>
-    <button class="ref-overlay-close" onclick="closeButtonGuide()" aria-label="Close button guide">&#x2715;</button>
+    <button class="ref-overlay-close" onclick="closeButtonGuide()" aria-label="Close button guide">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
     <h3 class="ref-section-header blue">Cooking Buttons</h3>
@@ -750,7 +796,7 @@
 <div class="ref-overlay" id="foodTipsOverlay" role="dialog" aria-label="Food Tips" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#e65100,#bf360c);">
     <h2 class="ref-overlay-title">Food Tips</h2>
-    <button class="ref-overlay-close" onclick="closeFoodTips()" aria-label="Close food tips">&#x2715;</button>
+    <button class="ref-overlay-close" onclick="closeFoodTips()" aria-label="Close food tips">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
 
@@ -797,7 +843,7 @@
 <div class="ref-overlay" id="careOverlay" role="dialog" aria-label="Care and Info" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#37474f,#263238);">
     <h2 class="ref-overlay-title">Care &amp; Info</h2>
-    <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2715;</button>
+    <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
 
@@ -854,7 +900,7 @@
 <div class="ref-overlay" id="snapAskOverlay" role="dialog" aria-label="Snap and Ask Ollie" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#5c4033,#3e2a1e);">
     <h2 class="ref-overlay-title">Snap &amp; Ask Ollie</h2>
-    <button class="ref-overlay-close" onclick="closeSnapAsk()" aria-label="Close snap and ask">&#x2715;</button>
+    <button class="ref-overlay-close" onclick="closeSnapAsk()" aria-label="Close snap and ask">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:16px; padding-top:24px;">
     <p style="text-align:center; color:var(--text-light); font-size:15px;">What do you want to check?</p>
@@ -918,6 +964,12 @@ RULES:
 - Keep answers under 150 words. Be concise.
 - Your name is Ollie.
 
+PHOTO SAFETY:
+- You may receive photos from users. ONLY respond to photos of food, dishes, cookware, containers, or this microwave.
+- If a photo does not show food, cookware, or a microwave, respond ONLY with: "I can only help with food and cookware photos for your microwave. Please send a picture of the food you want to cook or the dish you want to check!"
+- Do NOT describe, analyze, or comment on inappropriate, explicit, violent, or off-topic images. Do not acknowledge what is in the photo. Just give the redirect message above.
+- Never generate content that is harmful, explicit, or unrelated to microwave usage.
+
 DEVICE INFO:
 Model: Panasonic NN-SC73LS, 1200W
 
@@ -956,6 +1008,7 @@ SAFETY:
 
 ADDITIONAL TASK: COOKWARE PHOTO ANALYSIS
 The user sent a photo of a dish, bowl, plate, container, or cup. Analyze whether it is safe in this microwave.
+IMPORTANT: If the photo does NOT show cookware, a container, or a dish, do NOT analyze it. Respond only with the redirect message from the PHOTO SAFETY rules above.
 
 COOKWARE SAFETY KNOWLEDGE:
 SAFE: Microwave-safe labeled dishes, heat-resistant glass (Pyrex), ceramic, paper plates (short warming only), paper towels (no recycled/synthetic), parchment paper, wax paper (as cover), microwave-safe labeled plastic, oven bags (closed with string not twist-tie), frozen dinner trays (if no metal), straw/wicker/wood (short reheat only).
@@ -972,6 +1025,7 @@ RESPONSE FORMAT:
 
 ADDITIONAL TASK: FOOD PHOTO ANALYSIS
 The user sent a photo of food they want to cook or reheat. Give specific instructions for this Panasonic NN-SC73LS microwave.
+IMPORTANT: If the photo does NOT show food, do NOT analyze it. Respond only with the redirect message from the PHOTO SAFETY rules above.
 
 SENSOR COOK CODES: 1=Potato, 2=Fresh veg, 3=Frozen veg, 4=Frozen pizza, 5=Frozen entree, 6=Casserole, 7=Ground meat, 8=Lasagna, 9=Soup, 10=Rice, 11=Pasta, 12=Fish
 
