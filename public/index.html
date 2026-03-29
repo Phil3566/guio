@@ -114,6 +114,15 @@
       opacity: 0.9;
       line-height: 1.4;
     }
+    .hero-product {
+      text-align: center;
+      margin: -8px 16px 12px;
+    }
+    .hero-product-img {
+      width: 180px;
+      height: auto;
+      border-radius: 12px;
+    }
     .hero-badges {
       display: flex;
       gap: 8px;
@@ -293,22 +302,93 @@
     .ref-section-header.red { background: #b71c1c; }
     .ref-section-header.black { background: #222; }
     .ref-row {
-      display: flex;
-      padding: 10px 0;
+      padding: 7px 0;
       border-bottom: 1px solid #ebe7e2;
-      gap: 8px;
     }
     .ref-row:last-child { border-bottom: none; }
     .ref-label {
-      font-weight: 700;
       font-size: 14px;
-      min-width: 95px;
-      flex-shrink: 0;
     }
-    .ref-value {
-      font-size: 14px;
+    .ref-label strong { font-weight: 700; }
+    .ref-desc {
+      font-size: 12px;
       color: var(--text-light);
+      display: inline;
     }
+    .btn-tag {
+      display: inline-block;
+      background: #2d2d2d;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 4px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
+    .tag-yes {
+      display: inline-block;
+      background: #1e7d45;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-no {
+      display: inline-block;
+      background: #b71c1c;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-caution {
+      display: inline-block;
+      background: #e6a000;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    /* Snap & Ask mode cards */
+    .snap-mode-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s, border-color 0.2s;
+      text-align: left;
+      font-family: inherit;
+      width: 100%;
+    }
+    .snap-mode-card:active { transform: scale(0.97); }
+    .snap-mode-card:hover,
+    .snap-mode-card:focus-visible { border-color: var(--teal); }
+    .snap-mode-icon { font-size: 36px; flex-shrink: 0; }
+    .snap-mode-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .snap-mode-desc { font-size: 13px; color: var(--text-light); }
+
+    /* Photo thumbnail in chat bubble */
+    .chat-bubble-photo {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
     .ref-codes {
       display: flex;
       flex-wrap: wrap;
@@ -487,6 +567,30 @@
       cursor: not-allowed;
     }
     .chat-send:active:not(:disabled) { background: #d06000; }
+    .chat-voice {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .chat-voice:active { background: #0f4a3e; }
+    .chat-voice.listening {
+      background: #b71c1c;
+      animation: pulse-mic 1s infinite;
+    }
+    @keyframes pulse-mic {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(183,28,28,0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(183,28,28,0); }
+    }
 
     /* Bottom spacing */
     .bottom-spacer { height: 8px; }
@@ -504,78 +608,62 @@
     <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
     <div class="hero-text">
       <h1>Hey! I'm <span>Ollie.</span></h1>
-      <p>Your <span class="ai-gradient">AI</span> assistant for this microwave. I've read every page of the manual — ask me anything.</p>
+      <p>I'm your <span class="ai-gradient">AI</span> microwave assistant. I've read every page of the <strong style="font-size:16px;">Panasonic NN-SC73LS</strong> manual — ask me anything.</p>
     </div>
   </div>
-
-  <!-- Quick Questions -->
-  <h2 class="section-label">Quick Questions</h2>
-  <div class="quick-grid">
-    <button class="quick-card orange" onclick="askQuestion('How do I reheat soup safely?')">
-      <div class="quick-card-badge" aria-hidden="true">TOP</div>
-      <div class="quick-card-icon" aria-hidden="true">&#x1F35C;</div>
-      <div class="quick-card-title">Reheat soup safely</div>
-      <div class="quick-card-desc">Best power &amp; time</div>
-    </button>
-    <button class="quick-card blue" onclick="askQuestion('How do I defrost chicken?')">
-      <div class="quick-card-icon" aria-hidden="true">&#x1F357;</div>
-      <div class="quick-card-title">Defrost chicken</div>
-      <div class="quick-card-desc">By weight</div>
-    </button>
-    <button class="quick-card green" onclick="askQuestion('What do the beeps mean?')">
-      <div class="quick-card-icon" aria-hidden="true">&#x1F514;</div>
-      <div class="quick-card-title">What do beeps mean?</div>
-      <div class="quick-card-desc">Error codes explained</div>
-    </button>
-    <button class="quick-card purple" onclick="askQuestion('How do I set the clock?')">
-      <div class="quick-card-icon" aria-hidden="true">&#x1F570;</div>
-      <div class="quick-card-title">Set the clock</div>
-      <div class="quick-card-desc">Step-by-step</div>
-    </button>
+  <div class="hero-product">
+    <img src="microwave.jpg" alt="Panasonic NN-SC73LS microwave" class="hero-product-img">
   </div>
+
+  <!-- Button Guide Button -->
+  <button class="ref-btn" onclick="openButtonGuide()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#2d2d2d,#1a1a1a);">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F518;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Button Guide</div>
+      <div class="ref-btn-desc">What every button on the panel does</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
 
   <!-- Quick Reference Button -->
   <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Quick Reference</div>
-      <div class="ref-btn-desc">All buttons &amp; functions at a glance</div>
+      <div class="ref-btn-desc">How to do common tasks step by step</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
-  <!-- People Also Asked -->
-  <h2 class="section-label">People Also Asked</h2>
-  <ul class="paa-list">
-    <li>
-      <button class="paa-item" onclick="askQuestion('Why is my food unevenly heated?')">
-        <span class="paa-dot orange" aria-hidden="true"></span>
-        <span class="paa-text">Why is my food unevenly heated?</span>
-        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
-      </button>
-    </li>
-    <li>
-      <button class="paa-item" onclick="askQuestion('How do I turn off the beep sound?')">
-        <span class="paa-dot teal" aria-hidden="true"></span>
-        <span class="paa-text">How do I turn off the beep sound?</span>
-        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
-      </button>
-    </li>
-    <li>
-      <button class="paa-item" onclick="askQuestion('Is the turntable supposed to stop?')">
-        <span class="paa-dot purple" aria-hidden="true"></span>
-        <span class="paa-text">Is the turntable supposed to stop?</span>
-        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
-      </button>
-    </li>
-    <li>
-      <button class="paa-item" onclick="askQuestion('Can I use metal in this microwave?')">
-        <span class="paa-dot yellow" aria-hidden="true"></span>
-        <span class="paa-text">Can I use metal in this microwave?</span>
-        <span class="paa-chevron" aria-hidden="true">&#x203A;</span>
-      </button>
-    </li>
-  </ul>
+  <!-- Snap & Ask Ollie Button -->
+  <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#5c4033,#3e2a1e);">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F4F7;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Snap &amp; Ask Ollie</div>
+      <div class="ref-btn-desc">Take a photo of a dish or food for advice</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Food Tips Button -->
+  <button class="ref-btn" onclick="openFoodTips()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e65100,#bf360c);">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F966;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Food Tips</div>
+      <div class="ref-btn-desc">How food behaves in the microwave</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Care & Info Button -->
+  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#37474f,#263238);">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F9F9;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Care &amp; Info</div>
+      <div class="ref-btn-desc">Cleaning, specs, parts &amp; troubleshooting</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
 
   <div class="bottom-spacer"></div>
 </div>
@@ -589,27 +677,14 @@
   <div class="ref-overlay-body">
 
     <h3 class="ref-section-header blue">Cook &amp; Reheat</h3>
-    <div class="ref-row"><div class="ref-label">Reheat food</div><div class="ref-value">Sensor Reheat &#x2192; Start</div></div>
-    <div class="ref-row"><div class="ref-label">Cook (manual)</div><div class="ref-value">Enter time &#x2192; Start</div></div>
-    <div class="ref-row"><div class="ref-label">Lower power</div><div class="ref-value">Power Level (press repeatedly) &#x2192; enter time &#x2192; Start</div></div>
-    <div class="ref-row"><div class="ref-label">Add 30 sec</div><div class="ref-value">Press Quick 30 &mdash; press again to add more</div></div>
-    <div class="ref-row"><div class="ref-label">Keep warm</div><div class="ref-value">Keep Warm &#x2192; enter minutes (max 30) &#x2192; Start</div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Reheat food:</strong> <span class="btn-tag">Sensor Reheat</span> &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; auto-detects time. Don't open door until 2 beeps.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cook (manual):</strong> enter time on <span class="btn-tag">0&ndash;9</span> &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; full power by default.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Lower power:</strong> <span class="btn-tag">Power Level</span> press repeatedly (10 levels: PL10 highest &rarr; PL1 lowest), then enter time &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; common: PL7 reheat, PL6 dense food, PL3 defrost.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Add 30 sec:</strong> <span class="btn-tag">Quick 30</span> <span class="ref-desc">&mdash; each press = +30 sec. Works while cooking.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Keep warm:</strong> <span class="btn-tag">Keep Warm</span> &rarr; enter min (max 30) &rarr; <span class="btn-tag">Start</span></div></div>
 
     <h3 class="ref-section-header green">Auto &amp; Defrost</h3>
-    <div class="ref-row"><div class="ref-label">Auto by food</div><div class="ref-value">Sensor Cook &#x2192; press until # shows &#x2192; Start</div></div>
-    <div class="ref-row"><div class="ref-label">Defrost</div><div class="ref-value">Turbo Defrost &#x2192; enter lbs &#x2192; Start &middot; Turn food at 2 beeps</div></div>
-    <div class="ref-row"><div class="ref-label">Popcorn</div><div class="ref-value">Popcorn: 1x=3.5 oz &middot; 2x=3 oz &middot; 3x=1.75 oz &#x2192; Start</div></div>
-
-    <h3 class="ref-section-header brown">Clock &amp; Timer</h3>
-    <div class="ref-row"><div class="ref-label">Set clock</div><div class="ref-value">Clock &#x2192; enter time &#x2192; Clock again</div></div>
-    <div class="ref-row"><div class="ref-label">Kitchen timer</div><div class="ref-value">Timer &#x2192; enter time &#x2192; Start (no heating)</div></div>
-
-    <h3 class="ref-section-header red">Controls</h3>
-    <div class="ref-row"><div class="ref-label">Pause</div><div class="ref-value">Stop/Reset once</div></div>
-    <div class="ref-row"><div class="ref-label">Cancel all</div><div class="ref-value">Stop/Reset twice</div></div>
-    <div class="ref-row"><div class="ref-label">Child lock</div><div class="ref-value">Lock: Start x3 &middot; Unlock: Stop/Reset x3</div></div>
-
-    <h3 class="ref-section-header black">Sensor Cook Codes</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Cook by food:</strong> <span class="btn-tag">Sensor Cook</span> press until your food code shows &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; <span class="btn-tag">More</span> / <span class="btn-tag">Less</span> adjusts cooking time.</span></div></div>
     <div class="ref-codes">
       <div class="ref-code"><strong>1</strong> Potato</div>
       <div class="ref-code"><strong>2</strong> Fresh veg</div>
@@ -624,9 +699,191 @@
       <div class="ref-code"><strong>11</strong> Pasta</div>
       <div class="ref-code"><strong>12</strong> Fish</div>
     </div>
+    <div class="ref-row"><div class="ref-label"><strong>Defrost:</strong> <span class="btn-tag">Turbo Defrost</span> &rarr; enter lbs (max 6) &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; turn food at 2 beeps.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Popcorn:</strong> press <span class="btn-tag">Popcorn</span> once for 3.5 oz bag, twice for 3 oz, 3 times for 1.75 oz &rarr; <span class="btn-tag">Start</span></div></div>
+
+    <h3 class="ref-section-header brown">Clock &amp; Timer</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Set clock:</strong> <span class="btn-tag">Clock Set</span> &rarr; enter time &rarr; <span class="btn-tag">Clock Set</span> again <span class="ref-desc">&mdash; 12-hour format.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Timer:</strong> <span class="btn-tag">Timer</span> &rarr; enter time &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; countdown, no heat.</span></div></div>
+
+    <h3 class="ref-section-header red">Controls</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Pause:</strong> <span class="btn-tag">Stop / Reset</span> once <span class="ref-desc">&mdash; press <span class="btn-tag">Start</span> to resume.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cancel all:</strong> <span class="btn-tag">Stop / Reset</span> twice <span class="ref-desc">&mdash; clears everything.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Child lock:</strong> <span class="btn-tag">Start</span> x3 to lock &middot; <span class="btn-tag">Stop / Reset</span> x3 to unlock</div></div>
 
   </div>
 </div>
+
+<!-- ===== BUTTON GUIDE OVERLAY ===== -->
+<div class="ref-overlay" id="buttonGuideOverlay" role="dialog" aria-label="Button Guide" aria-modal="true">
+  <div class="ref-overlay-header">
+    <h2 class="ref-overlay-title">Button Guide</h2>
+    <button class="ref-overlay-close" onclick="closeButtonGuide()" aria-label="Close button guide">&#x2715;</button>
+  </div>
+  <div class="ref-overlay-body">
+    <h3 class="ref-section-header blue">Cooking Buttons</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Sensor Reheat</span> <span class="ref-desc">&mdash; reheats food automatically. Press once, then Start. Don't open door until 2 beeps.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Sensor Cook</span> <span class="ref-desc">&mdash; cooks by food type. Press until code 1&ndash;12 shows, then Start. See Quick Reference for codes.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Popcorn</span> <span class="ref-desc">&mdash; pops microwave popcorn. Press 1x for 3.5 oz, 2x for 3 oz, 3x for 1.75 oz, then Start.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Power Level</span> <span class="ref-desc">&mdash; sets cooking power. Press repeatedly to cycle 10 levels: PL10 (high) down to PL1 (low). Then enter time.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Turbo Defrost</span> <span class="ref-desc">&mdash; fast defrost by weight. Enter lbs (up to 6), then Start. Flip food when it beeps twice.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Keep Warm</span> <span class="ref-desc">&mdash; holds food warm after cooking. Enter minutes (up to 30), then Start. Cannot combine with sensor.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Quick 30</span> <span class="ref-desc">&mdash; quick start at full power. Each press adds 30 sec. Also works while already cooking.</span></div></div>
+
+    <h3 class="ref-section-header green">Adjustment Buttons</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">More</span> <span class="ref-desc">&mdash; increases sensor cooking time. Press before Start.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Less</span> <span class="ref-desc">&mdash; decreases sensor cooking time. Press before Start.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">0&ndash;9</span> <span class="ref-desc">&mdash; number pad. Enter cook time, weight, or food codes.</span></div></div>
+
+    <h3 class="ref-section-header brown">Clock &amp; Timer</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Timer</span> <span class="ref-desc">&mdash; kitchen countdown timer. No heat. Press Timer, enter time, then Start.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Clock Set</span> <span class="ref-desc">&mdash; sets time of day. Press once, enter time on number pad, press again to confirm. 12-hour format.</span></div></div>
+
+    <h3 class="ref-section-header red">Controls</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Start</span> <span class="ref-desc">&mdash; starts any cooking program. Also used to lock child lock (press 3 times quickly).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Stop / Reset</span> <span class="ref-desc">&mdash; press once to pause (Start to resume). Press twice to cancel everything. Unlocks child lock (press 3x).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Door Release</span> <span class="ref-desc">&mdash; opens the door. Also pauses cooking automatically.</span></div></div>
+  </div>
+</div>
+
+<!-- ===== FOOD TIPS OVERLAY ===== -->
+<div class="ref-overlay" id="foodTipsOverlay" role="dialog" aria-label="Food Tips" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#e65100,#bf360c);">
+    <h2 class="ref-overlay-title">Food Tips</h2>
+    <button class="ref-overlay-close" onclick="closeFoodTips()" aria-label="Close food tips">&#x2715;</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header blue">How Food Cooks</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Shape:</strong> <span class="ref-desc">uniform pieces heat evenly. Put thick parts toward edges.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Size:</strong> <span class="ref-desc">smaller / thinner = faster. Cut food into similar sizes.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Density:</strong> <span class="ref-desc">bread, cake = fast. Potatoes, roasts = slow.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Starting temp:</strong> <span class="ref-desc">room temp cooks faster than fridge or frozen.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Quantity:</strong> <span class="ref-desc">more food = more time. Double the food ≠ double the time, but close.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Bone &amp; fat:</strong> <span class="ref-desc">bones cause uneven cooking. Fat areas overcook.</span></div></div>
+
+    <h3 class="ref-section-header green">Techniques</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Cover food:</strong> <span class="ref-desc">lid or vented plastic wrap traps steam, cooks evenly, prevents splatter.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Stir midway:</strong> <span class="ref-desc">moves hot edges to cool center. Kills cold spots.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Flip large items:</strong> <span class="ref-desc">turn roasts, whole chicken halfway through.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Rearrange:</strong> <span class="ref-desc">move pieces from edges to center halfway.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Use round dishes:</strong> <span class="ref-desc">food cooks more evenly than in square ones.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Arrange in a circle:</strong> <span class="ref-desc">equal spacing. Don't pile food in the center.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Standing time:</strong> <span class="ref-desc">food keeps cooking after stopping. Meat rises 5&ndash;15&deg;F. Let it rest.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Browning:</strong> <span class="ref-desc">microwaves won't brown food. Use browning sauce, Worcestershire, or dark spices.</span></div></div>
+
+    <h3 class="ref-section-header red">Never Do This</h3>
+    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Whole eggs</strong> <span class="ref-desc">&mdash; steam builds inside, they explode</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Sealed containers</strong> <span class="ref-desc">&mdash; pressure builds, they burst. Open or vent first</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Deep fat frying</strong> <span class="ref-desc">&mdash; oil can burst into flames</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Home canning / sterilizing</strong> <span class="ref-desc">&mdash; can't hold proper temp</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Drying herbs or small food amounts</strong> <span class="ref-desc">&mdash; can scorch or catch fire</span></div></div>
+
+    <h3 class="ref-section-header" style="background:#e6a000;">Pierce Before Cooking</h3>
+    <div class="ref-row"><div class="ref-label"><span class="tag-caution">!</span> Potatoes, sausages, whole squash, apples <span class="ref-desc">&mdash; pierce skin or they explode</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="tag-caution">!</span> Plastic pouches, sealed bags <span class="ref-desc">&mdash; cut a slit to vent steam</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="tag-caution">!</span> Egg yolks <span class="ref-desc">&mdash; pierce before cooking (scrambled is fine)</span></div></div>
+
+    <h3 class="ref-section-header black">Safe Temperatures</h3>
+    <div class="ref-row"><div class="ref-label"><strong>160&deg;F</strong> <span class="ref-desc">&mdash; pork, ground meat, fish, seafood, egg dishes</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>165&deg;F</strong> <span class="ref-desc">&mdash; leftovers, ready-to-eat refrigerated food</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>170&deg;F</strong> <span class="ref-desc">&mdash; white meat poultry</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>180&deg;F</strong> <span class="ref-desc">&mdash; dark meat poultry</span></div></div>
+
+  </div>
+</div>
+
+<!-- ===== CARE & INFO OVERLAY ===== -->
+<div class="ref-overlay" id="careOverlay" role="dialog" aria-label="Care and Info" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#37474f,#263238);">
+    <h2 class="ref-overlay-title">Care &amp; Info</h2>
+    <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2715;</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header blue">Cleaning</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Before cleaning:</strong> <span class="ref-desc">unplug oven. Leave door open.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Outside:</strong> <span class="ref-desc">damp cloth. Don't let water seep into vents.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Inside:</strong> <span class="ref-desc">damp cloth after each use. Mild detergent OK. No harsh cleaners or abrasives.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Door:</strong> <span class="ref-desc">soft dry cloth. Steam on door is normal. Do not remove inner heat barrier film.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cavity floor:</strong> <span class="ref-desc">mild detergent, water, or window cleaner. Dry.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Wave guide cover:</strong> <span class="ref-desc">do not remove. Keep clean like the inside.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Control panel:</strong> <span class="ref-desc">soft dry cloth. No harsh detergent. Peel off shipping film if still on.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Glass tray:</strong> <span class="ref-desc">warm soapy water or dishwasher.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Roller ring:</strong> <span class="ref-desc">mild soapy water or dishwasher. Keep clean to avoid noise.</span></div></div>
+    <div class="ref-row" style="background:#f9f4ec; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Important:</strong> <span class="ref-desc">after use, wipe dry all surfaces including vent openings, seams, and under glass tray. Food residue causes arcing and damage.</span></div>
+    </div>
+
+    <h3 class="ref-section-header red">Troubleshooting</h3>
+    <div class="ref-row"><div class="ref-label"><strong>TV interference:</strong> <span class="ref-desc">normal, like a mixer or vacuum. Not a fault.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Steam on door / warm air from vents:</strong> <span class="ref-desc">normal. Wipe door dry after use.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Won't turn on:</strong> <span class="ref-desc">unplug, wait 10 sec, re-plug. Check fuse / breaker. Try another outlet.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Won't start cooking:</strong> <span class="ref-desc">close door firmly. Press Start after programming. Press Stop/Reset first to clear old program.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Glass tray wobbles:</strong> <span class="ref-desc">reposition on roller ring. Check for food underneath.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Noise from glass tray:</strong> <span class="ref-desc">roller ring or oven bottom is dirty. Clean both.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Lock icon on display:</strong> <span class="ref-desc">child lock is on. Press Stop/Reset x3 to unlock.</span></div></div>
+
+    <h3 class="ref-section-header green">Specifications</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Model:</strong> <span class="ref-desc">Panasonic NN-SC73LS</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power:</strong> <span class="ref-desc">1,200W cooking &middot; 120V, 60Hz &middot; 12 Amps</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Outside size:</strong> <span class="ref-desc">21.8&quot; x 12.8&quot; x 17.7&quot; (W x H x D)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cavity size:</strong> <span class="ref-desc">15.5&quot; x 10.2&quot; x 17.1&quot;</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Weight:</strong> <span class="ref-desc">28.7 lbs (13 kg)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Clearance needed:</strong> <span class="ref-desc">3&quot; sides, 12&quot; above, back open</span></div></div>
+
+    <h3 class="ref-section-header" style="background:#e6a000;">Replacement Parts</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Glass tray:</strong> <span class="ref-desc">part #12570000001005</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Roller ring:</strong> <span class="ref-desc">part #12170000004310</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Owner's manual:</strong> <span class="ref-desc">part #16170000A86727</span></div></div>
+    <div class="ref-row" style="background:#f9f4ec; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Order parts:</strong> <span class="ref-desc"><a href="http://www.panasonic.ca/english/support" target="_blank" rel="noopener" style="color:var(--teal); text-decoration:underline;">panasonic.ca/english/support</a></span></div>
+    </div>
+
+    <h3 class="ref-section-header" style="background:#78909c;">Official Manual</h3>
+    <div class="ref-row"><div class="ref-label"><span class="ref-desc"><a href="https://help.na.panasonic.com" target="_blank" rel="noopener" style="color:var(--teal); text-decoration:underline;">View the full owner's manual at help.na.panasonic.com</a></span></div></div>
+
+    <div style="margin-top:16px; padding:12px; background:#fff8e1; border-left:4px solid #e6a000; border-radius:6px; font-size:13px; color:#5f6368; line-height:1.5;">
+      This tool is intended as a helpful guide and may contain errors. Always refer to the <a href="https://help.na.panasonic.com" target="_blank" rel="noopener" style="color:var(--teal); text-decoration:underline;">official Panasonic owner's manual</a> for complete and accurate information.
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== SNAP & ASK MODE SELECTOR ===== -->
+<div class="ref-overlay" id="snapAskOverlay" role="dialog" aria-label="Snap and Ask Ollie" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#5c4033,#3e2a1e);">
+    <h2 class="ref-overlay-title">Snap &amp; Ask Ollie</h2>
+    <button class="ref-overlay-close" onclick="closeSnapAsk()" aria-label="Close snap and ask">&#x2715;</button>
+  </div>
+  <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:16px; padding-top:24px;">
+    <p style="text-align:center; color:var(--text-light); font-size:15px;">What do you want to check?</p>
+
+    <button class="snap-mode-card" onclick="startCapture('cookware')">
+      <div class="snap-mode-icon" aria-hidden="true">&#x1F372;</div>
+      <div>
+        <div class="snap-mode-title">Can I use this dish?</div>
+        <div class="snap-mode-desc">Take a photo of a bowl, plate, container, or cup</div>
+      </div>
+    </button>
+
+    <button class="snap-mode-card" onclick="startCapture('food')">
+      <div class="snap-mode-icon" aria-hidden="true">&#x1F966;</div>
+      <div>
+        <div class="snap-mode-title">What should I do with this food?</div>
+        <div class="snap-mode-desc">Take a photo of food you want to cook or reheat</div>
+      </div>
+    </button>
+
+    <p style="text-align:center; color:var(--text-light); font-size:12px; margin-top:8px;">
+      Photos are sent to Ollie for analysis and are not stored.
+    </p>
+  </div>
+</div>
+
+<!-- Hidden file input for camera -->
+<input type="file" id="cameraInput" accept="image/*" capture="environment"
+       style="display:none;" onchange="handlePhoto(event)">
 
 <!-- ===== CHAT VIEW ===== -->
 <div class="chat-view" id="chatView">
@@ -642,6 +899,7 @@
          enterkeyhint="send"
          autocomplete="off"
          id="main-input">
+  <button class="chat-voice" id="chatVoice" onclick="toggleVoice()" aria-label="Voice input">&#x1F3A4;</button>
   <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
 </div>
 
@@ -669,21 +927,21 @@ PANEL LAYOUT:
 Row 1: [Popcorn] [Sensor Reheat] [Sensor Cook] [Power Level]
 Row 2: [Turbo Defrost] [Keep Warm] [Quick 30]
 Number pad: 0-9
-Right column: [MORE] [LESS] [TIMER] [CLOCK]
+Right column: [MORE] [LESS] [TIMER] [CLOCK SET]
 Bottom: [STOP/RESET] (wide) and [START] (wide, green)
 
 FUNCTION REFERENCE:
 - Manual Cook: Enter time → START. Full power by default.
 - Quick 30: Each press = +30 sec at full power. Starts immediately. Works during cooking.
-- Power Level: Press repeatedly: PL10=full, PL7=reheat, PL6=dense, PL3=defrost, PL1=gentle
+- Power Level: 10 levels (press repeatedly). PL10=full (HIGH), PL7=reheat (MED-HIGH), PL6=dense food (MEDIUM), PL3=defrost (MED-LOW), PL1=gentle (LOW)
 - Sensor Reheat: Press → START. Don't open door until 2 beeps. Not for bread/beverages/frozen.
 - Sensor Cook: Press until food code appears → START. Codes: 1=Potato, 2=Fresh veg, 3=Frozen veg, 4=Frozen pizza, 5=Frozen entrée, 6=Casserole, 7=Ground meat, 8=Lasagna, 9=Soup, 10=Rice, 11=Pasta, 12=Fish
-- More/Less: ±20% on sensor cooking. Press before START.
+- More/Less: Adjusts sensor cooking time. Press before START.
 - Popcorn: 1×=3.5oz, 2×=3oz, 3×=1.75oz → START. Stop when pops slow to 2-3 sec apart.
 - Keep Warm: Enter minutes (max 30) → START. Cannot combine with sensor features.
 - Turbo Defrost: Enter weight in lbs (max 6) → START. Flip food when it beeps twice.
 - Timer: Press TIMER → enter time → START. Counts down, no heat.
-- Clock: Press CLOCK → enter time → CLOCK. 12-hour format.
+- Clock Set: Press CLOCK SET → enter time → CLOCK SET. 12-hour format.
 - Child Lock: Lock = START ×3. Unlock = STOP/RESET ×3 (within 10 sec).
 - Stop/Reset: 1× = pause, 2× = cancel all.
 - Beeps: 1=accepted, 2=open door/flip food, 5=done, none=error.
@@ -694,14 +952,116 @@ SAFETY:
 - Never heat whole eggs (will explode)
 - Keep 3" clearance on sides, 12" above`;
 
+  const COOKWARE_PHOTO_PROMPT = `
+
+ADDITIONAL TASK: COOKWARE PHOTO ANALYSIS
+The user sent a photo of a dish, bowl, plate, container, or cup. Analyze whether it is safe in this microwave.
+
+COOKWARE SAFETY KNOWLEDGE:
+SAFE: Microwave-safe labeled dishes, heat-resistant glass (Pyrex), ceramic, paper plates (short warming only), paper towels (no recycled/synthetic), parchment paper, wax paper (as cover), microwave-safe labeled plastic, oven bags (closed with string not twist-tie), frozen dinner trays (if no metal), straw/wicker/wood (short reheat only).
+UNSAFE: Metal of any kind, aluminum foil, metal twist-ties, brown paper bags, melamine plastic, fast-food cartons with metal handles, regular glass jars, regular thermometers.
+CAUTION: Foam cups (melt at high temp), browning dishes (microwave type only), paper cups (may ignite), unlabeled dinnerware (test first).
+
+RESPONSE FORMAT:
+- Start with a clear verdict: "Safe to use!", "Do NOT use this!", or "Use with caution"
+- Explain in 2-3 short sentences
+- If you cannot identify the material, say so and suggest the container test: place dish + 1 cup water, run 1 min at PL10. Dish stays cool = safe. Dish hot = don't use.
+- Keep response under 100 words`;
+
+  const FOOD_PHOTO_PROMPT = `
+
+ADDITIONAL TASK: FOOD PHOTO ANALYSIS
+The user sent a photo of food they want to cook or reheat. Give specific instructions for this Panasonic NN-SC73LS microwave.
+
+SENSOR COOK CODES: 1=Potato, 2=Fresh veg, 3=Frozen veg, 4=Frozen pizza, 5=Frozen entree, 6=Casserole, 7=Ground meat, 8=Lasagna, 9=Soup, 10=Rice, 11=Pasta, 12=Fish
+
+RESPONSE FORMAT:
+- Start by naming what you see: "That looks like..."
+- If it matches a sensor code, give sensor cook instructions using button names
+- If not, give manual cook instructions with power level and time
+- Max 5 numbered steps
+- Include safety warnings when relevant (pierce skins, cover food, stir midway, standing time)
+- Safe temps: 160F pork/ground meat/fish, 165F leftovers, 170F white poultry, 180F dark poultry
+- If you cannot identify the food, ask the user to describe it
+- Keep response under 150 words`;
+
+  let pendingPhoto = null;
+  let snapMode = null;
+
   const homeView = document.getElementById("homeView");
   const chatView = document.getElementById("chatView");
   const chatMessages = document.getElementById("chatMessages");
   const chatInput = document.getElementById("chatInput");
   const chatSend = document.getElementById("chatSend");
 
+  const chatVoice = document.getElementById("chatVoice");
+
   let conversationHistory = [];
   let isWaiting = false;
+  let recognition = null;
+  let isListening = false;
+
+  // ===== VOICE INPUT (Web Speech API) =====
+  function toggleVoice() {
+    if (isListening) {
+      stopVoice();
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice input is not supported in this browser. Try Chrome or Safari.");
+      return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+
+    recognition.onstart = function() {
+      isListening = true;
+      chatVoice.classList.add("listening");
+      chatInput.placeholder = "Listening...";
+    };
+
+    recognition.onresult = function(event) {
+      let transcript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      chatInput.value = transcript;
+    };
+
+    recognition.onend = function() {
+      isListening = false;
+      chatVoice.classList.remove("listening");
+      chatInput.placeholder = "Ask Ollie anything...";
+      if (chatInput.value.trim()) {
+        sendMessage();
+      }
+    };
+
+    recognition.onerror = function(event) {
+      isListening = false;
+      chatVoice.classList.remove("listening");
+      chatInput.placeholder = "Ask Ollie anything...";
+      if (event.error !== "no-speech" && event.error !== "aborted") {
+        console.error("Speech recognition error:", event.error);
+      }
+    };
+
+    recognition.start();
+  }
+
+  function stopVoice() {
+    if (recognition) {
+      recognition.stop();
+    }
+    isListening = false;
+    chatVoice.classList.remove("listening");
+    chatInput.placeholder = "Ask Ollie anything...";
+  }
 
   chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -734,6 +1094,247 @@ SAFETY:
     } else {
       if (document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
+  }
+
+
+  function openButtonGuide() {
+    const overlay = document.getElementById("buttonGuideOverlay");
+    overlay.classList.add("active");
+    overlay.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapButtonGuideFocus);
+  }
+  function closeButtonGuide() {
+    const overlay = document.getElementById("buttonGuideOverlay");
+    overlay.classList.remove("active");
+    document.removeEventListener("keydown", trapButtonGuideFocus);
+  }
+  function trapButtonGuideFocus(e) {
+    if (e.key === "Escape") { closeButtonGuide(); return; }
+    if (e.key !== "Tab") return;
+    const overlay = document.getElementById("buttonGuideOverlay");
+    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
+  function openFoodTips() {
+    const overlay = document.getElementById("foodTipsOverlay");
+    overlay.classList.add("active");
+    overlay.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapFoodTipsFocus);
+  }
+  function closeFoodTips() {
+    const overlay = document.getElementById("foodTipsOverlay");
+    overlay.classList.remove("active");
+    document.removeEventListener("keydown", trapFoodTipsFocus);
+  }
+  function trapFoodTipsFocus(e) {
+    if (e.key === "Escape") { closeFoodTips(); return; }
+    if (e.key !== "Tab") return;
+    const overlay = document.getElementById("foodTipsOverlay");
+    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
+  function openCare() {
+    const overlay = document.getElementById("careOverlay");
+    overlay.classList.add("active");
+    overlay.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapCareFocus);
+  }
+  function closeCare() {
+    const overlay = document.getElementById("careOverlay");
+    overlay.classList.remove("active");
+    document.removeEventListener("keydown", trapCareFocus);
+  }
+  function trapCareFocus(e) {
+    if (e.key === "Escape") { closeCare(); return; }
+    if (e.key !== "Tab") return;
+    const overlay = document.getElementById("careOverlay");
+    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
+  // ===== SNAP & ASK FUNCTIONS =====
+  function openSnapAsk() {
+    const overlay = document.getElementById("snapAskOverlay");
+    overlay.classList.add("active");
+    overlay.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapSnapAskFocus);
+  }
+  function closeSnapAsk() {
+    const overlay = document.getElementById("snapAskOverlay");
+    overlay.classList.remove("active");
+    document.removeEventListener("keydown", trapSnapAskFocus);
+  }
+  function trapSnapAskFocus(e) {
+    if (e.key === "Escape") { closeSnapAsk(); return; }
+    if (e.key !== "Tab") return;
+    const overlay = document.getElementById("snapAskOverlay");
+    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
+  function startCapture(mode) {
+    snapMode = mode;
+    closeSnapAsk();
+    setTimeout(() => {
+      document.getElementById("cameraInput").click();
+    }, 100);
+  }
+
+  function handlePhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const MAX_DIM = 1024;
+        let width = img.width;
+        let height = img.height;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round(height * (MAX_DIM / width));
+            width = MAX_DIM;
+          } else {
+            width = Math.round(width * (MAX_DIM / height));
+            height = MAX_DIM;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        const base64 = dataUrl.split(",")[1];
+
+        pendingPhoto = { base64, mediaType: "image/jpeg", mode: snapMode, dataUrl };
+        sendPhotoMessage();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = "";
+  }
+
+  async function sendPhotoMessage() {
+    if (!pendingPhoto || isWaiting) return;
+
+    showChat();
+    isWaiting = true;
+    chatSend.disabled = true;
+
+    const userPrompt = pendingPhoto.mode === "cookware"
+      ? "Can I use this dish/container in the microwave? Is it safe?"
+      : "I want to microwave this food. How should I cook or reheat it in this Panasonic NN-SC73LS?";
+
+    // Show user bubble with photo thumbnail
+    const userBubble = document.createElement("div");
+    userBubble.className = "chat-bubble user";
+    const thumbImg = document.createElement("img");
+    thumbImg.src = pendingPhoto.dataUrl;
+    thumbImg.className = "chat-bubble-photo";
+    thumbImg.alt = "Photo you sent";
+    userBubble.appendChild(thumbImg);
+    const textNode = document.createElement("div");
+    textNode.textContent = pendingPhoto.mode === "cookware"
+      ? "Can I use this dish in the microwave?"
+      : "How should I cook this?";
+    userBubble.appendChild(textNode);
+    chatMessages.appendChild(userBubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Build multi-modal message
+    const userContent = [
+      { type: "image", source: { type: "base64", media_type: pendingPhoto.mediaType, data: pendingPhoto.base64 } },
+      { type: "text", text: userPrompt }
+    ];
+    conversationHistory.push({ role: "user", content: userContent });
+
+    // Typing indicator
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble typing";
+    typing.setAttribute("role", "status");
+    typing.textContent = "Ollie is looking at your photo...";
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    const photoSystemPrompt = pendingPhoto.mode === "cookware"
+      ? SYSTEM_PROMPT + COOKWARE_PHOTO_PROMPT
+      : SYSTEM_PROMPT + FOOD_PHOTO_PROMPT;
+
+    const photoMode = pendingPhoto.mode;
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 1024,
+          system: photoSystemPrompt,
+          messages: conversationHistory
+        })
+      });
+
+      typing.remove();
+
+      if (!response.ok) {
+        const err = await response.text();
+        throw new Error("API error " + response.status);
+      }
+
+      const data = await response.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: "assistant", content: reply });
+
+      // Replace image in history with text summary to save bandwidth
+      const lastUserIdx = conversationHistory.length - 2;
+      if (conversationHistory[lastUserIdx] && Array.isArray(conversationHistory[lastUserIdx].content)) {
+        conversationHistory[lastUserIdx].content = photoMode === "cookware"
+          ? "[User sent a photo of cookware/dish for microwave safety check]"
+          : "[User sent a photo of food for cooking instructions]";
+      }
+
+      const bubble = addBubble("", "assistant");
+      formatBubble(bubble, reply);
+
+    } catch (err) {
+      typing.remove();
+      addBubble("Sorry, I couldn't analyze that photo right now. Please try again.", "assistant");
+      console.error("Photo chat error:", err);
+    }
+
+    pendingPhoto = null;
+    isWaiting = false;
+    chatSend.disabled = false;
+    chatInput.focus();
   }
 
   function showChat() {
