@@ -694,16 +694,6 @@
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
-  <!-- Food Tips Button -->
-  <button class="ref-btn" onclick="openFoodTips()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e53935,#c62828); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x1F966;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Food Tips</div>
-      <div class="ref-btn-desc">How food behaves in the microwave</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
-
   <!-- Care & Info Button -->
   <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F9F9;</div>
@@ -792,53 +782,6 @@
     <div class="ref-row"><div class="ref-label"><span class="btn-tag">Start</span> <span class="ref-desc">&mdash; starts any cooking program. Also used to lock child lock (press 3 times quickly).</span></div></div>
     <div class="ref-row"><div class="ref-label"><span class="btn-tag">Stop / Reset</span> <span class="ref-desc">&mdash; press once to pause (Start to resume). Press twice to cancel everything. Unlocks child lock (press 3x).</span></div></div>
     <div class="ref-row"><div class="ref-label"><span class="btn-tag">Door Release</span> <span class="ref-desc">&mdash; opens the door. Also pauses cooking automatically.</span></div></div>
-  </div>
-</div>
-
-<!-- ===== FOOD TIPS OVERLAY ===== -->
-<div class="ref-overlay" id="foodTipsOverlay" role="dialog" aria-label="Food Tips" aria-modal="true">
-  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#e53935,#c62828); color:white;">
-    <h2 class="ref-overlay-title">Food Tips</h2>
-    <button class="ref-overlay-close" onclick="closeFoodTips()" aria-label="Close food tips">&#x2190; Back</button>
-  </div>
-  <div class="ref-overlay-body">
-
-    <h3 class="ref-section-header blue">How Food Cooks</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Shape:</strong> <span class="ref-desc">uniform pieces heat evenly. Put thick parts toward edges.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Size:</strong> <span class="ref-desc">smaller / thinner = faster. Cut food into similar sizes.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Density:</strong> <span class="ref-desc">bread, cake = fast. Potatoes, roasts = slow.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Starting temp:</strong> <span class="ref-desc">room temp cooks faster than fridge or frozen.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Quantity:</strong> <span class="ref-desc">more food = more time. Double the food ≠ double the time, but close.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Bone &amp; fat:</strong> <span class="ref-desc">bones cause uneven cooking. Fat areas overcook.</span></div></div>
-
-    <h3 class="ref-section-header green">Techniques</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Cover food:</strong> <span class="ref-desc">lid or vented plastic wrap traps steam, cooks evenly, prevents splatter.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Stir midway:</strong> <span class="ref-desc">moves hot edges to cool center. Kills cold spots.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Flip large items:</strong> <span class="ref-desc">turn roasts, whole chicken halfway through.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Rearrange:</strong> <span class="ref-desc">move pieces from edges to center halfway.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Use round dishes:</strong> <span class="ref-desc">food cooks more evenly than in square ones.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Arrange in a circle:</strong> <span class="ref-desc">equal spacing. Don't pile food in the center.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Standing time:</strong> <span class="ref-desc">food keeps cooking after stopping. Meat rises 5&ndash;15&deg;F. Let it rest.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Browning:</strong> <span class="ref-desc">microwaves won't brown food. Use browning sauce, Worcestershire, or dark spices.</span></div></div>
-
-    <h3 class="ref-section-header red">Never Do This</h3>
-    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Whole eggs</strong> <span class="ref-desc">&mdash; steam builds inside, they explode</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Sealed containers</strong> <span class="ref-desc">&mdash; pressure builds, they burst. Open or vent first</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Deep fat frying</strong> <span class="ref-desc">&mdash; oil can burst into flames</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Home canning / sterilizing</strong> <span class="ref-desc">&mdash; can't hold proper temp</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="tag-no">NO</span> <strong>Drying herbs or small food amounts</strong> <span class="ref-desc">&mdash; can scorch or catch fire</span></div></div>
-
-    <h3 class="ref-section-header" style="background:#e6a000;">Pierce Before Cooking</h3>
-    <div class="ref-row"><div class="ref-label"><span class="tag-caution">!</span> Potatoes, sausages, whole squash, apples <span class="ref-desc">&mdash; pierce skin or they explode</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="tag-caution">!</span> Plastic pouches, sealed bags <span class="ref-desc">&mdash; cut a slit to vent steam</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="tag-caution">!</span> Egg yolks <span class="ref-desc">&mdash; pierce before cooking (scrambled is fine)</span></div></div>
-
-    <h3 class="ref-section-header black">Safe Temperatures</h3>
-    <div class="ref-row"><div class="ref-label"><strong>160&deg;F</strong> <span class="ref-desc">&mdash; pork, ground meat, fish, seafood, egg dishes</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>165&deg;F</strong> <span class="ref-desc">&mdash; leftovers, ready-to-eat refrigerated food</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>170&deg;F</strong> <span class="ref-desc">&mdash; white meat poultry</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>180&deg;F</strong> <span class="ref-desc">&mdash; dark meat poultry</span></div></div>
-
   </div>
 </div>
 
@@ -1168,31 +1111,6 @@ RESPONSE FORMAT:
     if (e.key === "Escape") { closeButtonGuide(); return; }
     if (e.key !== "Tab") return;
     const overlay = document.getElementById("buttonGuideOverlay");
-    const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey) {
-      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-    } else {
-      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  }
-
-  function openFoodTips() {
-    const overlay = document.getElementById("foodTipsOverlay");
-    overlay.classList.add("active");
-    overlay.querySelector(".ref-overlay-close").focus();
-    document.addEventListener("keydown", trapFoodTipsFocus);
-  }
-  function closeFoodTips() {
-    const overlay = document.getElementById("foodTipsOverlay");
-    overlay.classList.remove("active");
-    document.removeEventListener("keydown", trapFoodTipsFocus);
-  }
-  function trapFoodTipsFocus(e) {
-    if (e.key === "Escape") { closeFoodTips(); return; }
-    if (e.key !== "Tab") return;
-    const overlay = document.getElementById("foodTipsOverlay");
     const focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
