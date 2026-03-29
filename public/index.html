@@ -304,7 +304,7 @@
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
-    .ref-overlay-title { font-size: 18px; font-weight: 700; }
+    .ref-overlay-title { font-size: 18px; font-weight: 700; color: inherit; }
     .ref-overlay-close {
       background: var(--teal);
       color: white;
@@ -665,7 +665,7 @@
   </div>
 
   <!-- Button Guide Button -->
-  <button class="ref-btn" onclick="openButtonGuide()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9); color:#2e7d32;">
+  <button class="ref-btn" onclick="openButtonGuide()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F518;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Button Guide</div>
@@ -675,7 +675,7 @@
   </button>
 
   <!-- Quick Reference Button -->
-  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb); color:#1565c0;">
+  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Quick Reference</div>
@@ -685,7 +685,7 @@
   </button>
 
   <!-- Snap & Ask Ollie Button -->
-  <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2); color:#e65100;">
+  <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F4F7;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Snap &amp; Ask Ollie</div>
@@ -695,7 +695,7 @@
   </button>
 
   <!-- Food Tips Button -->
-  <button class="ref-btn" onclick="openFoodTips()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0); color:#c62828;">
+  <button class="ref-btn" onclick="openFoodTips()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#e53935,#c62828); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F966;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Food Tips</div>
@@ -705,7 +705,7 @@
   </button>
 
   <!-- Care & Info Button -->
-  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7); color:#6a1b9a;">
+  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F9F9;</div>
     <div class="ref-btn-text">
       <div class="ref-btn-title">Care &amp; Info</div>
@@ -719,7 +719,7 @@
 
 <!-- ===== REFERENCE OVERLAY ===== -->
 <div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
-  <div class="ref-overlay-header">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
     <h2 class="ref-overlay-title">Quick Reference</h2>
     <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2190; Back</button>
   </div>
@@ -765,7 +765,7 @@
 
 <!-- ===== BUTTON GUIDE OVERLAY ===== -->
 <div class="ref-overlay" id="buttonGuideOverlay" role="dialog" aria-label="Button Guide" aria-modal="true">
-  <div class="ref-overlay-header">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
     <h2 class="ref-overlay-title">Button Guide</h2>
     <button class="ref-overlay-close" onclick="closeButtonGuide()" aria-label="Close button guide">&#x2190; Back</button>
   </div>
@@ -797,7 +797,7 @@
 
 <!-- ===== FOOD TIPS OVERLAY ===== -->
 <div class="ref-overlay" id="foodTipsOverlay" role="dialog" aria-label="Food Tips" aria-modal="true">
-  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#e65100,#bf360c);">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#e53935,#c62828); color:white;">
     <h2 class="ref-overlay-title">Food Tips</h2>
     <button class="ref-overlay-close" onclick="closeFoodTips()" aria-label="Close food tips">&#x2190; Back</button>
   </div>
@@ -844,7 +844,7 @@
 
 <!-- ===== CARE & INFO OVERLAY ===== -->
 <div class="ref-overlay" id="careOverlay" role="dialog" aria-label="Care and Info" aria-modal="true">
-  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#37474f,#263238);">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
     <h2 class="ref-overlay-title">Care &amp; Info</h2>
     <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2190; Back</button>
   </div>
@@ -901,7 +901,7 @@
 
 <!-- ===== SNAP & ASK MODE SELECTOR ===== -->
 <div class="ref-overlay" id="snapAskOverlay" role="dialog" aria-label="Snap and Ask Ollie" aria-modal="true">
-  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#5c4033,#3e2a1e);">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
     <h2 class="ref-overlay-title">Snap &amp; Ask Ollie</h2>
     <button class="ref-overlay-close" onclick="closeSnapAsk()" aria-label="Close snap and ask">&#x2190; Back</button>
   </div>
