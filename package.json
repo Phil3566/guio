@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "seed": "node db/seed-panasonic.js"
+    "seed": "node db/seed-panasonic.js",
+    "seed-toshiba": "node db/seed-toshiba.js",
+    "seed-all": "node db/seed-panasonic.js && node db/seed-toshiba.js"
   },
   "engines": {
     "node": ">=18.0.0"

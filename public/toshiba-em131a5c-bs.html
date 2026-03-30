@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ollie — Panasonic NN-SC73LS Microwave Guide</title>
+  <title>Ollie — Toshiba EM131A5C-BS Microwave Guide</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -159,24 +159,6 @@
       border-radius: 22px;
       cursor: pointer;
     }
-    .hero-badges {
-      display: flex;
-      gap: 8px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-    .hero-badge {
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(4px);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-    }
 
     .ai-gradient {
       background: linear-gradient(135deg, #ffd000, #ff85e0, #90e0ff);
@@ -184,77 +166,6 @@
       -webkit-text-fill-color: transparent;
       font-weight: 900;
       font-size: 110%;
-    }
-
-    /* Section labels */
-    .section-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      padding: 16px 16px 10px;
-    }
-    h2.section-label {
-      font-size: 12px;
-    }
-
-    /* Quick question cards - 2x2 grid */
-    .quick-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 0 16px;
-    }
-    .quick-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 14px;
-      border: 2px solid transparent;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      position: relative;
-      transition: transform 0.1s;
-      text-align: left;
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-      width: 100%;
-    }
-    .quick-card:active { transform: scale(0.97); }
-    .quick-card.orange { border-color: #f5c28a; background: var(--orange-light); }
-    .quick-card.blue { border-color: #90caf9; background: var(--blue-light); }
-    .quick-card.green { border-color: #a5d6a7; background: var(--green-light); }
-    .quick-card.purple { border-color: #ce93d8; background: var(--purple-light); }
-
-    .quick-card-icon {
-      font-size: 28px;
-      margin-bottom: 6px;
-    }
-    .quick-card-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-    .quick-card.orange .quick-card-title { color: #c45100; }
-    .quick-card.blue .quick-card-title { color: #1565c0; }
-    .quick-card.green .quick-card-title { color: #2e7d32; }
-    .quick-card.purple .quick-card-title { color: #7b1fa2; }
-
-    .quick-card-desc {
-      font-size: 13px;
-      color: var(--text-light);
-    }
-    .quick-card-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--orange);
-      color: white;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
     }
 
     /* Quick reference button */
@@ -450,51 +361,6 @@
       color: var(--teal);
     }
 
-    /* People also asked */
-    .paa-list {
-      padding: 0 16px;
-      list-style: none;
-    }
-    .paa-item {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 0.1s;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-    }
-    .paa-item:active { transform: scale(0.98); }
-    .paa-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .paa-dot.orange { background: var(--orange); }
-    .paa-dot.teal { background: var(--teal); }
-    .paa-dot.purple { background: #9c27b0; }
-    .paa-dot.yellow { background: #f9a825; }
-    .paa-text {
-      flex: 1;
-      font-size: 15px;
-      font-weight: 600;
-    }
-    .paa-chevron {
-      color: #595959;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
     /* Chat view (hidden by default, shown when user asks) */
     .chat-view {
       display: none;
@@ -651,17 +517,17 @@
     <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
     <div class="hero-text">
       <h1>Hey! I'm <span>Ollie.</span></h1>
-      <p>I'm your <span class="ai-gradient">AI</span> microwave assistant. I've read every page of the <strong style="font-size:16px;">Panasonic NN-SC73LS</strong> manual — ask me anything.</p>
+      <p>I'm your <span class="ai-gradient">AI</span> microwave assistant. I've read every page of the <strong style="font-size:16px;">Toshiba EM131A5C-BS</strong> manual &mdash; ask me anything.</p>
     </div>
   </div>
   <div class="hero-product">
-    <img src="microwave.jpg" alt="Panasonic NN-SC73LS microwave — tap to enlarge" class="hero-product-img" onclick="document.getElementById('imgFullscreen').classList.add('active')">
+    <img src="toshiba-em131a5c-bs.jpg" alt="Toshiba EM131A5C-BS microwave — tap to enlarge" class="hero-product-img" onclick="document.getElementById('imgFullscreen').classList.add('active')">
   </div>
 
   <!-- Fullscreen image overlay -->
   <div class="img-fullscreen" id="imgFullscreen" onclick="this.classList.remove('active')">
     <button class="img-fullscreen-close" aria-label="Close image">&#x2190; Back</button>
-    <img src="microwave-full.jpg" alt="Panasonic NN-SC73LS microwave full size">
+    <img src="toshiba-em131a5c-bs-full.jpg" alt="Toshiba EM131A5C-BS microwave full size">
   </div>
 
   <!-- Button Guide Button -->
@@ -707,7 +573,7 @@
   <div class="bottom-spacer"></div>
 </div>
 
-<!-- ===== REFERENCE OVERLAY ===== -->
+<!-- ===== QUICK REFERENCE OVERLAY ===== -->
 <div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
     <h2 class="ref-overlay-title">Quick Reference</h2>
@@ -716,39 +582,60 @@
   <div class="ref-overlay-body">
 
     <h3 class="ref-section-header blue">Cook &amp; Reheat</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Reheat food:</strong> <span class="btn-tag">Sensor Reheat</span> &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; auto-detects time. Don't open door until 2 beeps.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Cook (manual):</strong> enter time on <span class="btn-tag">0&ndash;9</span> &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; full power by default.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Lower power:</strong> <span class="btn-tag">Power Level</span> press repeatedly (10 levels: PL10 highest &rarr; PL1 lowest), then enter time &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; common: PL7 reheat, PL6 dense food, PL3 defrost.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Add 30 sec:</strong> <span class="btn-tag">Quick 30</span> <span class="ref-desc">&mdash; each press = +30 sec. Works while cooking.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Keep warm:</strong> <span class="btn-tag">Keep Warm</span> &rarr; enter min (max 30) &rarr; <span class="btn-tag">Start</span></div></div>
-
-    <h3 class="ref-section-header green">Auto &amp; Defrost</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Cook by food:</strong> <span class="btn-tag">Sensor Cook</span> press until your food code shows &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; <span class="btn-tag">More</span> / <span class="btn-tag">Less</span> adjusts cooking time.</span></div></div>
-    <div class="ref-codes">
-      <div class="ref-code"><strong>1</strong> Potato</div>
-      <div class="ref-code"><strong>2</strong> Fresh veg</div>
-      <div class="ref-code"><strong>3</strong> Frozen veg</div>
-      <div class="ref-code"><strong>4</strong> Frozen pizza</div>
-      <div class="ref-code"><strong>5</strong> Frozen entr&eacute;e</div>
-      <div class="ref-code"><strong>6</strong> Casserole</div>
-      <div class="ref-code"><strong>7</strong> Ground meat</div>
-      <div class="ref-code"><strong>8</strong> Lasagna</div>
-      <div class="ref-code"><strong>9</strong> Soup</div>
-      <div class="ref-code"><strong>10</strong> Rice</div>
-      <div class="ref-code"><strong>11</strong> Pasta</div>
-      <div class="ref-code"><strong>12</strong> Fish</div>
+    <div class="ref-row"><div class="ref-label"><strong>Reheat food:</strong> <span class="btn-tag">Sensor Reheat</span> &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; auto-detects time. Don't open door until time appears.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cook (manual):</strong> <span class="btn-tag">Cook Time</span> &rarr; enter time on <span class="btn-tag">0&ndash;9</span> &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; full power by default. Press Cook Time FIRST!</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Lower power:</strong> <span class="btn-tag">Cook Time</span> &rarr; enter time &rarr; <span class="btn-tag">Power Level</span> &rarr; press <span class="btn-tag">0&ndash;9</span> &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; PL10=full, PL7=70%, PL5=50%, PL3=30%.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Add 30 sec:</strong> <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; each press = +30 sec at full power. Works while cooking.</span></div></div>
+    <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>&#x26A0; One Touch Start:</strong> <span class="ref-desc">Pressing <span class="btn-tag">1</span>&ndash;<span class="btn-tag">6</span> without pressing Cook Time first will instantly start cooking at full power for 1&ndash;6 minutes!</span></div>
     </div>
-    <div class="ref-row"><div class="ref-label"><strong>Defrost:</strong> <span class="btn-tag">Turbo Defrost</span> &rarr; enter lbs (max 6) &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; turn food at 2 beeps.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Popcorn:</strong> press <span class="btn-tag">Popcorn</span> once for 3.5 oz bag, twice for 3 oz, 3 times for 1.75 oz &rarr; <span class="btn-tag">Start</span></div></div>
+
+    <h3 class="ref-section-header green">Sensor &amp; Presets</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Sensor cook:</strong> press the food button &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; don't open door until time appears.</span></div></div>
+    <div class="ref-codes">
+      <div class="ref-code"><strong>SC-1</strong> Reheat</div>
+      <div class="ref-code"><strong>SC-2</strong> Frozen Pizza</div>
+      <div class="ref-code"><strong>SC-3</strong> Frozen Entr&eacute;e</div>
+      <div class="ref-code"><strong>SC-4</strong> Potato</div>
+      <div class="ref-code"><strong>SC-5</strong> Rice</div>
+      <div class="ref-code"><strong>SC-6</strong> Fresh Veggie</div>
+      <div class="ref-code"><strong>SC-7</strong> Frozen Veggie</div>
+    </div>
+    <div class="ref-row"><div class="ref-label"><strong>Custom Cook:</strong> <span class="btn-tag">Custom Cook</span> press until code shows &rarr; enter weight &rarr; <span class="btn-tag">START/+30Sec.</span></div></div>
+    <div class="ref-codes">
+      <div class="ref-code"><strong>CC-1</strong> Bacon</div>
+      <div class="ref-code"><strong>CC-2</strong> Rolls/Muffins</div>
+      <div class="ref-code"><strong>CC-3</strong> Beverage</div>
+      <div class="ref-code"><strong>CC-4</strong> Chicken</div>
+      <div class="ref-code"><strong>CC-5</strong> Oatmeal</div>
+    </div>
+    <div class="ref-row"><div class="ref-label"><strong>Soften/Melt:</strong> <span class="btn-tag">Soften/Melt</span> press until code shows &rarr; enter weight &rarr; <span class="btn-tag">START/+30Sec.</span></div></div>
+    <div class="ref-codes">
+      <div class="ref-code"><strong>S-1</strong> Melt Butter</div>
+      <div class="ref-code"><strong>S-2</strong> Melt Chocolate</div>
+      <div class="ref-code"><strong>S-3</strong> Melt Cheese</div>
+      <div class="ref-code"><strong>S-4</strong> Marshmallows</div>
+      <div class="ref-code"><strong>S-5</strong> Soften Butter</div>
+      <div class="ref-code"><strong>S-6</strong> Ice Cream</div>
+      <div class="ref-code"><strong>S-7</strong> Cream Cheese</div>
+    </div>
+    <div class="ref-row"><div class="ref-label"><strong>Popcorn:</strong> press <span class="btn-tag">Popcorn</span> &mdash; 1x=1.75 oz, 2x=3.0 oz, 3x=3.5 oz &rarr; <span class="btn-tag">START/+30Sec.</span></div></div>
+
+    <h3 class="ref-section-header" style="background:#e65100;">Defrost</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Custom Defrost:</strong> <span class="btn-tag">Custom Defrost</span> (dEF1=Meat, dEF2=Poultry, dEF3=Fish) &rarr; enter lbs (0.1&ndash;6.0) &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; turn food at beep.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>1 Lb Defrost:</strong> <span class="btn-tag">1lb Defrost</span> &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; quick defrost for exactly 1 pound.</span></div></div>
 
     <h3 class="ref-section-header brown">Clock &amp; Timer</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Set clock:</strong> <span class="btn-tag">Clock Set</span> &rarr; enter time &rarr; <span class="btn-tag">Clock Set</span> again <span class="ref-desc">&mdash; 12-hour format.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Timer:</strong> <span class="btn-tag">Timer</span> &rarr; enter time &rarr; <span class="btn-tag">Start</span> <span class="ref-desc">&mdash; countdown, no heat.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Set clock:</strong> <span class="btn-tag">Clock</span> &rarr; enter time &rarr; <span class="btn-tag">Clock</span> again <span class="ref-desc">&mdash; 12-hour format (1:00&ndash;12:59).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Timer:</strong> <span class="btn-tag">Kitchen Timer</span> &rarr; enter time &rarr; <span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; countdown, no heat.</span></div></div>
 
     <h3 class="ref-section-header red">Controls</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Pause:</strong> <span class="btn-tag">Stop / Reset</span> once <span class="ref-desc">&mdash; press <span class="btn-tag">Start</span> to resume.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Cancel all:</strong> <span class="btn-tag">Stop / Reset</span> twice <span class="ref-desc">&mdash; clears everything.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Child lock:</strong> <span class="btn-tag">Start</span> x3 to lock &middot; <span class="btn-tag">Stop / Reset</span> x3 to unlock</div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Pause:</strong> <span class="btn-tag">STOP/Cancel</span> once <span class="ref-desc">&mdash; press <span class="btn-tag">START/+30Sec.</span> to resume.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cancel all:</strong> <span class="btn-tag">STOP/Cancel</span> twice <span class="ref-desc">&mdash; clears everything.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Child lock:</strong> hold <span class="btn-tag">STOP/Cancel</span> 3 sec to lock &middot; hold 3 sec again to unlock</div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Mute sounds:</strong> long press <span class="btn-tag">8</span> for 3 sec <span class="ref-desc">&mdash; long beep confirms. Repeat to unmute.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Energy saver:</strong> quick press <span class="btn-tag">STOP/Cancel</span> (under 3 sec) in standby <span class="ref-desc">&mdash; display turns off.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Save recipe:</strong> <span class="btn-tag">Favorite</span> &rarr; select 1/2/3 &rarr; program cook &rarr; <span class="btn-tag">Favorite</span> to save</div></div>
 
   </div>
 </div>
@@ -760,28 +647,36 @@
     <button class="ref-overlay-close" onclick="closeButtonGuide()" aria-label="Close button guide">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
-    <h3 class="ref-section-header blue">Cooking Buttons</h3>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Sensor Reheat</span> <span class="ref-desc">&mdash; reheats food automatically. Press once, then Start. Don't open door until 2 beeps.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Sensor Cook</span> <span class="ref-desc">&mdash; cooks by food type. Press until code 1&ndash;12 shows, then Start. See Quick Reference for codes.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Popcorn</span> <span class="ref-desc">&mdash; pops microwave popcorn. Press 1x for 3.5 oz, 2x for 3 oz, 3x for 1.75 oz, then Start.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Power Level</span> <span class="ref-desc">&mdash; sets cooking power. Press repeatedly to cycle 10 levels: PL10 (high) down to PL1 (low). Then enter time.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Turbo Defrost</span> <span class="ref-desc">&mdash; fast defrost by weight. Enter lbs (up to 6), then Start. Flip food when it beeps twice.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Keep Warm</span> <span class="ref-desc">&mdash; holds food warm after cooking. Enter minutes (up to 30), then Start. Cannot combine with sensor.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Quick 30</span> <span class="ref-desc">&mdash; quick start at full power. Each press adds 30 sec. Also works while already cooking.</span></div></div>
+    <h3 class="ref-section-header blue">Sensor &amp; Preset Buttons</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Sensor Reheat</span> <span class="ref-desc">&mdash; reheats food automatically using steam sensor. Press once, then START. Not for bread, beverages, or frozen food.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Frozen Pizza</span> <span class="ref-desc">&mdash; cooks frozen pizza (6&ndash;12 oz). Press once, then START. Don't open door until time appears.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Frozen Entr&eacute;e</span> <span class="ref-desc">&mdash; cooks frozen meals (8&ndash;32 oz). Press once, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Potato</span> <span class="ref-desc">&mdash; cooks 1&ndash;4 potatoes (10 oz each). Pierce with fork first! Press once, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Rice</span> <span class="ref-desc">&mdash; cooks rice (8&ndash;16 oz). Cover with vented lid. Press once, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Veggie</span> <span class="ref-desc">&mdash; press once for fresh veg (SC-6), twice for frozen veg (SC-7). 4&ndash;16 oz, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Custom Cook</span> <span class="ref-desc">&mdash; 5 preset foods. Press repeatedly to cycle CC-1 Bacon, CC-2 Rolls, CC-3 Beverage, CC-4 Chicken, CC-5 Oatmeal. Enter weight, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Soften/Melt</span> <span class="ref-desc">&mdash; 7 presets for butter, chocolate, cheese, marshmallows, ice cream, cream cheese. Press repeatedly to select S-1 through S-7. Enter weight, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Popcorn</span> <span class="ref-desc">&mdash; pops microwave popcorn. Press 1x for 1.75 oz, 2x for 3.0 oz, 3x for 3.5 oz, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Favorite</span> <span class="ref-desc">&mdash; save/recall up to 3 custom cooking programs. Press to select slot 1, 2, or 3.</span></div></div>
 
-    <h3 class="ref-section-header green">Adjustment Buttons</h3>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">More</span> <span class="ref-desc">&mdash; increases sensor cooking time. Press before Start.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Less</span> <span class="ref-desc">&mdash; decreases sensor cooking time. Press before Start.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">0&ndash;9</span> <span class="ref-desc">&mdash; number pad. Enter cook time, weight, or food codes.</span></div></div>
+    <h3 class="ref-section-header" style="background:#e65100;">Defrost Buttons</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">1lb Defrost</span> <span class="ref-desc">&mdash; quick defrost for exactly 1 pound. Press once, then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Custom Defrost</span> <span class="ref-desc">&mdash; defrost by food type and weight. Press to cycle dEF1 (Meat), dEF2 (Poultry), dEF3 (Fish). Enter weight (0.1&ndash;6.0 lbs), then START. Flip food at beep.</span></div></div>
+
+    <h3 class="ref-section-header green">Cooking Controls</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Cook Time</span> <span class="ref-desc">&mdash; sets manual cooking time. Press FIRST, then enter time on number pad. This prevents accidental One Touch Start!</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Power Level</span> <span class="ref-desc">&mdash; sets cooking power (PL1&ndash;PL10). Press after entering cook time, then press 0&ndash;9 to select level.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">0&ndash;9</span> <span class="ref-desc">&mdash; number pad. Enter cook time, weight, or food portions. Warning: pressing 1&ndash;6 alone starts One Touch cooking!</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">8</span> &#x1F50A; <span class="ref-desc">&mdash; number 8 also controls sound. Long press for 3 seconds to mute or unmute all beeps.</span></div></div>
 
     <h3 class="ref-section-header brown">Clock &amp; Timer</h3>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Timer</span> <span class="ref-desc">&mdash; kitchen countdown timer. No heat. Press Timer, enter time, then Start.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Clock Set</span> <span class="ref-desc">&mdash; sets time of day. Press once, enter time on number pad, press again to confirm. 12-hour format.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Kitchen Timer</span> <span class="ref-desc">&mdash; countdown timer with no heat. Press, enter time (max 99:59), then START.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Clock</span> <span class="ref-desc">&mdash; sets time of day. Press, enter time, press Clock again. 12-hour format. During cooking, press to see current time.</span></div></div>
 
     <h3 class="ref-section-header red">Controls</h3>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Start</span> <span class="ref-desc">&mdash; starts any cooking program. Also used to lock child lock (press 3 times quickly).</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Stop / Reset</span> <span class="ref-desc">&mdash; press once to pause (Start to resume). Press twice to cancel everything. Unlocks child lock (press 3x).</span></div></div>
-    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Door Release</span> <span class="ref-desc">&mdash; opens the door. Also pauses cooking automatically.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">START/+30Sec.</span> <span class="ref-desc">&mdash; starts any cooking program. Also adds 30 seconds during cooking. Press alone for quick 30-second cook.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">STOP/Cancel</span> <span class="ref-desc">&mdash; press once to pause, twice to cancel. Hold 3 sec for child lock. Quick press in standby for energy saver.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Power Saving</span> &#x267B; <span class="ref-desc">&mdash; icon below STOP/Cancel. Quick press STOP/Cancel in standby to enter energy saver mode (display off).</span></div></div>
   </div>
 </div>
 
@@ -794,49 +689,45 @@
   <div class="ref-overlay-body">
 
     <h3 class="ref-section-header blue">Cleaning</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Before cleaning:</strong> <span class="ref-desc">unplug oven. Leave door open.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Outside:</strong> <span class="ref-desc">damp cloth. Don't let water seep into vents.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Inside:</strong> <span class="ref-desc">damp cloth after each use. Mild detergent OK. No harsh cleaners or abrasives.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Door:</strong> <span class="ref-desc">soft dry cloth. Steam on door is normal. Do not remove inner heat barrier film.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Cavity floor:</strong> <span class="ref-desc">mild detergent, water, or window cleaner. Dry.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Wave guide cover:</strong> <span class="ref-desc">do not remove. Keep clean like the inside.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Control panel:</strong> <span class="ref-desc">soft dry cloth. No harsh detergent. Peel off shipping film if still on.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Glass tray:</strong> <span class="ref-desc">warm soapy water or dishwasher.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Roller ring:</strong> <span class="ref-desc">mild soapy water or dishwasher. Keep clean to avoid noise.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Front &amp; front plate:</strong> <span class="ref-desc">hot soapy water on a dish cloth, dry with soft cloth. Remove splashes immediately. No metal or glass scrapers.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Inside cavity:</strong> <span class="ref-desc">soapy water or vinegar solution, dish cloth, dry completely. No oven spray, abrasives, or scouring pads.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Door panel:</strong> <span class="ref-desc">glass cleaner with dish cloth. No glass scrapers.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cooking compartment recess:</strong> <span class="ref-desc">damp cloth. Don't let water run into turntable drive.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Turntable &amp; roller ring:</strong> <span class="ref-desc">wash with hot soapy water. Make sure turntable engages properly when replacing.</span></div></div>
     <div class="ref-row" style="background:#f9f4ec; border-radius:6px; padding:8px; margin-top:4px;">
-      <div class="ref-label" style="font-size:13px;"><strong>Important:</strong> <span class="ref-desc">after use, wipe dry all surfaces including vent openings, seams, and under glass tray. Food residue causes arcing and damage.</span></div>
+      <div class="ref-label" style="font-size:13px;"><strong>Important:</strong> <span class="ref-desc">clean food spills immediately &mdash; residue on the waveguide cover or cavity can cause sparking and smoke. Never use harsh abrasives or metal scrapers.</span></div>
     </div>
 
     <h3 class="ref-section-header red">Troubleshooting</h3>
-    <div class="ref-row"><div class="ref-label"><strong>TV interference:</strong> <span class="ref-desc">normal, like a mixer or vacuum. Not a fault.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Steam on door / warm air from vents:</strong> <span class="ref-desc">normal. Wipe door dry after use.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Won't turn on:</strong> <span class="ref-desc">unplug, wait 10 sec, re-plug. Check fuse / breaker. Try another outlet.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Won't start cooking:</strong> <span class="ref-desc">close door firmly. Press Start after programming. Press Stop/Reset first to clear old program.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Glass tray wobbles:</strong> <span class="ref-desc">reposition on roller ring. Check for food underneath.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Noise from glass tray:</strong> <span class="ref-desc">roller ring or oven bottom is dirty. Clean both.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Lock icon on display:</strong> <span class="ref-desc">child lock is on. Press Stop/Reset x3 to unlock.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Won't turn on:</strong> <span class="ref-desc">check plug, circuit breaker, try another outlet. Close door firmly. Check if "Lock" is on display.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Arcing or sparking:</strong> <span class="ref-desc">use microwave-safe cookware only. Don't run oven when empty. Clean food residue from cavity.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Uneven cooking:</strong> <span class="ref-desc">use microwave-safe dishes. Fully defrost frozen food first. Adjust time and power level. Turn or stir food midway.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Overcooked food:</strong> <span class="ref-desc">reduce cooking time and/or use a lower power level.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Undercooked food:</strong> <span class="ref-desc">use proper cookware, defrost fully, check vents aren't blocked, increase time or power.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Improper defrosting:</strong> <span class="ref-desc">use microwave-safe cookware. Adjust time and power. Turn or stir food during defrost.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Display blank (energy saver):</strong> <span class="ref-desc">press any button or open door to wake up. This is normal &mdash; not a malfunction.</span></div></div>
 
     <h3 class="ref-section-header green">Specifications</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Model:</strong> <span class="ref-desc">Panasonic NN-SC73LS</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Power:</strong> <span class="ref-desc">1,200W cooking &middot; 120V, 60Hz &middot; 12 Amps</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Outside size:</strong> <span class="ref-desc">21.8&quot; x 12.8&quot; x 17.7&quot; (W x H x D)</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Cavity size:</strong> <span class="ref-desc">15.5&quot; x 10.2&quot; x 17.1&quot;</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Weight:</strong> <span class="ref-desc">28.7 lbs (13 kg)</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Clearance needed:</strong> <span class="ref-desc">3&quot; sides, 12&quot; above, back open</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Model:</strong> <span class="ref-desc">Toshiba EM131A5C-BS</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power:</strong> <span class="ref-desc">1,100W output &middot; 1,550W input &middot; 120V, 60Hz</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Capacity:</strong> <span class="ref-desc">1.2 cu.ft.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Outside size:</strong> <span class="ref-desc">20.5&quot; x 17.1&quot; x 12.8&quot; (W x D x H)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Turntable:</strong> <span class="ref-desc">12.4&quot; diameter</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Weight:</strong> <span class="ref-desc">34.6 lbs</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Clearance needed:</strong> <span class="ref-desc">3&quot; sides, 3&quot; top, 1&quot; rear. Min 3 ft installation height.</span></div></div>
 
     <h3 class="ref-section-header" style="background:#e6a000;">Replacement Parts</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Glass tray:</strong> <span class="ref-desc">part #12570000001005</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Roller ring:</strong> <span class="ref-desc">part #12170000004310</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Owner's manual:</strong> <span class="ref-desc">part #16170000A86727</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Glass tray:</strong> <span class="ref-desc">12.4&quot; turntable glass tray</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Turntable ring assembly:</strong> <span class="ref-desc">roller ring with wheels</span></div></div>
     <div class="ref-row" style="background:#f9f4ec; border-radius:6px; padding:8px; margin-top:4px;">
-      <div class="ref-label" style="font-size:13px;"><strong>Order parts:</strong> <span class="ref-desc"><a href="http://www.panasonic.ca/english/support" target="_blank" rel="noopener" style="color:var(--teal); text-decoration:underline;">panasonic.ca/english/support</a></span></div>
+      <div class="ref-label" style="font-size:13px;"><strong>Order parts:</strong> <span class="ref-desc">contact Toshiba customer support or search for your model number (EM131A5C-BS) on Amazon for replacement parts.</span></div>
     </div>
 
     <h3 class="ref-section-header" style="background:#78909c;">Official Manual</h3>
-    <div class="ref-row"><div class="ref-label"><span class="ref-desc"><a href="https://help.na.panasonic.com" target="_blank" rel="noopener" style="color:var(--teal); text-decoration:underline;">View the full owner's manual at help.na.panasonic.com</a></span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="ref-desc">Search for "Toshiba EM131A5C-BS manual" online, or contact Toshiba customer support for a replacement copy.</span></div></div>
 
     <div style="margin-top:16px; padding:12px; background:#fff8e1; border-left:4px solid #e6a000; border-radius:6px; font-size:13px; color:#5f6368; line-height:1.5;">
-      This tool is intended as a helpful guide and may contain errors. Always refer to the <a href="https://help.na.panasonic.com" target="_blank" rel="noopener" style="color:var(--teal); text-decoration:underline;">official Panasonic owner's manual</a> for complete and accurate information.
+      This tool is intended as a helpful guide and may contain errors. Always refer to the official Toshiba owner's manual for complete and accurate information.
     </div>
 
   </div>
@@ -895,16 +786,18 @@
 </div>
 
 <script>
-  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Panasonic NN-SC73LS microwave oven.
+  const DEVICE_ID = "toshiba-em131a5c-bs";
+
+  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Toshiba EM131A5C-BS microwave oven.
 
 Your job is to help users — especially older adults and people who find electronics confusing — understand how to use their microwave. Always be warm, patient, and encouraging. Never be condescending.
 
 RULES:
 - Give short, clear, numbered steps. Maximum 5 steps per answer.
-- Use plain English. Say "press" not "actuate". Say "the green START button" not "initiate cooking sequence".
-- When describing a button, say where it is on the panel (e.g. "the wide green START button at the bottom right").
+- Use plain English. Say "press" not "actuate". Say "the START/+30Sec. button" not "initiate cooking sequence".
+- When describing a button, say where it is on the panel (e.g. "the red STOP/Cancel button at the bottom right").
 - If the user seems frustrated or confused, acknowledge it warmly before answering.
-- Only answer questions about this microwave. For anything else, say: "I'm only set up to help with this Panasonic microwave — for other questions, a quick web search should help!"
+- Only answer questions about this microwave. For anything else, say: "I'm only set up to help with this Toshiba microwave — for other questions, a quick web search should help!"
 - Never guess. If you don't know, say so and suggest they check the manual.
 - Keep answers under 150 words. Be concise.
 - Your name is Ollie.
@@ -916,38 +809,62 @@ PHOTO SAFETY:
 - Never generate content that is harmful, explicit, or unrelated to microwave usage.
 
 DEVICE INFO:
-Model: Panasonic NN-SC73LS, 1200W
+Model: Toshiba EM131A5C-BS, 1100W output, 1.2 cu.ft., 120V/60Hz
 
 PANEL LAYOUT:
-[Door Release] on left edge
-[Display Window] — green LCD
-Row 1: [Popcorn] [Sensor Reheat] [Sensor Cook] [Power Level]
-Row 2: [Turbo Defrost] [Keep Warm] [Quick 30]
-Number pad: 0-9
-Right column: [MORE] [LESS] [TIMER] [CLOCK SET]
-Bottom: [STOP/RESET] (wide) and [START] (wide, green)
+[Display Window] — shows time, codes, settings
+
+SENSOR MICROWAVE & PRESETS (top section):
+Row 1: [Sensor Reheat] [Frozen Pizza] [Frozen Entrée]
+Row 2: [Potato] [Rice] [Veggie]
+[Custom Cook]                    [Soften/Melt]
+[Popcorn] [Favorite] [Clock]
+[1lb Defrost] [Custom Defrost] [Kitchen Timer]
+
+ONE TOUCH START number pad:
+[1][2][3]
+[4][5][6]
+[7][8 🔊On/Off][9]
+[Power Level] [0] [Cook Time]
+
+Bottom row: [START/+30Sec.] (left)  [STOP/Cancel] (right)
+Power Saving icon below STOP/Cancel
 
 FUNCTION REFERENCE:
-- Manual Cook: Enter time → START. Full power by default.
-- Quick 30: Each press = +30 sec at full power. Starts immediately. Works during cooking.
-- Power Level: 10 levels (press repeatedly). PL10=full (HIGH), PL7=reheat (MED-HIGH), PL6=dense food (MEDIUM), PL3=defrost (MED-LOW), PL1=gentle (LOW)
-- Sensor Reheat: Press → START. Don't open door until 2 beeps. Not for bread/beverages/frozen.
-- Sensor Cook: Press until food code appears → START. Codes: 1=Potato, 2=Fresh veg, 3=Frozen veg, 4=Frozen pizza, 5=Frozen entrée, 6=Casserole, 7=Ground meat, 8=Lasagna, 9=Soup, 10=Rice, 11=Pasta, 12=Fish
-- More/Less: Adjusts sensor cooking time. Press before START.
-- Popcorn: 1×=3.5oz, 2×=3oz, 3×=1.75oz → START. Stop when pops slow to 2-3 sec apart.
-- Keep Warm: Enter minutes (max 30) → START. Cannot combine with sensor features.
-- Turbo Defrost: Enter weight in lbs (max 6) → START. Flip food when it beeps twice.
-- Timer: Press TIMER → enter time → START. Counts down, no heat.
-- Clock Set: Press CLOCK SET → enter time → CLOCK SET. 12-hour format.
-- Child Lock: Lock = START ×3. Unlock = STOP/RESET ×3 (within 10 sec).
-- Stop/Reset: 1× = pause, 2× = cancel all.
-- Beeps: 1=accepted, 2=open door/flip food, 5=done, none=error.
+- Manual Cook: Press Cook Time → enter time → (optional: Power Level → press 0-9) → START/+30Sec. Full power (PL10) by default. Max 99:59.
+- IMPORTANT: You MUST press Cook Time first before entering time! Pressing number 1-6 without Cook Time triggers One Touch Start (instant cooking).
+- One Touch Start: Pressing 1-6 alone instantly starts cooking at full power for 1-6 min. Many users do this accidentally.
+- Add 30 sec: Press START/+30Sec while cooking. Works during cooking and time defrost. Does NOT work during weight defrost or kitchen timer.
+- Power Level: 10 levels (PL10=100% down to PL1=10%). Press after entering cook time, then press number 0-9. During cooking, press Power Level to view current level for 3 sec.
+- Sensor Reheat (SC-1): Press Sensor Reheat → START. Don't open door until time appears. Not for bread/dry food/beverages/frozen/raw. Food min 40°F. 8-32 oz.
+- Frozen Pizza (SC-2): Press Frozen Pizza → START. 6-12 oz.
+- Frozen Entrée (SC-3): Press Frozen Entrée → START. 8-32 oz.
+- Potato (SC-4): Press Potato → START. 1-4 potatoes, 10oz each. Puncture with fork, space 1" apart.
+- Rice (SC-5): Press Rice → START. 8-16 oz.
+- Fresh Veggie (SC-6): Press Veggie once → START. 4-16 oz.
+- Frozen Veggie (SC-7): Press Veggie twice → START. 4-16 oz.
+- Custom Cook: Press repeatedly for CC-1 to CC-5, enter weight → START. CC-1=Bacon(2-6 slices), CC-2=Frozen Roll/Muffin(1-6 pcs), CC-3=Beverage(1-2 cups), CC-4=Chicken(0.5-2.0 lbs), CC-5=Oatmeal(20/40 oz).
+- Soften/Melt: Press repeatedly for S-1 to S-7, enter weight → START. S-1=Melt Butter(1-3 sticks), S-2=Melt Chocolate(4/8 oz), S-3=Melt Cheese(8/16 oz), S-4=Melt Marshmallows(5/10 oz), S-5=Soften Butter(1-3 sticks), S-6=Soften Ice Cream(6/12/16 oz), S-7=Soften Cream Cheese(3/8 oz).
+- Popcorn: Press Popcorn — 1x=1.75oz, 2x=3.0oz, 3x=3.5oz → START.
+- Custom Defrost: Press for dEF1(Meat)/dEF2(Poultry)/dEF3(Fish) → enter weight (0.1-6.0 lbs) → START. Turn food at beep.
+- 1 Lb Defrost: Press 1lb Defrost → START. Pre-set for 1.0 lb.
+- Kitchen Timer: Press Kitchen Timer → enter time (max 99:59) → START. No heat. Cannot add time during timer.
+- Clock: Press Clock → enter time (1:00-12:59) → Clock. 12-hour format.
+- Favorite: Save up to 3 procedures. Press Favorite to select slot, program cook settings, Favorite to save.
+- Multi-Stage: Up to 2 stages. Defrost must be first if included. Quick Touch Presets cannot be used.
+- Child Lock: Hold STOP/Cancel 3 sec to lock/unlock. "Lock" on display.
+- Mute: Long press 8 for 3 sec. All sounds off. Repeat to unmute. Works under lock.
+- Energy Saver: Quick press STOP/Cancel (<3 sec) in standby. Display off. Press any button to wake.
+- Inquiring: During cooking, press Clock for time, Power Level for power (3 sec display).
+- STOP/Cancel: 1x=pause, 2x=cancel all.
+- Beeps: 1=confirmed, 1 at halfway defrost=turn food, 5=done("End" shows).
 
 SAFETY:
-- No metal, foil, or wire twist-ties
-- Pierce potatoes, sausages, sealed pouches before cooking
-- Never heat whole eggs (will explode)
-- Keep 3" clearance on sides, 12" above`;
+- No metal, aluminum trays, foil, metal twist-ties, metal-trimmed dishes
+- No paper bags, plastic foam (Styrofoam), or wood
+- Never heat whole eggs or sealed containers (will explode)
+- Pierce potatoes, sausages, plastic pouches before cooking
+- Keep 3" clearance on sides and top, 1" in rear`;
 
   const COOKWARE_PHOTO_PROMPT = `
 
@@ -956,31 +873,32 @@ The user sent a photo of a dish, bowl, plate, container, or cup. Analyze whether
 IMPORTANT: If the photo does NOT show cookware, a container, or a dish, do NOT analyze it. Respond only with the redirect message from the PHOTO SAFETY rules above.
 
 COOKWARE SAFETY KNOWLEDGE:
-SAFE: Microwave-safe labeled dishes, heat-resistant glass (Pyrex), ceramic, paper plates (short warming only), paper towels (no recycled/synthetic), parchment paper, wax paper (as cover), microwave-safe labeled plastic, oven bags (closed with string not twist-tie), frozen dinner trays (if no metal), straw/wicker/wood (short reheat only).
-UNSAFE: Metal of any kind, aluminum foil, metal twist-ties, brown paper bags, melamine plastic, fast-food cartons with metal handles, regular glass jars, regular thermometers.
-CAUTION: Foam cups (melt at high temp), browning dishes (microwave type only), paper cups (may ignite), unlabeled dinnerware (test first).
+SAFE: Microwave-safe labeled dishes, heat-resistant glass (Pyrex), ceramic dinnerware (no metallic trim), glass jars (remove lid, just warm), oven cooking bags (no metal ties), paper plates/cups (short warming), paper towels, parchment paper, wax paper (as cover), microwave-safe plastic (labeled), plastic wrap (microwave-safe, don't touch food), microwave-safe thermometers, browning dish (follow instructions).
+UNSAFE: Aluminum trays, metal or metal-trimmed utensils, metal twist-ties, paper bags, plastic foam (Styrofoam), wood.
+CAUTION: Food cartons with metal handles (transfer food out), glass jars (may not be heat-resistant), plastic (must be labeled microwave-safe, some soften).
 
 RESPONSE FORMAT:
 - Start with a clear verdict: "Safe to use!", "Do NOT use this!", or "Use with caution"
 - Explain in 2-3 short sentences
-- If you cannot identify the material, say so and suggest the container test: place dish + 1 cup water, run 1 min at PL10. Dish stays cool = safe. Dish hot = don't use.
-- Keep response under 100 words`;
+- If you cannot identify the material, say so and suggest the container test: place dish + 1 cup water, run 1 min at full power. Dish stays cool = safe. Dish hot = don't use.
+- Under 100 words`;
 
   const FOOD_PHOTO_PROMPT = `
 
 ADDITIONAL TASK: FOOD PHOTO ANALYSIS
-The user sent a photo of food they want to cook or reheat. Give specific instructions for this Panasonic NN-SC73LS microwave.
+The user sent a photo of food they want to cook or reheat. Give specific instructions for this Toshiba EM131A5C-BS microwave.
 IMPORTANT: If the photo does NOT show food, do NOT analyze it. Respond only with the redirect message from the PHOTO SAFETY rules above.
 
-SENSOR COOK CODES: 1=Potato, 2=Fresh veg, 3=Frozen veg, 4=Frozen pizza, 5=Frozen entree, 6=Casserole, 7=Ground meat, 8=Lasagna, 9=Soup, 10=Rice, 11=Pasta, 12=Fish
+SENSOR PRESETS: SC-1=Sensor Reheat, SC-2=Frozen Pizza(6-12oz), SC-3=Frozen Entrée(8-32oz), SC-4=Potato(1-4, 10oz each), SC-5=Rice(8-16oz), SC-6=Fresh Veggie(4-16oz), SC-7=Frozen Veggie(4-16oz)
+CUSTOM COOK: CC-1=Bacon(2-6 slices), CC-2=Frozen Roll/Muffin(1-6 pcs), CC-3=Beverage(1-2 cups), CC-4=Chicken Pieces(0.5-2.0 lbs), CC-5=Oatmeal(20/40 oz)
+SOFTEN/MELT: S-1=Melt Butter, S-2=Melt Chocolate, S-3=Melt Cheese, S-4=Melt Marshmallows, S-5=Soften Butter, S-6=Soften Ice Cream, S-7=Soften Cream Cheese
 
 RESPONSE FORMAT:
 - Start by naming what you see: "That looks like..."
-- If it matches a sensor code, give sensor cook instructions using button names
-- If not, give manual cook instructions with power level and time
+- If it matches a sensor/custom preset, give those instructions using button names
+- If not, give manual cook instructions (Cook Time → time → Power Level → START)
 - Max 5 numbered steps
 - Include safety warnings when relevant (pierce skins, cover food, stir midway, standing time)
-- Safe temps: 160F pork/ground meat/fish, 165F leftovers, 170F white poultry, 180F dark poultry
 - If you cannot identify the food, ask the user to describe it
 - Keep response under 150 words`;
 
@@ -1226,7 +1144,7 @@ RESPONSE FORMAT:
 
     const userPrompt = pendingPhoto.mode === "cookware"
       ? "Can I use this dish/container in the microwave? Is it safe?"
-      : "I want to microwave this food. How should I cook or reheat it in this Panasonic NN-SC73LS?";
+      : "I want to microwave this food. How should I cook or reheat it in this Toshiba EM131A5C-BS?";
 
     // Show user bubble with photo thumbnail
     const userBubble = document.createElement("div");
@@ -1274,7 +1192,7 @@ RESPONSE FORMAT:
           max_tokens: 1024,
           system: photoSystemPrompt,
           messages: conversationHistory,
-          device_id: "panasonic-nn-sc73ls"
+          device_id: DEVICE_ID
         })
       });
 
@@ -1374,7 +1292,7 @@ RESPONSE FORMAT:
           max_tokens: 512,
           system: SYSTEM_PROMPT,
           messages: conversationHistory,
-          device_id: "panasonic-nn-sc73ls"
+          device_id: DEVICE_ID
         })
       });
 

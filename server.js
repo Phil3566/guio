@@ -21,7 +21,7 @@ app.post("/api/chat", async (req, res) => {
     && lastMessage.role === "user"
     && typeof lastMessage.content === "string";
   const isFirstQuestion = messages.filter(m => m.role === "user").length === 1;
-  const deviceId = "panasonic-nn-sc73ls";
+  const deviceId = req.body.device_id || "panasonic-nn-sc73ls";
 
   if (isTextOnly && isFirstQuestion) {
     const match = faqCache.match(deviceId, lastMessage.content);
