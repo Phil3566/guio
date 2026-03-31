@@ -44,42 +44,42 @@ devices as gifts and want to reduce "how do I use this?" support calls.
 
 ---
 
-## Prototype Goal (Current Phase)
+## Current Phase: Prototype + Market Research
 
-Build a working web prototype of the AI chat guide for one device:
-**Panasonic NN-SC73LS microwave**.
+### What's been built
 
-The prototype demonstrates the full user flow:
-1. User scans QR code → lands on device page
-2. Sees a visual panel diagram and function summary
-3. Types a question → gets a plain-language answer from Claude
-4. Sees a call-to-action to buy the sticker kit
+**Two working device pages:**
+1. `public/index.html` — Panasonic NN-SC73LS microwave (hero product)
+2. `public/nespresso.html` — Nespresso Vertuo Next coffee machine
+
+Each device page includes:
+- Interactive panel diagram with tappable buttons
+- AI chat powered by Claude Haiku (via Express backend proxy)
+- Quick Reference overlay with button descriptions
+- FAQ caching for common questions (reduces API calls)
+- QR codes for production URLs
+- WCAG 2.1 AA accessibility compliance
+- Mobile-first responsive design
+
+**Backend:**
+- `server.js` — Express server on port 8080, proxies Anthropic API calls
+- `.env` — stores `ANTHROPIC_API_KEY`
+
+**Market research pipeline:**
+- `research/amazon_scanner.py` — scrapes Amazon Best Sellers, ranks by opportunity score
+- `research/review_analyzer.py` — Playwright + Claude API automated review analysis
+- `research/category_picks.csv` — 127 product categories, 39 selected for research
+- `research/analysis_2026-03-30.csv` — full confusion analysis results across 35 categories
+
+**Documentation:**
+- `docs/microwave-layout-template.md` — standard layout template for microwave device pages
 
 ### Tech stack
-- **Frontend:** Single HTML file (HTML + CSS + JS, no framework)
-- **AI:** Anthropic API called directly from the frontend via fetch
-  (for prototype only — in production, route through a backend to hide API key)
-- **Model:** `claude-haiku-4-5-20251001`
-- **No build step, no login, no database** for prototype
-
-### API call pattern
-```javascript
-const response = await fetch("https://api.anthropic.com/v1/messages", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-api-key": API_KEY,
-    "anthropic-version": "2023-06-01",
-    "anthropic-dangerous-direct-browser-access": "true"
-  },
-  body: JSON.stringify({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 1024,
-    system: SYSTEM_PROMPT,
-    messages: conversationHistory
-  })
-});
-```
+- **Frontend:** Single HTML files (HTML + CSS + JS, no framework)
+- **Backend:** Express.js proxy server (hides API key from browser)
+- **AI:** Claude Haiku 4.5 via Anthropic API
+- **Research:** Python + Playwright + Claude API for automated product analysis
+- **No build step, no login, no database**
 
 ---
 
@@ -178,11 +178,22 @@ in the project folder.
 
 ---
 
-## What Has Been Built (Pre-CLI Work)
+## What Has Been Built
 
-All of the following were built and validated in the design phase:
+### Device pages (CLI phase)
+- `public/index.html` — Panasonic NN-SC73LS microwave: chat, panel diagram, Quick Reference, QR
+- `public/nespresso.html` — Nespresso Vertuo Next: chat, panel diagram, Quick Reference, QR
+- `server.js` — Express backend on port 8080, API proxy for Anthropic calls
+- `docs/microwave-layout-template.md` — standard layout template for microwave device pages
 
-### Sticker kit outputs
+### Research pipeline (CLI phase)
+- `research/amazon_scanner.py` — Best Sellers scraper, opportunity scoring
+- `research/review_analyzer.py` — Playwright + Claude API confusion analyzer
+- `research/category_picks.csv` — 127 categories, 39 selected
+- `research/product_research_template.csv` — pre-formatted research spreadsheet
+- `research/README.md` — usage instructions for research tools
+
+### Sticker kit outputs (pre-CLI)
 - `clearlabel_prototype.html` — full sticker sheet with all buttons
 - `clearlabel_top_sticker_white.html` + `.pdf` — single top-of-microwave sticker
 - `clearlabel_top_sticker_fr.html` + `.pdf` — French version
@@ -190,12 +201,12 @@ All of the following were built and validated in the design phase:
 - `clearlabel_with_qr.html` + `.pdf` — version with QR code
 - `clearlabel_v3.html` + `.pdf` — centred panel diagram, arrows in 4 directions, task list, QR
 
-### PowerPoint outputs
+### PowerPoint outputs (pre-CLI)
 - `clearlabel_quickref.pptx` — full quick reference slide with panel diagram + task list
 - `clearlabel_text.pptx` — clean text-only reference following style guide
 - `clearlabel_panel.pptx` — dark-mode panel recreation from manual p.8
 
-### Business documents
+### Business documents (pre-CLI)
 - `CLEARLABEL_BUSINESS_PLAN.md` — full business plan
 - `SKILL.md` — condensed skill file for Claude project context
 
@@ -203,23 +214,52 @@ All of the following were built and validated in the design phase:
 
 ## Device Categories to Expand Into
 
-Priority order based on market research:
-1. Electronics & home tech (TVs, routers, cable boxes, streaming sticks)
-2. Medical & health devices (blood pressure monitors, CPAP, glucometers)
-3. Home appliances (washers, dryers, microwaves) ← current focus
-4. HVAC & smart home (thermostats, security panels)
-5. Office & printing (printers, scanners)
-6. Kitchen gadgets (Instant Pot, air fryers, espresso machines)
+Based on automated review analysis (see `research/analysis_2026-03-30.csv`):
+
+### Top opportunities (confusion score 5+, ClearLabel fit: Yes)
+1. **TVs** — confusion 6/10, fit: Yes. Top pain point: setup, smart features, remote
+2. **Printers** — confusion 5/10, fit: Yes. Setup, Wi-Fi connectivity, driver installation
+3. **Microwaves** — confusion 5/10, fit: Yes (already building)
+
+### Categories researched (39 selected from 127)
+Full list in `research/category_picks.csv`. Groups include:
+- Kitchen (air fryers, espresso machines, food processors, etc.)
+- Electronics (TVs, soundbars, routers, streaming sticks, etc.)
+- Home (robot vacuums, sewing machines, garage door openers, etc.)
+- Office (printers, label makers, shredders)
+- Personal Care (hair clippers, electric toothbrushes, etc.)
+
+### Excluded categories
+- **Medical/health devices** — liability risk if guide gives wrong info
+- **Security devices** (smart locks, video doorbells) — liability if guide causes security failure
 
 ---
 
 ## Market Research Tools
 
-- **Helium 10 Black Box** — find top electronics by monthly sales volume
-  - Filter: 500+ monthly sales, 200+ reviews, under 4.2★, $20–$150 price
-  - Low rating = confused users = ClearLabel opportunity
+### Custom-built (replaces Helium 10)
+
+1. **`research/amazon_scanner.py`** — Amazon Best Sellers scraper
+   - Scrapes product listings across configurable categories
+   - Extracts: name, ASIN, price, rating, review count
+   - Calculates opportunity score: `total_reviews * rating_multiplier` (lower rating = higher multiplier)
+   - Outputs ranked CSV (`results_YYYY-MM-DD.csv`)
+   - Dependencies: `requests`, `beautifulsoup4`
+
+2. **`research/review_analyzer.py`** — Automated review confusion analyzer
+   - Reads selected categories from `category_picks.csv`
+   - Uses Playwright to load Amazon product pages (not review pages — those require login)
+   - Extracts Amazon's AI-generated "Customers say" summary + on-page reviews
+   - Sends to Claude Haiku for structured analysis: confusion score, setup difficulty,
+     instruction quality, elderly mentions (all 0-10), plus pain points and ClearLabel fit
+   - Outputs enriched CSV (`analysis_YYYY-MM-DD.csv`)
+   - Dependencies: `playwright`, `requests`, `beautifulsoup4`, `anthropic` API key in `.env`
+   - Known issue: ~13 categories return wrong products due to Amazon URL slug mismatches
+
+### External (free)
+- **Amazon Best Sellers pages** — direct browsing for category discovery
+- **Amazon Rufus AI** — ask about common complaints and confusion signals
 - **ImportYeti** (free) — US customs data, supplier country of origin
-- **Amazon 1–3★ reviews** — mine for "confusing", "called my son", "no instructions"
 
 ---
 
@@ -236,21 +276,52 @@ Priority order based on market research:
 | Mar 2026 | QR URL convention: clearlabel.com/device/[brand]-[model-slug] |
 | Mar 2026 | No user login for chat — open access, frictionless |
 | Mar 2026 | Switched to Claude Code CLI for prototype build |
+| Mar 2026 | Added Express.js backend (`server.js`) to proxy API calls (hides key from browser) |
+| Mar 2026 | Built Panasonic microwave device page with chat, panel diagram, Quick Reference |
+| Mar 2026 | Built Nespresso Vertuo Next as second device page |
+| Mar 2026 | Added FAQ caching to reduce API calls for common questions |
+| Mar 2026 | WCAG 2.1 AA accessibility pass on all device pages |
+| Mar 2026 | QR codes updated for production URLs |
+| Mar 2026 | Replaced Helium 10 ($99+/mo) with custom Python scraping tools (free) |
+| Mar 2026 | Built automated review analyzer using Playwright + Claude API |
+| Mar 2026 | Excluded medical/health and security device categories (liability risk) |
+| Mar 2026 | Curated 127 product categories, selected 39 for research |
+| Mar 2026 | TVs identified as top expansion opportunity (confusion score 6/10) |
+| Mar 2026 | Amazon review pages require login — pivoted to product page scraping instead |
+| Mar 2026 | API key stored in `.env`, read by both server.js and Python scripts |
 
 ---
 
 ## Open Tasks
 
-### Prototype (do first)
-- [ ] Build `index.html` — device page with chat interface
-- [ ] Write and test the system prompt with real user questions
-- [ ] Add tappable panel diagram (SVG, each button shows tooltip/description)
-- [ ] Add sticker kit upsell section below chat
-- [ ] Test on mobile (primary use case — user is standing at microwave)
+### Prototype — completed
+- [x] Build `index.html` — Panasonic microwave device page with chat
+- [x] Write and test the system prompt with real user questions
+- [x] Add tappable panel diagram (SVG, each button shows tooltip/description)
+- [x] Add Quick Reference overlay
+- [x] Add Express.js backend to proxy API calls
+- [x] Build second device page (`nespresso.html`)
+- [x] FAQ caching for common questions
+- [x] WCAG 2.1 AA accessibility compliance
+- [x] QR codes for production URLs
+
+### Market research — completed
+- [x] Build Amazon Best Sellers scraper (`amazon_scanner.py`)
+- [x] Curate 127 product categories across 9 groups
+- [x] Select 39 categories for automated analysis
+- [x] Build automated review analyzer (`review_analyzer.py`)
+- [x] Run full analysis across 35 categories — results in `analysis_2026-03-30.csv`
+- [x] Identify TVs as top expansion opportunity
+
+### Next up
+- [ ] Fix ~13 category URL mismatches in review analyzer (wrong products returned)
+- [ ] Build third device page based on research results (TV or printer)
+- [ ] Add sticker kit upsell section to device pages
+- [ ] Test on mobile (primary use case — user is standing at device)
+- [ ] Deploy to DigitalOcean (user has asked about this)
 
 ### Near-term
 - [ ] Register domain: clearlabel.com (or clearlabel.co, getclrlabel.com)
-- [ ] Run Helium 10 Black Box research to select 2nd and 3rd devices
 - [ ] Find sticker print-on-demand supplier
 - [ ] Create Amazon seller account and claim New Seller Incentives
   ($50 coupon credits + $200 ad credit + free Vine enrollment — expire 90 days)

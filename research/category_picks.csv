@@ -1,0 +1,136 @@
+include,category,subcategory,why_clearlabel,liability_risk,amazon_bestsellers_path
+Y,Kitchen,Microwave Ovens,Confusing buttons/presets. Already proven with Panasonic + Toshiba.,Low,zgbs/kitchen/289935
+Y,Kitchen,Air Fryers,Preset programs and time/temp confusion. Very popular gift item.,Low,zgbs/kitchen/17659096011
+,Kitchen,Coffee & Espresso Machines,Pod systems milk frothers descaling cycles. Common gift for parents.,Low,zgbs/kitchen/289745
+,Kitchen,Slow Cookers & Multi-Cookers,Instant Pot complexity — multiple modes and confusing controls.,Low,zgbs/kitchen/289839
+,Kitchen,Bread Machines,Program selection crust settings ingredient ratios confuse users.,Low,zgbs/kitchen/289934
+,Kitchen,Toaster Ovens & Countertop Ovens,Multiple cooking modes air fry convection broil confuse users.,Low,zgbs/kitchen/289936
+,Kitchen,Food Processors,Assembly blade selection speed pulse settings.,Low,zgbs/kitchen/289913
+,Kitchen,Blenders,Speed settings programs self-cleaning mode ice crush.,Low,zgbs/kitchen/289912
+,Kitchen,Electric Kettles & Tea Makers,Temperature presets keep-warm timers.,Low,zgbs/kitchen/289753
+,Kitchen,Ice Makers,Setup cleaning cycle troubleshooting water line.,Low,zgbs/kitchen/3741441
+,Kitchen,Sous Vide Cookers,Temperature time settings app pairing water level.,Low,zgbs/kitchen/13397011
+,Kitchen,Rice Cookers,Program selection water ratios keep-warm delay timer.,Low,zgbs/kitchen/289838
+,Kitchen,Electric Grills & Griddles,Temperature zones timer drip tray non-stick care.,Low,zgbs/kitchen/289937
+,Kitchen,Juicers,Assembly pulp settings cleaning speed selection.,Low,zgbs/kitchen/289915
+,Kitchen,Dehydrators,Temperature timer tray rotation food spacing.,Low,zgbs/kitchen/289941
+,Kitchen,Waffle Makers,Temperature indicator flip mechanism batter amount.,Low,zgbs/kitchen/289942
+,Kitchen,Electric Pressure Canners,Pressure settings safety valve sealing ring altitude adjustment.,Low,zgbs/kitchen/289839
+,Kitchen,Induction Cooktops / Hot Plates,Temperature settings compatible cookware timer power levels.,Low,zgbs/kitchen/289938
+,Kitchen,Pizza Ovens (Countertop),Temperature stone placement rotate timing.,Low,zgbs/kitchen/289936
+,Kitchen,Popcorn Machines,Oil vs air butter settings cleaning.,Low,zgbs/kitchen/289943
+,Kitchen,Wine & Beverage Coolers,Temperature zones shelving humidity.,Low,zgbs/kitchen/3741451
+,Kitchen,Garbage Disposals,Installation reset button jam clearing operation.,Low,zgbs/kitchen/289917
+,Kitchen,Water Filters & Purifiers,Filter replacement indicator reset installation.,Low,zgbs/kitchen/510654
+Y,Kitchen,Dishwashers (Portable/Countertop),Cycle selection rinse aid water hookup error codes.,Low,zgbs/appliances/13397441
+,Kitchen,Yogurt Makers,Temperature time culture settings.,Low,zgbs/kitchen/289944
+,Kitchen,Electric Smokers,Temperature wood chip loading vent settings water pan.,Low,zgbs/patio/3180281
+,Kitchen,Vacuum Sealers,Bag type seal modes moist/dry settings pulse.,Low,zgbs/kitchen/289919
+Y,Electronics,TVs,Input switching app setup remote confusion. Huge market.,Low,zgbs/electronics/172659
+,Electronics,Streaming Devices (Fire Stick / Roku / Apple TV),Setup WiFi pairing app navigation voice control.,Low,zgbs/electronics/13447451
+Y,Electronics,Sound Bars,Bluetooth pairing input modes EQ settings multiple remotes.,Low,zgbs/electronics/3237461
+Y,Electronics,Bluetooth Speakers,Pairing multi-device switching party mode waterproof care.,Low,zgbs/electronics/2407811
+Y,Electronics,Home Theater Receivers,Input assignment speaker setup surround modes HDMI ARC.,Low,zgbs/electronics/281056
+Y,Electronics,Routers & Mesh WiFi Systems,App-based setup security settings firmware updates guest network.,Low,zgbs/pc/300189
+Y,Electronics,WiFi Range Extenders,Placement setup pairing to existing router.,Low,zgbs/pc/3015008
+,Electronics,Cable Modems,ISP activation setup light indicators troubleshooting.,Low,zgbs/pc/284716
+,Electronics,Network Switches,VLAN setup port configuration managed vs unmanaged.,Low,zgbs/pc/281414
+,Electronics,NAS Drives,RAID setup remote access file sharing user accounts.,Low,zgbs/pc/13436301
+Y,Electronics,Printers (Inkjet),WiFi setup driver issues ink replacement mobile printing scanning.,Low,zgbs/office-products/172648
+Y,Electronics,Printers (Laser),Toner replacement WiFi setup driver duplex settings.,Low,zgbs/office-products/172647
+Y,Electronics,Scanners (Flatbed & Document),Software setup file format options connectivity OCR.,Low,zgbs/office-products/172651
+Y,Electronics,Projectors,Input setup focus keystone correction streaming apps lamp life.,Low,zgbs/electronics/300334
+,Electronics,E-Readers (Kindle / Kobo),Account setup library management sideloading books font settings.,Low,zgbs/electronics/6669702011
+,Electronics,Tablets,Setup app installation parental controls account management.,Low,zgbs/electronics/1232596011
+Y,Electronics,Digital Photo Frames,WiFi setup photo loading app sharing slideshow settings.,Low,zgbs/electronics/525460
+,Electronics,Universal Remotes,Programming device codes macro setup activity buttons.,Low,zgbs/electronics/172546
+,Electronics,HDMI Switches & Splitters,Input/output setup resolution compatibility auto-switching.,Low,zgbs/electronics/172546
+,Electronics,Dash Cams,Installation loop recording parking mode app WiFi setup.,Low,zgbs/car/3248689011
+,Electronics,Action Cameras (GoPro etc),Mode selection resolution/fps WiFi app mounting accessories.,Low,zgbs/electronics/7458925011
+,Electronics,Digital Cameras,Mode dial settings ISO aperture WiFi transfer menu navigation.,Low,zgbs/electronics/502394
+,Electronics,Drones,Controller pairing flight modes GPS calibration app setup.,Low,zgbs/electronics/14022461
+Y,Electronics,Walkie Talkies,Channel selection privacy codes squelch range.,Low,zgbs/electronics/2131508011
+,Electronics,USB Hubs & Docking Stations,Port types driver installation display setup power delivery.,Low,zgbs/pc/281413
+,Electronics,External Hard Drives,Formatting backup software encryption partitioning.,Low,zgbs/pc/595048
+Y,Electronics,Monitors,Input selection resolution settings color calibration stand adjustment.,Low,zgbs/pc/1292115011
+,Electronics,Portable Power Stations,Charging ports solar input AC output capacity management.,Low,zgbs/electronics/17290204011
+,Electronics,UPS / Battery Backups,Setup load management alert settings battery replacement.,Low,zgbs/pc/764Notes572
+,Electronics,Smart Surge Protectors,App setup scheduling energy monitoring voice control.,Low,zgbs/electronics/285Notes0356011
+,Electronics,Car Stereos & Head Units,Installation wiring Bluetooth pairing backup camera steering controls.,Low,zgbs/car/10981251
+,Electronics,CB Radios,Channel selection squelch SWR antenna tuning.,Low,zgbs/car/307Notes8741
+,Electronics,Digital Voice Recorders,Recording modes file management playback speed transfer.,Low,zgbs/electronics/227Notes7Notes56011
+,Electronics,Karaoke Machines,Bluetooth input mixing echo settings microphone setup.,Low,zgbs/electronics/11Notes974861
+,Electronics,VR Headsets,Setup guardian boundary account app installation controls.,Low,zgbs/electronics/21Notes154068011
+Y,Home,Robot Vacuums,App setup mapping scheduling maintenance filter cleaning.,Low,zgbs/kitchen/3743811
+,Home,Robot Mops,Water tank filling pad replacement app zones no-go areas.,Low,zgbs/kitchen/3743811
+,Home,Cordless Stick Vacuums,Attachments suction modes filter cleaning battery care.,Low,zgbs/kitchen/510106
+Y,Home,Carpet Cleaners,Solution tank assembly brush roll formula mixing.,Low,zgbs/kitchen/510106
+Y,Home,Steam Cleaners & Mops,Water filling heat-up attachments pad replacement.,Low,zgbs/kitchen/510106
+Y,Home,Washing Machines,Cycle selection settings error codes detergent dispenser.,Low,zgbs/appliances/13397451
+Y,Home,Dryers,Cycle selection lint alerts sensor dry settings.,Low,zgbs/appliances/13397461
+,Home,Thermostats (Smart),Programming schedules WiFi setup mode switching app control.,Medium — wrong HVAC advice could damage system,zgbs/hi/6810424011
+Y,Home,Dehumidifiers,Settings filter replacement humidity targets bucket vs drain.,Low,zgbs/kitchen/510182
+Y,Home,Humidifiers,Tank filling filter replacement humidity settings mist type.,Low,zgbs/kitchen/510183
+Y,Home,Air Purifiers,Filter replacement speed settings air quality indicators.,Low,zgbs/kitchen/510184
+Y,Home,Portable Air Conditioners,Installation exhaust hose window kit drain modes BTU settings.,Low,zgbs/kitchen/510188
+,Home,Window Air Conditioners,Installation mode selection timer energy saver remote.,Low,zgbs/kitchen/510188
+,Home,Ceiling Fan Remotes,Programming pairing reverse direction speed light dimmer.,Low,zgbs/hi/495266
+,Home,Garage Door Openers,Programming remotes WiFi setup MyQ app troubleshooting.,Medium — safety concern if door malfunctions,zgbs/hi/511310
+,Home,Smart Plugs & Smart Switches,App pairing voice assistant setup automations schedules.,Low,zgbs/hi/6291368011
+,Home,Smart Light Bulbs & Strips,App setup color scenes voice control grouping schedules.,Low,zgbs/hi/5601389011
+,Home,Smart Displays (Echo Show / Nest Hub),Setup skills/routines video calling privacy settings.,Low,zgbs/electronics/17386948011
+,Home,Smart Speakers (Echo / HomePod),Setup voice commands skills music services multi-room.,Low,zgbs/electronics/9Notes818047011
+,Home,Smart Locks,Installation app setup codes guest access auto-lock.,Medium — security implications if locked out,zgbs/hi/17380755011
+,Home,Video Doorbells,Installation WiFi setup motion zones notification settings.,Medium — security implications,zgbs/hi/17381340011
+,Home,Fans (Tower / Pedestal / Box),Mode selection timer oscillation remote control.,Low,zgbs/kitchen/3737671
+,Home,Space Heaters,Mode selection thermostat timer safety shutoff.,Low,zgbs/kitchen/510182
+,Home,Electric Fireplaces,Remote control flame settings heat modes timer installation.,Low,zgbs/kitchen/3737671
+,Home,Bidet Toilet Seats,Installation water pressure nozzle settings warm seat dryer.,Low,zgbs/kitchen/6810562011
+,Home,Sprinkler Timers & Controllers,Zone programming schedule rain delay seasonal adjust WiFi.,Low,zgbs/garden/553890
+Y,Home,Pressure Washers,Assembly nozzle selection PSI/GPM soap dispenser maintenance.,Low,zgbs/garden/553912
+,Home,Pool Pumps & Equipment,Timer settings valve positions priming filter cleaning.,Low,zgbs/garden/553912
+,Home,Sump Pumps,Installation float switch check valve battery backup.,Low,zgbs/hi/511310
+,Home,Smoke & CO Detectors (Smart),Installation app setup interconnect voice alerts battery.,Low,zgbs/hi/495224
+,Home,Baby Monitors,Pairing camera setup night vision volume pan/tilt VOX mode.,Low,zgbs/baby/166864011
+,Home,Pet Feeders (Automatic),Scheduling portion size app setup meal recording.,Low,zgbs/pet-supplies/2975505011
+,Home,Pet Cameras,WiFi setup app pairing treat dispenser two-way audio.,Low,zgbs/pet-supplies/2975505011
+,Office,Label Makers,Template setup connectivity tape loading formatting.,Low,zgbs/office-products/172574
+,Office,Shredders,Sheet capacity oil maintenance jam clearing auto-feed.,Low,zgbs/office-products/172575
+,Office,Calculators (Financial / Graphing),Function keys programming financial formulas statistics.,Low,zgbs/office-products/172570
+,Office,Laminators,Temperature settings pouch thickness warm-up jam clearing.,Low,zgbs/office-products/172574
+,Office,Binding Machines,Comb/coil selection punch margin document setup.,Low,zgbs/office-products/172574
+,Office,Receipt / POS Printers,Paper loading driver setup connectivity integration.,Low,zgbs/office-products/172648
+,Personal Care,Electric Toothbrushes,Mode selection pressure sensor app pairing brush head replacement.,Low,zgbs/beauty/14057661
+,Personal Care,Hair Clippers & Trimmers,Guard sizes settings blade oiling maintenance.,Low,zgbs/beauty/11062841
+,Personal Care,Electric Shavers,Head replacement cleaning station modes wet/dry use.,Low,zgbs/beauty/11062831
+,Personal Care,Hair Dryers & Stylers (Dyson etc),Attachments heat/speed settings cool shot diffuser.,Low,zgbs/beauty/11058481
+,Personal Care,Facial Cleansing Brushes,Mode selection brush head replacement charging.,Low,zgbs/beauty/11058481
+,Personal Care,Sleep Sound Machines,Sound selection volume timer mix mode light settings.,Low,zgbs/health/3764441
+,Personal Care,Smart Alarm Clocks,WiFi setup display brightness alarm modes sleep sounds.,Low,zgbs/kitchen/3734741
+,Personal Care,Massage Guns,Speed settings attachment heads battery pressure.,Low,zgbs/sports/3407731
+Y,Hobby & Creative,Sewing Machines,Threading bobbin stitch selection tension adjustment presser feet.,Low,zgbs/arts-crafts/12899121
+,Hobby & Creative,Embroidery Machines,Hoop setup design loading thread tension file transfer.,Low,zgbs/arts-crafts/12899121
+Y,Hobby & Creative,3D Printers,Bed leveling filament loading slicing software temperature.,Low,zgbs/industrial/6066126011
+,Hobby & Creative,Cricut / Cutting Machines,Software setup blade selection material settings Bluetooth.,Low,zgbs/arts-crafts/12899121
+Y,Hobby & Creative,Record Players / Turntables,Setup speaker connection speed selection cartridge alignment.,Low,zgbs/electronics/667823011
+Y,Hobby & Creative,Digital Pianos & Keyboards,Sound selection MIDI setup recording transpose metronome pedal.,Low,zgbs/musical-instruments/11965861
+Y,Hobby & Creative,Guitar Amp Modelers & Multi-FX,Patch editing effect chain preset management expression pedal.,Low,zgbs/musical-instruments/11968551
+Y,Hobby & Creative,Audio Interfaces (Home Recording),Driver installation input/output routing phantom power latency.,Low,zgbs/musical-instruments/11968591
+Y,Hobby & Creative,Mixers (Audio),Channel routing gain staging EQ effects send monitoring.,Low,zgbs/musical-instruments/11968591
+,Hobby & Creative,USB Microphones,Setup gain selection polar pattern monitoring.,Low,zgbs/musical-instruments/11968591
+,Outdoors & Auto,GPS Handhelds,Waypoint entry track recording map loading coordinate formats.,Low,zgbs/electronics/172526
+Y,Outdoors & Auto,Fish Finders,Sonar settings depth reading frequency transducer mounting.,Low,zgbs/sports/3397251
+Y,Outdoors & Auto,Weather Stations,Sensor placement WiFi setup reading interpretation history.,Low,zgbs/garden/14252901
+,Outdoors & Auto,Metal Detectors,Discrimination settings ground balance sensitivity pinpoint.,Low,zgbs/garden/553892
+,Outdoors & Auto,Electric Bikes (Display & Controls),Display readout assist levels settings odometer trip.,Low,zgbs/sports/3403201
+,Outdoors & Auto,OBD2 Car Scanners,Connection code reading live data clearing codes app setup.,Low,zgbs/car/15707381
+,Outdoors & Auto,Jump Starters (Portable),Connection sequence safety features USB output air compressor.,Low,zgbs/car/15707381
+,Outdoors & Auto,Tire Inflators (Portable),PSI setting auto-shutoff unit switching nozzle adapters.,Low,zgbs/car/15707381
+,Outdoors & Auto,Robot Lawn Mowers,Boundary wire app setup scheduling zone cutting height.,Low,zgbs/garden/553902
+,Outdoors & Auto,Electric Lawn Mowers,Battery management cutting height self-propel speed.,Low,zgbs/garden/553902
+,Outdoors & Auto,Leaf Blowers (Cordless),Speed settings turbo mode battery management nozzle attachments.,Low,zgbs/garden/553906
+,Outdoors & Auto,Outdoor Solar Lights,Installation sun exposure settings modes timer.,Low,zgbs/garden/14252901
+,Fitness,Treadmills,Display programs incline speed Bluetooth app heart rate.,Low,zgbs/sports/3407871
+,Fitness,Exercise Bikes (Stationary),Resistance display programs Bluetooth cadence sensor.,Low,zgbs/sports/3407861
+,Fitness,Rowing Machines,Resistance display stroke rate Bluetooth app metrics.,Low,zgbs/sports/3407881
+,Fitness,Ellipticals,Resistance incline display programs heart rate.,Low,zgbs/sports/3407871

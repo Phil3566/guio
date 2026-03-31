@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ollie — Emeril Lagasse Dual Zone 360 Air Fryer Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #b71c1c;
+      --brand-dark: #7f0000;
+      --orange: #e8710a;
+      --orange-light: #fff3e6;
+      --green-light: #e8f5e9;
+      --blue-light: #e3f2fd;
+      --purple-light: #f3e5f5;
+      --bg: #faf6f1;
+      --text: #202124;
+      --text-light: #5f6368;
+      --border: #e0dcd7;
+      --radius: 14px;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Skip nav */
+    .skip-nav {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      background: var(--brand);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      z-index: 2000;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-nav:focus {
+      top: 0;
+    }
+
+    /* Focus styles */
+    :focus-visible {
+      outline: 3px solid var(--brand);
+      outline-offset: 2px;
+    }
+    button:focus-visible {
+      outline: 3px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    /* Scrollable content */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hero banner */
+    .hero {
+      margin: 10px 12px 4px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #b71c1c 0%, #8e0000 60%, #6d0000 100%);
+      color: white;
+      padding: 14px 16px 10px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .hero-logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .hero-text h1 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    .hero-text h1 span {
+      color: #f5b731;
+    }
+    .hero-text p {
+      font-size: 14px;
+      opacity: 1;
+      line-height: 1.5;
+    }
+    .hero-product {
+      text-align: center;
+      margin: 2px 12px 4px;
+    }
+    .hero-product-img {
+      width: 220px;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .hero-product-img:active { transform: scale(0.97); }
+
+    /* Fullscreen image overlay */
+    .img-fullscreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .img-fullscreen.active { display: flex; }
+    .img-fullscreen img {
+      max-width: 92vw;
+      max-height: 88vh;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    .img-fullscreen-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.9);
+      color: #202124;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 20px;
+      min-height: 44px;
+      border-radius: 22px;
+      cursor: pointer;
+    }
+
+    .ai-gradient {
+      background: linear-gradient(135deg, #ffd000, #ff85e0, #90e0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      font-size: 110%;
+    }
+
+    /* Quick question cards - 2x2 grid */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 16px;
+    }
+    .quick-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 14px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      transition: transform 0.1s;
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      width: 100%;
+    }
+    .quick-card:active { transform: scale(0.97); }
+    .quick-card.orange { border-color: #f5c28a; background: var(--orange-light); }
+    .quick-card.blue { border-color: #90caf9; background: var(--blue-light); }
+    .quick-card.green { border-color: #a5d6a7; background: var(--green-light); }
+    .quick-card.purple { border-color: #ce93d8; background: var(--purple-light); }
+
+    .quick-card-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+    .quick-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .quick-card.orange .quick-card-title { color: #c45100; }
+    .quick-card.blue .quick-card-title { color: #1565c0; }
+    .quick-card.green .quick-card-title { color: #2e7d32; }
+    .quick-card.purple .quick-card-title { color: #7b1fa2; }
+
+    .quick-card-desc {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+    .quick-card-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--orange);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* Section labels */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      padding: 16px 16px 10px;
+    }
+    h2.section-label {
+      font-size: 12px;
+    }
+
+    /* Navigation buttons */
+    .ref-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 12px 0;
+      padding: 12px 14px;
+      min-height: 44px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s;
+      border: none;
+      width: calc(100% - 24px);
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .ref-btn:active { transform: scale(0.97); }
+    .ref-btn:focus-visible { outline-color: #f5b731; }
+    .ref-btn-icon { font-size: 22px; flex-shrink: 0; }
+    .ref-btn-text { flex: 1; }
+    .ref-btn-title { font-size: 15px; font-weight: 700; }
+    .ref-btn-desc { font-size: 12px; }
+    .ref-btn-chevron { font-size: 20px; }
+
+    /* Reference overlay */
+    .ref-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--bg);
+      flex-direction: column;
+    }
+    .ref-overlay.active { display: flex; }
+    .ref-overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .ref-overlay-title { font-size: 18px; font-weight: 700; color: inherit; }
+    .ref-overlay-close {
+      background: var(--brand);
+      color: white;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 12px 20px;
+      min-height: 44px;
+      line-height: 1;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ref-overlay-close:active { opacity: 0.8; }
+    .ref-overlay-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 16px 40px;
+    }
+    .ref-section-header {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .ref-section-header:first-child { margin-top: 0; }
+    .ref-section-header.blue { background: #1a73e8; }
+    .ref-section-header.green { background: #1e7d45; }
+    .ref-section-header.brown { background: #8d6e1f; }
+    .ref-section-header.red { background: #b71c1c; }
+    .ref-section-header.black { background: #222; }
+    .ref-row {
+      padding: 7px 0;
+      border-bottom: 1px solid #ebe7e2;
+    }
+    .ref-row:last-child { border-bottom: none; }
+    .ref-label {
+      font-size: 14px;
+    }
+    .ref-label strong { font-weight: 700; }
+    .ref-desc {
+      font-size: 15px;
+      color: var(--text-light);
+      display: inline;
+    }
+    .btn-tag {
+      display: inline-block;
+      background: #2d2d2d;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 4px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
+    .tag-yes {
+      display: inline-block;
+      background: #1e7d45;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-no {
+      display: inline-block;
+      background: #b71c1c;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-caution {
+      display: inline-block;
+      background: #e6a000;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+
+    /* Snap & Ask mode cards */
+    .snap-mode-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s, border-color 0.2s;
+      text-align: left;
+      font-family: inherit;
+      width: 100%;
+    }
+    .snap-mode-card:active { transform: scale(0.97); }
+    .snap-mode-card:hover,
+    .snap-mode-card:focus-visible { border-color: var(--brand); }
+    .snap-mode-icon { font-size: 36px; flex-shrink: 0; }
+    .snap-mode-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .snap-mode-desc { font-size: 13px; color: var(--text-light); }
+
+    /* Photo thumbnail in chat bubble */
+    .chat-bubble-photo {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    /* Preset codes grid */
+    .ref-codes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 0 4px;
+    }
+    .ref-code {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .ref-code strong {
+      color: var(--brand);
+    }
+
+    /* Chat view */
+    .chat-view {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+    .chat-view.active {
+      display: flex;
+    }
+    .content.hidden { display: none; }
+
+    .chat-back {
+      padding: 12px 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--brand);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chat-bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+    .chat-bubble.assistant {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      margin-right: auto;
+    }
+    .chat-bubble.user {
+      background: var(--brand);
+      color: white;
+      border-bottom-right-radius: 4px;
+      margin-left: auto;
+    }
+    .chat-bubble.typing {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      margin-right: auto;
+      color: var(--text-light);
+    }
+
+    /* Input bar */
+    .chat-input-label {
+      padding: 10px 16px 0;
+      background: white;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--brand);
+      text-align: center;
+    }
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px;
+      background: white;
+      flex-shrink: 0;
+      padding-bottom: env(safe-area-inset-bottom, 10px);
+    }
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      font-size: 16px;
+      outline: none;
+      font-family: inherit;
+      background: var(--bg);
+      transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: var(--brand); outline: none; }
+    .chat-input:focus-visible { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(183,28,28,0.3); }
+    .chat-send {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .chat-send:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .chat-send:active:not(:disabled) { background: #d06000; }
+    .chat-voice {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: white;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .chat-voice:active { background: var(--brand-dark); }
+    .chat-voice.listening {
+      background: #b71c1c;
+      animation: pulse-mic 1s infinite;
+    }
+    @keyframes pulse-mic {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(183,28,28,0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(183,28,28,0); }
+    }
+
+    /* Bottom spacing */
+    .bottom-spacer { height: 4px; }
+  </style>
+</head>
+<body>
+
+<a href="#chatInput" class="skip-nav">Skip to chat</a>
+
+<!-- ===== HOME VIEW ===== -->
+<div class="content" id="homeView" role="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
+    <div class="hero-text">
+      <h1>Hey! I'm <span>Ollie.</span></h1>
+      <p>I'm your <span class="ai-gradient">AI</span> air fryer oven assistant. I've read every page of the <strong style="font-size:16px;">Emeril Lagasse Dual Zone 360</strong> manual &mdash; ask me anything.</p>
+    </div>
+  </div>
+  <div class="hero-product">
+    <img src="emeril-airfryer.jpg" alt="Emeril Lagasse Dual Zone 360 Air Fryer Oven — tap to enlarge" class="hero-product-img" onclick="document.getElementById('imgFullscreen').classList.add('active')">
+  </div>
+
+  <!-- Fullscreen image overlay -->
+  <div class="img-fullscreen" id="imgFullscreen" onclick="this.classList.remove('active')">
+    <button class="img-fullscreen-close" aria-label="Close image">&#x2190; Back</button>
+    <img src="emeril-airfryer-full.jpg" alt="Emeril Lagasse Dual Zone 360 full size">
+  </div>
+
+  <!-- Button Guide Button -->
+  <button class="ref-btn" onclick="openButtonGuide()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F518;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Button Guide</div>
+      <div class="ref-btn-desc">What every knob and button on the panel does</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Quick Reference Button -->
+  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Quick Reference</div>
+      <div class="ref-btn-desc">How to air fry, bake, roast, use both zones &amp; more</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Snap & Ask Ollie Button -->
+  <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F4F7;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Snap &amp; Ask Ollie</div>
+      <div class="ref-btn-desc">Take a photo of food or a tray for advice</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Care & Info Button -->
+  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F9F9;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Care &amp; Info</div>
+      <div class="ref-btn-desc">Cleaning, specs, accessories &amp; troubleshooting</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Quick Questions -->
+  <h2 class="section-label">Quick Questions</h2>
+  <div class="quick-grid">
+    <button class="quick-card orange" onclick="askQuestion('How do I air fry frozen french fries?')">
+      <div class="quick-card-badge" aria-hidden="true">TOP</div>
+      <div class="quick-card-icon" aria-hidden="true">&#x1F35F;</div>
+      <div class="quick-card-title">Air fry fries</div>
+      <div class="quick-card-desc">Frozen fries, step by step</div>
+    </button>
+    <button class="quick-card blue" onclick="askQuestion('How do I cook two different foods at the same time using both zones?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F501;</div>
+      <div class="quick-card-title">Use both zones</div>
+      <div class="quick-card-desc">Cook 2 foods at once</div>
+    </button>
+    <button class="quick-card green" onclick="askQuestion('How do I set the temperature and time?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x1F321;</div>
+      <div class="quick-card-title">Set temp &amp; time</div>
+      <div class="quick-card-desc">Using the control knob</div>
+    </button>
+    <button class="quick-card purple" onclick="askQuestion('What does the Sync button do and how do I use it?')">
+      <div class="quick-card-icon" aria-hidden="true">&#x23F1;</div>
+      <div class="quick-card-title">QuickSync</div>
+      <div class="quick-card-desc">Finish both zones together</div>
+    </button>
+  </div>
+
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- ===== QUICK REFERENCE OVERLAY ===== -->
+<div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
+    <h2 class="ref-overlay-title">Quick Reference</h2>
+    <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2190; Back</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header blue">Air Fry &amp; Cook</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Air fry (basic):</strong> turn <span class="btn-tag">Control Knob</span> to <strong>Air Fry</strong> &rarr; press knob &rarr; turn to set temp (default 400&deg;F) &rarr; press knob &rarr; turn to set time (default 20 min) &rarr; <span class="btn-tag">Start/Pause</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Frozen fries:</strong> select <strong>Fries</strong> preset &rarr; adjust temp/time if needed &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; press <span class="btn-tag">Shake</span> before starting for a halfway flip reminder.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Chicken:</strong> select <strong>Chicken</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; default ~380&deg;F. Use Shake reminder for even browning.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Wings:</strong> select <strong>Wings</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; default ~400&deg;F. Shake halfway.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Steak:</strong> select <strong>Steak</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; default ~400&deg;F. Flip once.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Fish:</strong> select <strong>Fish</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; default ~375&deg;F. No need to flip.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Bacon:</strong> select <strong>Bacon</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; lay strips flat on crisper tray. Drip tray catches grease.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Vegetables:</strong> select <strong>Vegetables</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; toss with oil first for crispiness.</span></div></div>
+
+    <h3 class="ref-section-header green">Bake, Roast &amp; Grill</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Bake:</strong> select <strong>Bake</strong> &rarr; set temp (default 350&deg;F) &rarr; set time (default 25 min) &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; includes preheat. Use baking pan.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Roast:</strong> select <strong>Roast</strong> &rarr; set temp (default 350&deg;F) &rarr; set time (default 35 min) &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; includes preheat. Good for whole chicken (remove divider).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Pizza:</strong> select <strong>Pizza</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; default ~425&deg;F. Place directly on crisper tray for crispy crust.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Broil:</strong> select <strong>Broil</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; 450&deg;F, upper heat only. Watch food closely, it can burn fast.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Grill:</strong> select <strong>Grill</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; ~450&deg;F, upper heat with high fan. Use grill plate accessory.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Pastry:</strong> select <strong>Pastry</strong> preset &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; lower temp for delicate baking. Use baking pan.</span></div></div>
+
+    <h3 class="ref-section-header brown">Special Functions</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Toast:</strong> select <strong>Toast</strong> &rarr; turn knob to set <strong>darkness</strong> (1&ndash;7, not temperature) &rarr; press knob &rarr; set <strong>number of slices</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; this preset uses darkness level instead of temp and slice count instead of time.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Rotisserie:</strong> remove divider &rarr; install spit rod through food &rarr; secure forks &rarr; select <strong>Rotisserie</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; default ~375&deg;F. Use fetch tool to remove hot spit.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Dehydrate:</strong> select <strong>Dehydrate</strong> &rarr; set temp (~135&deg;F) &rarr; set time (up to 8 hr) &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; low heat, long time. For jerky, dried fruit, herbs.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Slow Cook:</strong> select <strong>Slow Cook</strong> &rarr; set time (up to 4 hr) &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; ~225&deg;F, no fan. Use baking pan or oven-safe pot.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Reheat:</strong> select <strong>Reheat</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; gentle heat to warm leftovers without overcooking.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Keep Warm:</strong> select <strong>Warm</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; ~170&deg;F. Holds food warm until you're ready to serve.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Defrost:</strong> select <strong>Defrost</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; very low heat (~85&deg;F) to thaw frozen food gently.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Proof dough:</strong> select <strong>Proof</strong> &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; very low heat (~85&deg;F) to rise bread dough.</span></div></div>
+
+    <h3 class="ref-section-header red">Dual Zone &amp; Sync</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Use both zones:</strong> insert the <strong>Divider</strong> into the center slot &rarr; set Zone 1 (left knob) &rarr; set Zone 2 (right knob) &rarr; press <span class="btn-tag">Start/Pause</span> on each side</div></div>
+    <div class="ref-row"><div class="ref-label"><strong>QuickSync:</strong> set both zones first &rarr; press <span class="btn-tag">Sync</span> &rarr; then <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; the oven staggers start times so both zones finish together.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Single zone (full oven):</strong> remove the <strong>Divider</strong> &rarr; use either knob to set cooking &rarr; <span class="btn-tag">Start/Pause</span> <span class="ref-desc">&mdash; use full-width XL trays for large items.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Fan speed:</strong> press <span class="btn-tag">Fan</span> to cycle: High &rarr; Low &rarr; Off <span class="ref-desc">&mdash; each zone has its own fan button.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Shake reminder:</strong> press <span class="btn-tag">Shake</span> before starting &rarr; oven beeps halfway to remind you to flip or shake food</div></div>
+
+    <h3 class="ref-section-header black">All 24 Presets</h3>
+    <div class="ref-codes">
+      <div class="ref-code"><strong>1</strong> Air Fry</div>
+      <div class="ref-code"><strong>2</strong> Fries</div>
+      <div class="ref-code"><strong>3</strong> Toast</div>
+      <div class="ref-code"><strong>4</strong> Rotisserie</div>
+      <div class="ref-code"><strong>5</strong> Chicken</div>
+      <div class="ref-code"><strong>6</strong> Pizza</div>
+      <div class="ref-code"><strong>7</strong> Wings</div>
+      <div class="ref-code"><strong>8</strong> Eggs</div>
+      <div class="ref-code"><strong>9</strong> Steak</div>
+      <div class="ref-code"><strong>10</strong> Vegetables</div>
+      <div class="ref-code"><strong>11</strong> Defrost</div>
+      <div class="ref-code"><strong>12</strong> Grill</div>
+      <div class="ref-code"><strong>13</strong> Bacon</div>
+      <div class="ref-code"><strong>14</strong> Ribs</div>
+      <div class="ref-code"><strong>15</strong> Fish</div>
+      <div class="ref-code"><strong>16</strong> Slow Cook</div>
+      <div class="ref-code"><strong>17</strong> Pastry</div>
+      <div class="ref-code"><strong>18</strong> Proof</div>
+      <div class="ref-code"><strong>19</strong> Broil</div>
+      <div class="ref-code"><strong>20</strong> Bake</div>
+      <div class="ref-code"><strong>21</strong> Roast</div>
+      <div class="ref-code"><strong>22</strong> Dehydrate</div>
+      <div class="ref-code"><strong>23</strong> Reheat</div>
+      <div class="ref-code"><strong>24</strong> Warm</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== BUTTON GUIDE OVERLAY ===== -->
+<div class="ref-overlay" id="buttonGuideOverlay" role="dialog" aria-label="Button Guide" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
+    <h2 class="ref-overlay-title">Button Guide</h2>
+    <button class="ref-overlay-close" onclick="closeButtonGuide()" aria-label="Close button guide">&#x2190; Back</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header blue">Zone Controls (Left &amp; Right sides)</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Control Knob</span> <span class="ref-desc">&mdash; the main dial on each side. <strong>Turn</strong> to scroll through presets. <strong>Press once</strong> to select, then <strong>turn</strong> to adjust temperature. <strong>Press again</strong>, then <strong>turn</strong> to adjust time. Left knob = Zone 1, Right knob = Zone 2.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Start / Pause</span> <span class="ref-desc">&mdash; press to start cooking for that zone. Press again to pause. Each zone has its own Start/Pause button.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Cancel</span> <span class="ref-desc">&mdash; press to stop and cancel cooking for that zone. Resets the zone to standby.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Fan</span> <span class="ref-desc">&mdash; cycles the convection fan for that zone: High &rarr; Low &rarr; Off. Most presets set fan automatically, but you can override.</span></div></div>
+
+    <h3 class="ref-section-header green">Center Controls (shared)</h3>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Sync</span> <span class="ref-desc">&mdash; QuickSync. Set both zones first, then press Sync. The oven staggers start times so both zones finish cooking at the same time.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Shake</span> <span class="ref-desc">&mdash; shake/flip reminder. Press before starting. The oven beeps halfway through cooking to remind you to shake or flip your food.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Light</span> <span class="ref-desc">&mdash; turns the interior oven light on or off so you can check on food without opening the door.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><span class="btn-tag">Mute</span> <span class="ref-desc">&mdash; mutes or unmutes all beeps and button sounds.</span></div></div>
+
+    <h3 class="ref-section-header brown">Display</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Each zone has its own LED display showing:</strong> <span class="ref-desc">selected preset, temperature, remaining time, fan speed icon, and heating element indicator.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Display color:</strong> <span class="ref-desc"><strong style="color:#1565c0;">Blue</strong> = ready to program. <strong style="color:#b71c1c;">Red</strong> = cooking in progress. Returns to <strong style="color:#1565c0;">blue</strong> when done.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Heating elements:</strong> <span class="ref-desc">icons show which heaters are active &mdash; upper only (Broil), lower only (Keep Warm), or both (most presets).</span></div></div>
+
+  </div>
+</div>
+
+<!-- ===== CARE & INFO OVERLAY ===== -->
+<div class="ref-overlay" id="careOverlay" role="dialog" aria-label="Care and Info" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
+    <h2 class="ref-overlay-title">Care &amp; Info</h2>
+    <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2190; Back</button>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header blue">Cleaning</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Before cleaning:</strong> <span class="ref-desc">unplug and let cool completely.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Interior walls:</strong> <span class="ref-desc">wipe with damp cloth and mild dish soap. Do not use abrasive cleaners or steel wool.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Drip tray:</strong> <span class="ref-desc">remove and wash with warm soapy water after each use. This catches grease &mdash; don't skip it.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Crisper tray &amp; baking pan:</strong> <span class="ref-desc">hand wash with warm soapy water or use the dishwasher.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Grill plate:</strong> <span class="ref-desc">soak in warm soapy water to loosen stuck food, then scrub gently.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>French doors:</strong> <span class="ref-desc">wipe glass with damp cloth. Open both doors fully for easy interior access.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Rotisserie spit &amp; forks:</strong> <span class="ref-desc">hand wash with soapy water. Use fetch tool to remove while hot.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Exterior:</strong> <span class="ref-desc">wipe stainless steel with a damp cloth. Dry immediately to prevent water spots.</span></div></div>
+    <div class="ref-row" style="background:#f9f4ec; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Important:</strong> <span class="ref-desc">clean the drip tray regularly. Built-up grease can smoke and is a fire hazard.</span></div>
+    </div>
+
+    <h3 class="ref-section-header red">Troubleshooting</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Won't turn on:</strong> <span class="ref-desc">check the power cord is plugged in securely. Try another outlet. The cord is only 3 feet long &mdash; do not use an extension cord.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Uneven cooking:</strong> <span class="ref-desc">don't overfill the basket. Shake or flip food halfway. In dual zone, one side may cook slightly faster &mdash; swap trays if needed.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Smoking:</strong> <span class="ref-desc">clean the drip tray &mdash; grease buildup causes smoke. Also check for food debris on the heating elements.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Food not crispy:</strong> <span class="ref-desc">lightly coat food with oil. Don't overcrowd the tray. Make sure fan is on High for air frying.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Display shows error (Er1&ndash;Er4):</strong> <span class="ref-desc">unplug for 30 seconds, then plug back in. If error persists, contact Emeril Everyday support at 973-287-5132.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Toast too dark/light:</strong> <span class="ref-desc">adjust the darkness level (1=light, 7=dark). Toast mode uses darkness setting, not temperature.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Exterior gets hot:</strong> <span class="ref-desc">this is normal. Keep the oven away from walls and cabinets. Leave 5&quot; clearance on all sides.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Felt a shock on the knob:</strong> <span class="ref-desc">some users report static. Make sure the oven is on a dry surface. If it happens often, contact support.</span></div></div>
+
+    <h3 class="ref-section-header green">Specifications</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Model:</strong> <span class="ref-desc">Emeril Lagasse Dual Zone 360 (DZEL24 Series)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power:</strong> <span class="ref-desc">1,750W &middot; 120V, 60Hz</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Capacity:</strong> <span class="ref-desc">25 quarts (XL)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Temperature range:</strong> <span class="ref-desc">85&deg;F &ndash; 450&deg;F</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Presets:</strong> <span class="ref-desc">24 cooking functions</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Outside size:</strong> <span class="ref-desc">17.7&quot; D x 15.9&quot; W x 14.2&quot; H</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Weight:</strong> <span class="ref-desc">~32 lbs</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power cord:</strong> <span class="ref-desc">3 feet (no extension cords)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Clearance needed:</strong> <span class="ref-desc">5&quot; on all sides and above</span></div></div>
+
+    <h3 class="ref-section-header" style="background:#e6a000;">Accessories</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Divider:</strong> <span class="ref-desc">metal insert that splits the oven into two independent zones. Remove for full-oven cooking.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Crisper tray:</strong> <span class="ref-desc">perforated tray for air frying. Standard size fits one zone; XL fits full oven.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Baking pan:</strong> <span class="ref-desc">solid tray for baking, roasting, catching drips. Standard fits one zone; XL fits full oven.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Grill plate:</strong> <span class="ref-desc">ridged plate for grilling. Place in one zone.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Rotisserie spit &amp; forks:</strong> <span class="ref-desc">rod with securing forks for rotisserie cooking. Full-width &mdash; remove divider first.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Rotisserie fetch tool:</strong> <span class="ref-desc">metal hook for safely removing the hot rotisserie spit. Always use this &mdash; never grab the spit with your hands.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Drip tray:</strong> <span class="ref-desc">sits at the bottom, catches grease and crumbs. Clean after every use.</span></div></div>
+    <div class="ref-row" style="background:#f9f4ec; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Order accessories:</strong> <span class="ref-desc"><a href="https://www.emerileveryday.com/parts___accessories" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">emerileveryday.com/parts___accessories</a></span></div>
+    </div>
+
+    <h3 class="ref-section-header" style="background:#78909c;">Official Manual &amp; Support</h3>
+    <div class="ref-row"><div class="ref-label"><span class="ref-desc"><a href="https://www.manualslib.com/manual/2637394/Emeril-Lagasse-Dzel24-01.html" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">View the full owner's manual on ManualsLib</a></span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Customer support:</strong> <span class="ref-desc">973-287-5132 &middot; info@tvcustomerinfo.com</span></div></div>
+
+    <div style="margin-top:16px; padding:12px; background:#fff8e1; border-left:4px solid #e6a000; border-radius:6px; font-size:13px; color:#5f6368; line-height:1.5;">
+      This tool is intended as a helpful guide and may contain errors. Always refer to the <a href="https://www.manualslib.com/manual/2637394/Emeril-Lagasse-Dzel24-01.html" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">official Emeril Lagasse owner's manual</a> for complete and accurate information.
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== SNAP & ASK MODE SELECTOR ===== -->
+<div class="ref-overlay" id="snapAskOverlay" role="dialog" aria-label="Snap and Ask Ollie" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
+    <h2 class="ref-overlay-title">Snap &amp; Ask Ollie</h2>
+    <button class="ref-overlay-close" onclick="closeSnapAsk()" aria-label="Close snap and ask">&#x2190; Back</button>
+  </div>
+  <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:16px; padding-top:24px;">
+    <p style="text-align:center; color:var(--text-light); font-size:15px;">What do you want to check?</p>
+
+    <button class="snap-mode-card" onclick="startCapture('cookware')">
+      <div class="snap-mode-icon" aria-hidden="true">&#x1F373;</div>
+      <div>
+        <div class="snap-mode-title">Can I put this in the air fryer?</div>
+        <div class="snap-mode-desc">Take a photo of a pan, tray, container, or dish</div>
+      </div>
+    </button>
+
+    <button class="snap-mode-card" onclick="startCapture('food')">
+      <div class="snap-mode-icon" aria-hidden="true">&#x1F357;</div>
+      <div>
+        <div class="snap-mode-title">How should I cook this?</div>
+        <div class="snap-mode-desc">Take a photo of food you want to air fry, bake, or roast</div>
+      </div>
+    </button>
+
+    <p style="text-align:center; color:var(--text-light); font-size:12px; margin-top:8px;">
+      Photos are sent to Ollie for analysis and are not stored.
+    </p>
+  </div>
+</div>
+
+<!-- Hidden file input for camera -->
+<input type="file" id="cameraInput" accept="image/*" capture="environment"
+       style="display:none;" onchange="handlePhoto(event)">
+
+<!-- ===== CHAT VIEW ===== -->
+<div class="chat-view" id="chatView">
+  <button class="chat-back" onclick="goHome()">&#x2039; Back</button>
+  <div class="chat-messages" id="chatMessages" aria-live="polite" aria-relevant="additions"></div>
+</div>
+
+<!-- Input (always visible) -->
+<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Ollie anything about your air fryer oven</label>
+<div class="chat-input-row">
+  <input type="text" class="chat-input" id="chatInput"
+         placeholder="Ask Ollie anything..."
+         enterkeyhint="send"
+         autocomplete="off">
+  <button class="chat-voice" id="chatVoice" onclick="toggleVoice()" aria-label="Voice input">&#x1F3A4;</button>
+  <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
+</div>
+
+<script>
+  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Emeril Lagasse Dual Zone 360 Air Fryer Oven (DZEL24 Series).
+
+Your job is to help users — especially older adults and people who find electronics confusing — understand how to use their air fryer oven. Always be warm, patient, and encouraging. Never be condescending.
+
+RULES:
+- Give short, clear, numbered steps. Maximum 5 steps per answer.
+- Use plain English. Say "turn the knob" not "rotate the selector dial".
+- When describing a control, say which side it's on (e.g. "the left Control Knob for Zone 1" or "the Sync button in the center").
+- If the user seems frustrated or confused, acknowledge it warmly before answering.
+- Only answer questions about this air fryer oven. For anything else, say: "I'm only set up to help with this Emeril Lagasse air fryer oven — for other questions, a quick web search should help!"
+- Never guess. If you don't know, say so and suggest they check the manual.
+- Keep answers under 150 words. Be concise.
+- Your name is Ollie.
+
+PHOTO SAFETY:
+- You may receive photos from users. ONLY respond to photos of food, cookware, trays, pans, or this air fryer oven.
+- If a photo does not show food, cookware, or an air fryer, respond ONLY with: "I can only help with food and cookware photos for your air fryer oven. Please send a picture of the food you want to cook or the dish you want to check!"
+- Do NOT describe, analyze, or comment on inappropriate, explicit, violent, or off-topic images. Do not acknowledge what is in the photo. Just give the redirect message above.
+- Never generate content that is harmful, explicit, or unrelated to air fryer oven usage.
+
+DEVICE INFO:
+Model: Emeril Lagasse Dual Zone 360 (DZEL24 Series)
+Power: 1,750W · 120V, 60Hz
+Capacity: 25 quarts · Temperature range: 85°F–450°F
+Door style: French door (dual doors open outward)
+Zones: Dual independent zones with center divider
+
+CONTROL PANEL LAYOUT:
+The panel is on top, above the French doors. It is mirrored — left controls Zone 1, right controls Zone 2, center controls are shared.
+
+Zone 1 (Left side):
+- Control Knob 1 (rotary push-knob) — turn to scroll presets, press to select, turn to adjust temp/time
+- Cancel 1 — cancels Zone 1
+- Start/Pause 1 — starts or pauses Zone 1
+- Fan 1 — cycles fan: High → Low → Off
+
+Center (shared):
+- Sync — QuickSync: staggers start times so both zones finish together
+- Mute — mutes/unmutes all sounds
+- Light — interior oven light on/off
+- Shake — shake/flip reminder; beeps halfway through cooking
+
+Zone 2 (Right side):
+- Control Knob 2, Cancel 2, Start/Pause 2, Fan 2 — same as Zone 1 but for Zone 2
+
+LED Displays (one per zone):
+- Shows: preset name, temperature, time remaining, fan speed icon, heating element icon
+- Blue = ready to program · Red = cooking in progress
+
+HOW TO USE THE CONTROL KNOB:
+1. Turn the knob to scroll through the 24 presets
+2. Press the knob to select a preset
+3. Turn the knob to adjust temperature
+4. Press the knob again
+5. Turn the knob to adjust time
+6. Press Start/Pause to begin cooking
+
+24 PRESETS (in order):
+Air Fry (400°F, 20 min, fan High), Fries (~400°F), Toast (darkness 1-7, slice count), Rotisserie (~375°F, 45 min), Chicken (~380°F), Pizza (~425°F), Wings (~400°F), Eggs (~300°F), Steak (~400°F), Vegetables (~375°F), Defrost (~85°F), Grill (~450°F, upper heat, fan High), Bacon (~350°F), Ribs (~325°F), Fish (~375°F), Slow Cook (~225°F, no fan), Pastry (~350°F), Proof (~85°F), Broil (450°F, upper heat only, no fan), Bake (350°F, 25 min), Roast (350°F, 35 min, with preheat), Dehydrate (~135°F, 8 hr), Reheat (~325°F), Warm (~170°F)
+
+SPECIAL NOTES:
+- Toast mode is DIFFERENT: it uses a darkness level (1-7) instead of temperature, and number of slices instead of time. This confuses many users.
+- Rotisserie requires removing the divider (it uses the full oven width).
+- Fan speed is set automatically by each preset but can be overridden with the Fan button.
+- The Shake button must be pressed BEFORE pressing Start/Pause.
+- Dual zone: each zone must be started separately with its own Start/Pause button.
+- QuickSync: set both zones first, press Sync, then start. It delays the shorter zone so both finish at the same time.
+
+ACCESSORIES:
+- Divider — metal insert for dual zone mode. Remove for full-oven/rotisserie.
+- Crisper tray — perforated, for air frying (standard fits one zone, XL fits full oven)
+- Baking pan — solid, for baking/roasting (standard fits one zone, XL fits full oven)
+- Grill plate — ridged, for grilling
+- Rotisserie spit + forks — for rotisserie mode (full-width only)
+- Rotisserie fetch tool — metal hook to safely remove hot spit
+- Drip tray — bottom tray, catches grease. Clean after every use.
+
+SAFETY:
+- Keep 5" clearance on all sides and above — the exterior gets HOT
+- Do not use extension cords (cord is only 3 feet)
+- Never leave unattended while cooking
+- Use the fetch tool for the rotisserie spit — it's extremely hot
+- Clean the drip tray regularly — grease buildup is a fire hazard
+- Do not put plastic, paper, or anything flammable inside
+- Do not immerse the oven in water
+- Unplug when not in use and before cleaning`;
+
+  const COOKWARE_PHOTO_PROMPT = `
+
+ADDITIONAL TASK: COOKWARE PHOTO ANALYSIS
+The user sent a photo of a pan, tray, dish, or container. Analyze whether it is safe in this air fryer oven.
+IMPORTANT: If the photo does NOT show cookware, a container, or a tray, do NOT analyze it. Respond only with the redirect message from the PHOTO SAFETY rules above.
+
+COOKWARE SAFETY KNOWLEDGE FOR AIR FRYER OVEN:
+SAFE: Oven-safe glass (Pyrex), ceramic/stoneware (oven-safe), cast iron, stainless steel, oven-safe silicone molds, aluminum foil (as liner, don't block airflow), parchment paper (don't let it touch heating elements), the included trays and accessories.
+UNSAFE: Plastic containers (will melt), paper plates, styrofoam, wooden boards/spoons (will burn at high temps), non-oven-safe glass, anything with plastic handles.
+CAUTION: Non-stick pans (safe up to ~450°F but check rating), foil pans (may blow around from fan — weigh down with food), glass lids (check oven-safe rating).
+
+RESPONSE FORMAT:
+- Start with a clear verdict: "Safe to use!", "Do NOT use this!", or "Use with caution"
+- Explain in 2-3 short sentences
+- If you cannot identify the material, say so and suggest checking the bottom for an "oven-safe" marking
+- Keep response under 100 words`;
+
+  const FOOD_PHOTO_PROMPT = `
+
+ADDITIONAL TASK: FOOD PHOTO ANALYSIS
+The user sent a photo of food they want to cook. Give specific instructions for this Emeril Lagasse Dual Zone 360 air fryer oven.
+IMPORTANT: If the photo does NOT show food, do NOT analyze it. Respond only with the redirect message from the PHOTO SAFETY rules above.
+
+24 PRESETS: Air Fry, Fries, Toast, Rotisserie, Chicken, Pizza, Wings, Eggs, Steak, Vegetables, Defrost, Grill, Bacon, Ribs, Fish, Slow Cook, Pastry, Proof, Broil, Bake, Roast, Dehydrate, Reheat, Warm
+
+RESPONSE FORMAT:
+- Start by naming what you see: "That looks like..."
+- Recommend the best preset and give step-by-step instructions using button names
+- Include temperature and time recommendations
+- Mention which tray/accessory to use (crisper tray, baking pan, grill plate)
+- Max 5 numbered steps
+- Include tips: "press Shake for a halfway flip reminder", "lightly coat with oil for crispiness"
+- Safe internal temps: 160°F ground meat/pork, 165°F poultry/leftovers, 145°F steak/fish
+- If you cannot identify the food, ask the user to describe it
+- Keep response under 150 words`;
+
+  let pendingPhoto = null;
+  let snapMode = null;
+
+  const homeView = document.getElementById("homeView");
+  const chatView = document.getElementById("chatView");
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const chatSend = document.getElementById("chatSend");
+  const chatVoice = document.getElementById("chatVoice");
+
+  let conversationHistory = [];
+  let isWaiting = false;
+  let recognition = null;
+  let isListening = false;
+
+  // ===== VOICE INPUT (Web Speech API) =====
+  function toggleVoice() {
+    if (isListening) { stopVoice(); return; }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice input is not supported in this browser. Try Chrome or Safari.");
+      return;
+    }
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.onstart = function() {
+      isListening = true;
+      chatVoice.classList.add("listening");
+      chatInput.placeholder = "Listening...";
+    };
+    recognition.onresult = function(event) {
+      let transcript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      chatInput.value = transcript;
+    };
+    recognition.onend = function() {
+      isListening = false;
+      chatVoice.classList.remove("listening");
+      chatInput.placeholder = "Ask Ollie anything...";
+      if (chatInput.value.trim()) sendMessage();
+    };
+    recognition.onerror = function(event) {
+      isListening = false;
+      chatVoice.classList.remove("listening");
+      chatInput.placeholder = "Ask Ollie anything...";
+      if (event.error !== "no-speech" && event.error !== "aborted") {
+        console.error("Speech recognition error:", event.error);
+      }
+    };
+    recognition.start();
+  }
+  function stopVoice() {
+    if (recognition) recognition.stop();
+    isListening = false;
+    chatVoice.classList.remove("listening");
+    chatInput.placeholder = "Ask Ollie anything...";
+  }
+
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  // ===== OVERLAY MANAGEMENT =====
+  function openRef() {
+    const o = document.getElementById("refOverlay");
+    o.classList.add("active");
+    o.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapRefFocus);
+  }
+  function closeRef() {
+    const o = document.getElementById("refOverlay");
+    o.classList.remove("active");
+    document.removeEventListener("keydown", trapRefFocus);
+    document.querySelector(".ref-btn").focus();
+  }
+  function trapRefFocus(e) {
+    if (e.key === "Escape") { closeRef(); return; }
+    if (e.key !== "Tab") return;
+    const o = document.getElementById("refOverlay");
+    const f = o.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (e.shiftKey) { if (document.activeElement === f[0]) { e.preventDefault(); f[f.length-1].focus(); } }
+    else { if (document.activeElement === f[f.length-1]) { e.preventDefault(); f[0].focus(); } }
+  }
+
+  function openButtonGuide() {
+    const o = document.getElementById("buttonGuideOverlay");
+    o.classList.add("active");
+    o.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapButtonGuideFocus);
+  }
+  function closeButtonGuide() {
+    const o = document.getElementById("buttonGuideOverlay");
+    o.classList.remove("active");
+    document.removeEventListener("keydown", trapButtonGuideFocus);
+  }
+  function trapButtonGuideFocus(e) {
+    if (e.key === "Escape") { closeButtonGuide(); return; }
+    if (e.key !== "Tab") return;
+    const o = document.getElementById("buttonGuideOverlay");
+    const f = o.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (e.shiftKey) { if (document.activeElement === f[0]) { e.preventDefault(); f[f.length-1].focus(); } }
+    else { if (document.activeElement === f[f.length-1]) { e.preventDefault(); f[0].focus(); } }
+  }
+
+  function openCare() {
+    const o = document.getElementById("careOverlay");
+    o.classList.add("active");
+    o.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapCareFocus);
+  }
+  function closeCare() {
+    const o = document.getElementById("careOverlay");
+    o.classList.remove("active");
+    document.removeEventListener("keydown", trapCareFocus);
+  }
+  function trapCareFocus(e) {
+    if (e.key === "Escape") { closeCare(); return; }
+    if (e.key !== "Tab") return;
+    const o = document.getElementById("careOverlay");
+    const f = o.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (e.shiftKey) { if (document.activeElement === f[0]) { e.preventDefault(); f[f.length-1].focus(); } }
+    else { if (document.activeElement === f[f.length-1]) { e.preventDefault(); f[0].focus(); } }
+  }
+
+  function openSnapAsk() {
+    const o = document.getElementById("snapAskOverlay");
+    o.classList.add("active");
+    o.querySelector(".ref-overlay-close").focus();
+    document.addEventListener("keydown", trapSnapAskFocus);
+  }
+  function closeSnapAsk() {
+    const o = document.getElementById("snapAskOverlay");
+    o.classList.remove("active");
+    document.removeEventListener("keydown", trapSnapAskFocus);
+  }
+  function trapSnapAskFocus(e) {
+    if (e.key === "Escape") { closeSnapAsk(); return; }
+    if (e.key !== "Tab") return;
+    const o = document.getElementById("snapAskOverlay");
+    const f = o.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (e.shiftKey) { if (document.activeElement === f[0]) { e.preventDefault(); f[f.length-1].focus(); } }
+    else { if (document.activeElement === f[f.length-1]) { e.preventDefault(); f[0].focus(); } }
+  }
+
+  // ===== SNAP & ASK PHOTO =====
+  function startCapture(mode) {
+    snapMode = mode;
+    closeSnapAsk();
+    setTimeout(() => { document.getElementById("cameraInput").click(); }, 100);
+  }
+
+  function handlePhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const MAX_DIM = 1024;
+        let w = img.width, h = img.height;
+        if (w > MAX_DIM || h > MAX_DIM) {
+          if (w > h) { h = Math.round(h * (MAX_DIM / w)); w = MAX_DIM; }
+          else { w = Math.round(w * (MAX_DIM / h)); h = MAX_DIM; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        pendingPhoto = { base64: dataUrl.split(",")[1], mediaType: "image/jpeg", mode: snapMode, dataUrl };
+        sendPhotoMessage();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = "";
+  }
+
+  async function sendPhotoMessage() {
+    if (!pendingPhoto || isWaiting) return;
+    showChat();
+    isWaiting = true;
+    chatSend.disabled = true;
+
+    const userPrompt = pendingPhoto.mode === "cookware"
+      ? "Can I use this dish/container in the air fryer oven? Is it safe?"
+      : "I want to cook this food. How should I cook it in this Emeril Lagasse Dual Zone 360 air fryer oven?";
+
+    const userBubble = document.createElement("div");
+    userBubble.className = "chat-bubble user";
+    const thumbImg = document.createElement("img");
+    thumbImg.src = pendingPhoto.dataUrl;
+    thumbImg.className = "chat-bubble-photo";
+    thumbImg.alt = "Photo you sent";
+    userBubble.appendChild(thumbImg);
+    const textNode = document.createElement("div");
+    textNode.textContent = pendingPhoto.mode === "cookware"
+      ? "Can I put this in the air fryer?"
+      : "How should I cook this?";
+    userBubble.appendChild(textNode);
+    chatMessages.appendChild(userBubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    const userContent = [
+      { type: "image", source: { type: "base64", media_type: pendingPhoto.mediaType, data: pendingPhoto.base64 } },
+      { type: "text", text: userPrompt }
+    ];
+    conversationHistory.push({ role: "user", content: userContent });
+
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble typing";
+    typing.setAttribute("role", "status");
+    typing.textContent = "Ollie is looking at your photo...";
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    const photoSystemPrompt = pendingPhoto.mode === "cookware"
+      ? SYSTEM_PROMPT + COOKWARE_PHOTO_PROMPT
+      : SYSTEM_PROMPT + FOOD_PHOTO_PROMPT;
+    const photoMode = pendingPhoto.mode;
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 1024,
+          system: photoSystemPrompt,
+          messages: conversationHistory,
+          device_id: "emeril-lagasse-dual-zone-360"
+        })
+      });
+      typing.remove();
+      if (!response.ok) throw new Error("API error " + response.status);
+      const data = await response.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: "assistant", content: reply });
+      const lastUserIdx = conversationHistory.length - 2;
+      if (conversationHistory[lastUserIdx] && Array.isArray(conversationHistory[lastUserIdx].content)) {
+        conversationHistory[lastUserIdx].content = photoMode === "cookware"
+          ? "[User sent a photo of cookware for air fryer safety check]"
+          : "[User sent a photo of food for air fryer cooking instructions]";
+      }
+      const bubble = addBubble("", "assistant");
+      formatBubble(bubble, reply);
+    } catch (err) {
+      typing.remove();
+      addBubble("Sorry, I couldn't analyze that photo right now. Please try again.", "assistant");
+      console.error("Photo chat error:", err);
+    }
+
+    pendingPhoto = null;
+    isWaiting = false;
+    chatSend.disabled = false;
+    chatInput.focus();
+  }
+
+  // ===== CHAT FUNCTIONS =====
+  function showChat() {
+    homeView.classList.add("hidden");
+    chatView.classList.add("active");
+  }
+  function goHome() {
+    chatView.classList.remove("active");
+    homeView.classList.remove("hidden");
+  }
+  function askQuestion(text) {
+    chatInput.value = text;
+    showChat();
+    sendMessage();
+  }
+  function addBubble(text, role) {
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble ${role}`;
+    bubble.textContent = text;
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return bubble;
+  }
+  function formatBubble(bubble, text) {
+    let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\n(\d+)\.\s/g, "<br>$1. ");
+    html = html.replace(/\n/g, "<br>");
+    bubble.innerHTML = html;
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || isWaiting) return;
+    showChat();
+    addBubble(text, "user");
+    chatInput.value = "";
+    isWaiting = true;
+    chatSend.disabled = true;
+    conversationHistory.push({ role: "user", content: text });
+
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble typing";
+    typing.setAttribute("role", "status");
+    typing.textContent = "Thinking...";
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 512,
+          system: SYSTEM_PROMPT,
+          messages: conversationHistory,
+          device_id: "emeril-lagasse-dual-zone-360"
+        })
+      });
+      typing.remove();
+      if (!response.ok) {
+        const err = await response.text();
+        throw new Error(`API error ${response.status}: ${err}`);
+      }
+      const data = await response.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: "assistant", content: reply });
+      const bubble = addBubble("", "assistant");
+      formatBubble(bubble, reply);
+    } catch (err) {
+      typing.remove();
+      addBubble("Sorry, I couldn't connect right now. Please try again in a moment.", "assistant");
+      console.error("Chat error:", err);
+    }
+    isWaiting = false;
+    chatSend.disabled = false;
+    chatInput.focus();
+  }
+</script>
+
+</body>
+</html>
