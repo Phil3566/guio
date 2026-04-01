@@ -289,6 +289,11 @@ Full list in `research/category_picks.csv`. Groups include:
 | Mar 2026 | TVs identified as top expansion opportunity (confusion score 6/10) |
 | Mar 2026 | Amazon review pages require login — pivoted to product page scraping instead |
 | Mar 2026 | API key stored in `.env`, read by both server.js and Python scripts |
+| Mar 2026 | Deep-dive air fryer analysis: Cosori #1 seller scored 0 (too easy), Emeril Dual Zone scored 6/10 |
+| Mar 2026 | Third device chosen: Emeril Lagasse Dual Zone 360 Air Fryer (ASIN B0BZ52FLKC, confusion 6/10) |
+| Mar 2026 | Built Emeril air fryer device page with 24 presets, dual-zone controls, red/copper theme |
+| Mar 2026 | Added `dotenv` to server.js — auto-loads API key from `.env` |
+| Mar 2026 | QR code generated for Emeril page (GitHub Pages URL) — needs fix, currently broken |
 
 ---
 
@@ -312,10 +317,25 @@ Full list in `research/category_picks.csv`. Groups include:
 - [x] Build automated review analyzer (`review_analyzer.py`)
 - [x] Run full analysis across 35 categories — results in `analysis_2026-03-30.csv`
 - [x] Identify TVs as top expansion opportunity
+- [x] Deep-dive air fryer analysis (Cosori too easy, Emeril Dual Zone = best candidate)
+- [x] Fixed air fryer Best Sellers URL in `category_picks.csv`
+
+### Emeril air fryer page — completed
+- [x] Build `emeril-airfryer.html` — 1,360 lines, 4 overlays, chat, voice, 24 presets
+- [x] Quick Reference: Air Fry & Cook, Bake & Roast, Special Functions, Dual Zone & Sync
+- [x] Button Guide: Zone controls, center controls (Sync/Shake/Light/Mute), display colors
+- [x] Care & Info: cleaning, troubleshooting (Er1-Er4), specs, accessories, support contacts
+- [x] Snap & Ask: "Can I put this in the air fryer?" + "How should I cook this?"
+- [x] System prompt covers all 24 presets, dual zone, QuickSync, Toast darkness mode
+- [x] QR code SVG generated (`qr-emeril.svg` + `qr-emeril-print.html`)
+- [x] Added `dotenv` to server.js for auto API key loading
+- [x] Pushed to GitHub
+- [ ] QR code URL needs fixing — currently points to wrong page when scanned
+- [ ] Add product images (`emeril-airfryer.jpg` + `emeril-airfryer-full.jpg`)
+- [ ] Verify preset default temps against physical manual (some are approximate)
 
 ### Next up
-- [ ] Fix ~13 category URL mismatches in review analyzer (wrong products returned)
-- [ ] Build third device page based on research results (TV or printer)
+- [ ] Fix Emeril QR code (confirm correct live URL)
 - [ ] Add sticker kit upsell section to device pages
 - [ ] Test on mobile (primary use case — user is standing at device)
 - [ ] Deploy to DigitalOcean (user has asked about this)
