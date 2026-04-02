@@ -1,3 +1,7 @@
 node_modules/
 .env
+.DS_Store
 research/results_*.csv
+research/__pycache__/
+db/faq.db-shm
+db/faq.db-wal

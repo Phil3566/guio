@@ -217,9 +217,12 @@ in the project folder.
 Based on automated review analysis (see `research/analysis_2026-03-30.csv`):
 
 ### Top opportunities (confusion score 5+, ClearLabel fit: Yes)
-1. **TVs** — confusion 6/10, fit: Yes. Top pain point: setup, smart features, remote
-2. **Printers** — confusion 5/10, fit: Yes. Setup, Wi-Fi connectivity, driver installation
-3. **Microwaves** — confusion 5/10, fit: Yes (already building)
+1. **Digital picture frames (Frameo-powered)** — Very strong UX pain across all 5 questions. Gift setup failure is the #1 complaint: frames sit unused because 65+ recipients can't connect WiFi. One Frameo guide covers dozens of brands (BIGASUO, Akimart, Pastigio, Dragon Touch, YunQiDeer, Pexar). Best manufacturer licensing angle — Frameo hardware makers would pay to reduce 1-star "can't set up" reviews.
+2. **Aura Carver Digital Picture Frame** — Very strong confusion evidence (all 5 UX questions). Proprietary software (not Frameo). Touch bar misfires, no pause/off button, arrives with no manual (just a QR code). Families travel to help elderly recipients set up.
+3. **Emeril Lagasse Dual Zone 360 Air Fryer** — confusion 6/10, fit: Yes (already built)
+4. **Cuisinart CBK-110 Bread Maker** — Strong evidence on 4 of 5 UX questions. Cuisinart confirmed their own instruction booklet was incorrect. Button confusion, unexpected behavior.
+5. **TVs** — confusion 6/10, fit: Yes. Top pain point: setup, smart features, remote
+6. **Printers** — confusion 5/10, fit: Yes. Setup, Wi-Fi connectivity, driver installation
 
 ### Categories researched (39 selected from 127)
 Full list in `research/category_picks.csv`. Groups include:
@@ -228,6 +231,28 @@ Full list in `research/category_picks.csv`. Groups include:
 - Home (robot vacuums, sewing machines, garage door openers, etc.)
 - Office (printers, label makers, shredders)
 - Personal Care (hair clippers, electric toothbrushes, etc.)
+
+### Digital Picture Frames — Deep Dive
+
+**Frameo ecosystem (software platform, not a brand):**
+Frameo licenses its app to third-party hardware manufacturers. One ClearLabel guide covers all of them.
+- **Brands using Frameo:** BIGASUO, Akimart, Pastigio, Dragon Touch, YunQiDeer, Pexar (by Lexar), and many others
+- **Common hardware:** 10.1" 1280x800 IPS, 16-32GB, 2.4GHz WiFi only, plastic build
+- **Premium tier:** Pexar — 2K resolution, anti-glare, 64GB, rear gallery lighting
+- **Key differentiators:** screen size, storage, anti-glare (Pexar only), 5GHz WiFi (BIGASUO 21.5" only)
+
+**Aura Carver (separate ecosystem, proprietary software):**
+- NOT compatible with Frameo
+- Touch bar controls (misfires common), no physical pause/off button
+- Arrives with no printed manual — just a QR code
+- Very strong confusion evidence across all 5 UX questions
+
+**Why frames are ideal for ClearLabel:**
+- Perfect demographic overlap (65+ gift recipients)
+- The #1 failure point is gift setup: frame sits unused because recipient can't connect WiFi
+- QR code on gift box insert or frame back → "Just got this as a gift? Start here"
+- Manufacturer licensing pitch: reduces 1-star "can't set up" reviews that kill conversion
+- One Frameo guide = dozens of brands served
 
 ### Excluded categories
 - **Medical/health devices** — liability risk if guide gives wrong info
@@ -293,7 +318,12 @@ Full list in `research/category_picks.csv`. Groups include:
 | Mar 2026 | Third device chosen: Emeril Lagasse Dual Zone 360 Air Fryer (ASIN B0BZ52FLKC, confusion 6/10) |
 | Mar 2026 | Built Emeril air fryer device page with 24 presets, dual-zone controls, red/copper theme |
 | Mar 2026 | Added `dotenv` to server.js — auto-loads API key from `.env` |
-| Mar 2026 | QR code generated for Emeril page (GitHub Pages URL) — needs fix, currently broken |
+| Mar 2026 | QR code generated for Emeril page — fixed to GitHub Pages URL, pushed |
+| Mar 2026 | Review analysis: Cuisinart CBK-110 bread maker — strong confusion on 4/5 UX questions |
+| Mar 2026 | Review analysis: Aura Carver digital picture frame — very strong confusion on all 5 questions |
+| Mar 2026 | Discovered Frameo ecosystem: software licensed to dozens of hardware brands (BIGASUO, Akimart, Pastigio, Dragon Touch, etc.) — one guide covers many brands |
+| Mar 2026 | Digital picture frames chosen as next device category — strongest UX pain, perfect demographic, best licensing angle |
+| Mar 2026 | Frameo-powered frames preferred over Aura Carver — one page covers dozens of brands vs. just one |
 
 ---
 
@@ -330,27 +360,43 @@ Full list in `research/category_picks.csv`. Groups include:
 - [x] QR code SVG generated (`qr-emeril.svg` + `qr-emeril-print.html`)
 - [x] Added `dotenv` to server.js for auto API key loading
 - [x] Pushed to GitHub
-- [ ] QR code URL needs fixing — currently points to wrong page when scanned
+- [x] QR code URL fixed — now points to GitHub Pages live URL
 - [ ] Add product images (`emeril-airfryer.jpg` + `emeril-airfryer-full.jpg`)
 - [ ] Verify preset default temps against physical manual (some are approximate)
 
-### Next up
-- [ ] Fix Emeril QR code (confirm correct live URL)
+### Review research (from separate Claude session)
+- [x] Cuisinart CBK-110 bread maker — analyzed, strong confusion signals
+- [x] Aura Carver digital picture frame — analyzed, very strong confusion across all 5 questions
+- [x] Frameo ecosystem mapped — software platform licensed to dozens of hardware brands
+- [x] Identified "gift setup failure" as the #1 pain point for digital frames
+- [ ] Import research files to `research/` folder: `cuisinart_review_analysis.md`, `aura_carver_review_analysis.md`, `Aura_Carver_Full_Manual.md`
+
+### Next up — Frameo digital picture frame page
+- [ ] Choose the best-selling Frameo-powered frame to build for (likely BIGASUO or Pastigio)
+- [ ] Gather Frameo app manual + WiFi setup steps
+- [ ] Build `public/frameo-frame.html` device page — focus on WiFi setup, adding photos, app pairing
+- [ ] Key CTA: "Just got this as a gift? Start here" — addresses the #1 failure point
+- [ ] QR code placement: gift box insert or frame back
+
+### Also next
 - [ ] Add sticker kit upsell section to device pages
 - [ ] Test on mobile (primary use case — user is standing at device)
 - [ ] Deploy to DigitalOcean (user has asked about this)
+- [ ] Add product images to Emeril page
 
 ### Near-term
 - [ ] Register domain: clearlabel.com (or clearlabel.co, getclrlabel.com)
-- [ ] Find sticker print-on-demand supplier
+- [ ] Find sticker/label print supplier (Sticker Mule, StickerGiant, Lightning Labels for Amazon FBA)
 - [ ] Create Amazon seller account and claim New Seller Incentives
   ($50 coupon credits + $200 ad credit + free Vine enrollment — expire 90 days)
 
 ### Later
+- [ ] Build Aura Carver device page (separate from Frameo — proprietary software)
+- [ ] Build Cuisinart CBK-110 bread maker device page
 - [ ] Build voice-guided mode (Web Speech API for TTS)
 - [ ] "What do I want to do?" outcome-based selector
 - [ ] Multi-device family subscription flow
-- [ ] Manufacturer outreach deck
+- [ ] Manufacturer outreach deck — pitch to Frameo hardware brands
 
 ---
 

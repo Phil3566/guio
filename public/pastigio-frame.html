@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ollie — Pastigio Digital Picture Frame Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #e53935;
+      --brand-dark: #b71c1c;
+      --orange: #e8710a;
+      --orange-light: #fff3e6;
+      --green-light: #e8f5e9;
+      --blue-light: #e3f2fd;
+      --purple-light: #f3e5f5;
+      --bg: #faf6f1;
+      --text: #202124;
+      --text-light: #5f6368;
+      --border: #e0dcd7;
+      --radius: 14px;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Skip nav */
+    .skip-nav {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      background: var(--brand);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      z-index: 2000;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-nav:focus {
+      top: 0;
+    }
+
+    /* Focus styles */
+    :focus-visible {
+      outline: 3px solid var(--brand);
+      outline-offset: 2px;
+    }
+    button:focus-visible {
+      outline: 3px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    /* Scrollable content */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hero banner */
+    .hero {
+      margin: 10px 12px 4px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #e53935 0%, #c62828 60%, #b71c1c 100%);
+      color: white;
+      padding: 14px 16px 10px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .hero-logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .hero-text h1 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    .hero-text h1 span {
+      color: #ffd54f;
+    }
+    .hero-text p {
+      font-size: 14px;
+      opacity: 1;
+      line-height: 1.5;
+    }
+    .hero-product {
+      text-align: center;
+      margin: 2px 12px 4px;
+    }
+    .hero-product-img {
+      width: 220px;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .hero-product-img:active { transform: scale(0.97); }
+
+    /* Fullscreen image overlay */
+    .img-fullscreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .img-fullscreen.active { display: flex; }
+    .img-fullscreen img {
+      max-width: 92vw;
+      max-height: 88vh;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    .img-fullscreen-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.9);
+      color: #202124;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 20px;
+      min-height: 44px;
+      border-radius: 22px;
+      cursor: pointer;
+    }
+
+    .ai-gradient {
+      background: linear-gradient(135deg, #ffd000, #ff85e0, #90e0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      font-size: 110%;
+    }
+
+    /* Navigation buttons */
+    .ref-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 12px 0;
+      padding: 12px 14px;
+      min-height: 44px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s;
+      border: none;
+      width: calc(100% - 24px);
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .ref-btn:active { transform: scale(0.97); }
+    .ref-btn:focus-visible { outline-color: #ffd54f; }
+    .ref-btn-icon { font-size: 22px; flex-shrink: 0; }
+    .ref-btn-text { flex: 1; }
+    .ref-btn-title { font-size: 15px; font-weight: 700; }
+    .ref-btn-desc { font-size: 12px; }
+    .ref-btn-chevron { font-size: 20px; }
+
+    /* Reference overlay */
+    .ref-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--bg);
+      flex-direction: column;
+    }
+    .ref-overlay.active { display: flex; }
+    .ref-overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .ref-overlay-title { font-size: 18px; font-weight: 700; color: inherit; }
+    .ref-overlay-close {
+      background: var(--brand);
+      color: white;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 12px 20px;
+      min-height: 44px;
+      line-height: 1;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ref-overlay-close:active { opacity: 0.8; }
+    .ref-overlay-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 16px 40px;
+    }
+    .ref-section-header {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .ref-section-header:first-child { margin-top: 0; }
+    .ref-section-header.blue { background: #1a73e8; }
+    .ref-section-header.green { background: #1e7d45; }
+    .ref-section-header.brown { background: #8d6e1f; }
+    .ref-section-header.red { background: #b71c1c; }
+    .ref-section-header.black { background: #222; }
+    .ref-section-header.purple { background: #7b1fa2; }
+    .ref-section-header.amber { background: #e6a000; }
+    .ref-section-header.grey { background: #78909c; }
+    .ref-row {
+      padding: 7px 0;
+      border-bottom: 1px solid #ebe7e2;
+    }
+    .ref-row:last-child { border-bottom: none; }
+    .ref-label {
+      font-size: 14px;
+    }
+    .ref-label strong { font-weight: 700; }
+    .ref-desc {
+      font-size: 15px;
+      color: var(--text-light);
+      display: inline;
+    }
+    .btn-tag {
+      display: inline-block;
+      background: #2d2d2d;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 4px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
+    .tag-yes {
+      display: inline-block;
+      background: #1e7d45;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-no {
+      display: inline-block;
+      background: #b71c1c;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-caution {
+      display: inline-block;
+      background: #e6a000;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+
+    /* Common issue cards */
+    .issue-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s, border-color 0.2s;
+      text-align: left;
+      font-family: inherit;
+      width: 100%;
+    }
+    .issue-card:active { transform: scale(0.97); }
+    .issue-card:hover,
+    .issue-card:focus-visible { border-color: var(--brand); }
+    .issue-card-icon { font-size: 32px; flex-shrink: 0; }
+    .issue-card-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .issue-card-desc { font-size: 13px; color: var(--text-light); }
+
+    /* Tech level selector */
+    .tech-level-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 8px 12px 4px;
+      background: white;
+      border-radius: 10px;
+      padding: 6px;
+      border: 1px solid var(--border);
+    }
+    .tech-level-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-light);
+      padding: 0 10px 0 6px;
+      white-space: nowrap;
+    }
+    .tech-level-pills {
+      display: flex;
+      flex: 1;
+      gap: 0;
+      background: #f0ebe6;
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .tech-pill {
+      flex: 1;
+      padding: 8px 4px;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+      text-align: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tech-pill.active {
+      background: var(--orange);
+      color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    /* Chat view */
+    .chat-view {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+    .chat-view.active {
+      display: flex;
+    }
+    .content.hidden { display: none; }
+
+    .chat-back {
+      padding: 12px 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--brand);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chat-bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+    .chat-bubble.assistant {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      margin-right: auto;
+    }
+    .chat-bubble.user {
+      background: var(--brand);
+      color: white;
+      border-bottom-right-radius: 4px;
+      margin-left: auto;
+    }
+    .chat-bubble.typing {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      margin-right: auto;
+      color: var(--text-light);
+    }
+
+    /* Input bar */
+    .chat-input-bar {
+      margin: 6px 12px 0;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      border-radius: 10px;
+      padding: 12px 14px 10px;
+      flex-shrink: 0;
+    }
+    .chat-input-bar-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .chat-input-bar-icon { font-size: 22px; }
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding-bottom: env(safe-area-inset-bottom, 2px);
+    }
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 24px;
+      font-size: 16px;
+      outline: none;
+      font-family: inherit;
+      background: rgba(255,255,255,0.95);
+      transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: white; outline: none; }
+    .chat-input:focus-visible { outline: none; border-color: white; box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
+    .chat-send {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .chat-send:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .chat-send:active:not(:disabled) { background: #d06000; }
+    .chat-voice {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: white;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .chat-voice:active { background: var(--brand-dark); }
+    .chat-voice.listening {
+      background: #b71c1c;
+      animation: pulse-mic 1s infinite;
+    }
+    @keyframes pulse-mic {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(229,57,53,0); }
+    }
+
+    /* Bottom spacing */
+    .bottom-spacer { height: 4px; }
+  </style>
+</head>
+<body>
+
+<a href="#chatInput" class="skip-nav">Skip to chat</a>
+
+<!-- ===== HOME VIEW ===== -->
+<div class="content" id="homeView" role="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
+    <div class="hero-text">
+      <h1>Hey! I'm <span>Ollie.</span></h1>
+      <p>I'm your <span class="ai-gradient">AI</span> picture frame assistant. I've read the complete Frameo manual &mdash; ask me anything about your <strong style="font-size:16px;">Pastigio frame</strong>.</p>
+    </div>
+  </div>
+  <div class="hero-product">
+    <img src="pastigio-frame.jpg" alt="Pastigio Digital Picture Frame — tap to enlarge" class="hero-product-img" onclick="document.getElementById('imgFullscreen').classList.add('active')">
+  </div>
+
+  <!-- Fullscreen image overlay -->
+  <div class="img-fullscreen" id="imgFullscreen" onclick="this.classList.remove('active')">
+    <button class="img-fullscreen-close" aria-label="Close image">&#x2190; Back</button>
+    <img src="pastigio-frame-full.jpg" alt="Pastigio Digital Picture Frame full size">
+  </div>
+
+  <!-- Tech Level Selector -->
+  <div class="tech-level-bar">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+
+  <!-- Quick Start Guide Button -->
+  <button class="ref-btn" onclick="openQuickStart()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F381;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Quick Start Guide</div>
+      <div class="ref-btn-desc">Gift setup, WiFi, family codes &amp; first photo</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Quick Reference Button -->
+  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Quick Reference</div>
+      <div class="ref-btn-desc">Photos, slideshow, display settings &amp; more</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Why People Love It Button -->
+  <button class="ref-btn" onclick="openHighlights()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#f9a825,#f57f17); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x2B50;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Why People Love It</div>
+      <div class="ref-btn-desc">What makes this frame a great gift</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Common Questions Button -->
+  <button class="ref-btn" onclick="openCommonQ()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#00897b,#00695c); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x2753;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Common Questions</div>
+      <div class="ref-btn-desc">Subscriptions, storage, WiFi, videos &amp; more</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Common Issues Button -->
+  <button class="ref-btn" onclick="openCommonIssues()" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x26A0;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Common Issues</div>
+      <div class="ref-btn-desc">WiFi, subscriptions, photos &amp; quick fixes</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <!-- Care & Info Button -->
+  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
+    <div class="ref-btn-icon" aria-hidden="true">&#x1F6E0;</div>
+    <div class="ref-btn-text">
+      <div class="ref-btn-title">Care &amp; Info</div>
+      <div class="ref-btn-desc">Troubleshooting, specs, subscription info &amp; support</div>
+    </div>
+    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
+  </button>
+
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- ===== QUICK START GUIDE OVERLAY ===== -->
+<div class="ref-overlay" id="quickStartOverlay" role="dialog" aria-label="Quick Start Guide" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
+    <h2 class="ref-overlay-title">Quick Start Guide</h2>
+    <button class="ref-overlay-close" onclick="closeQuickStart()" aria-label="Close quick start guide">&#x2190; Back</button>
+  </div>
+  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header red">Gift Setup &mdash; Just Unboxed? Start Here</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Step 1:</strong> <span class="ref-desc">Plug in the frame using the included power cord. The screen will turn on automatically.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 2:</strong> <span class="ref-desc">Select your language (English, Spanish, French, etc.).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 3:</strong> <span class="ref-desc">Connect to WiFi &mdash; tap your network name, then type the password. <strong>Must be 2.4GHz WiFi</strong> (not 5GHz).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 4:</strong> <span class="ref-desc">Enter your name and where the frame is (e.g., "Mom's Kitchen" or "Living Room").</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 5:</strong> <span class="ref-desc">If it asks to update, tap <strong>Yes</strong> and wait. This may take a few minutes.</span></div></div>
+    <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>That's it!</strong> <span class="ref-desc">Your frame is ready. Now add a family member so they can send you photos (see below).</span></div>
+    </div>
+
+    <h3 class="ref-section-header blue">Connect to WiFi &mdash; The #1 Problem</h3>
+    <div class="ref-row"><div class="ref-label"><span class="tag-caution">IMPORTANT</span> <span class="ref-desc">Your WiFi <strong>must be 2.4GHz</strong>. The frame cannot connect to 5GHz networks. This is the most common reason it won't connect.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Can't see your network?</strong> <span class="ref-desc">Ask someone to check if your router has a separate 2.4GHz network name. Many modern routers combine 2.4GHz and 5GHz into one name &mdash; the frame may not find it.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>See it but can't connect?</strong> <span class="ref-desc">Double-check the password. Tap the eye icon to show what you're typing. WiFi passwords are case-sensitive.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Network requirements:</strong> <span class="ref-desc">Must be 2.4GHz &bull; Must not be hidden &bull; Must use WPA2 (not WPA3) &bull; Channels 1&ndash;11 only</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Still stuck?</strong> <span class="ref-desc">Ask a family member to create a separate 2.4GHz network name on the router, then connect the frame to that name.</span></div></div>
+
+    <h3 class="ref-section-header green">Add Family Members</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Step 1:</strong> <span class="ref-desc">Tap the frame's screen once to open the menu.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 2:</strong> <span class="ref-desc">Tap <strong>"Add friend"</strong> (the little person icon with a + sign).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 3:</strong> <span class="ref-desc">A code appears on screen. It's valid for 12 hours.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 4:</strong> <span class="ref-desc">Call, text, or email this code to your family member.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 5:</strong> <span class="ref-desc">They download the free <strong>"Frameo"</strong> app on their phone (iPhone or Android).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 6:</strong> <span class="ref-desc">They open the app, tap <strong>"+"</strong>, and enter the code.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Done!</strong> <span class="ref-desc">They can now send you photos from anywhere in the world. Each family member needs to do this separately.</span></div></div>
+    <div class="ref-row" style="background:#e8f5e9; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Code expired?</strong> <span class="ref-desc">No problem. Just generate a new one by tapping "Add friend" again. There's no limit.</span></div>
+    </div>
+
+    <h3 class="ref-section-header purple">For Family Members &mdash; How to Send Photos</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Step 1:</strong> <span class="ref-desc">Download the free <strong>"Frameo"</strong> app on your phone (iPhone or Android).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 2:</strong> <span class="ref-desc">Get the code from the frame owner (they'll call or text it to you).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 3:</strong> <span class="ref-desc">Open the app &rarr; tap <strong>"+"</strong> &rarr; enter the code.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 4:</strong> <span class="ref-desc">Select photos &rarr; tap <strong>Send</strong>. You can send up to 10 photos at a time (or more with Frameo+).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 5:</strong> <span class="ref-desc">Photos appear on the frame within seconds!</span></div></div>
+    <div class="ref-row" style="background:#f3e5f5; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Tip:</strong> <span class="ref-desc">The 10-photo limit is per batch, not total. Just send multiple batches &mdash; there's no limit on how many photos the frame can hold.</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== QUICK REFERENCE OVERLAY ===== -->
+<div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
+    <h2 class="ref-overlay-title">Quick Reference</h2>
+    <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2190; Back</button>
+  </div>
+  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header blue">Viewing Photos</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Browse:</strong> <span class="ref-desc">Swipe left or right on the screen to see the next or previous photo.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Quick menu:</strong> <span class="ref-desc">Tap the screen once. A menu appears with icons for settings, friends, albums, and more.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>React:</strong> <span class="ref-desc">Double-tap the screen to send an emoji reaction. The person who sent the photo will see it in their app.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Slideshow:</strong> <span class="ref-desc">Photos rotate automatically. Change the speed in Settings &rarr; Slideshow &rarr; Timer.</span></div></div>
+
+    <h3 class="ref-section-header green">Managing Photos</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Delete a photo:</strong> <span class="ref-desc">Tap screen &rarr; tap the trash icon. This permanently removes the photo.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Hide a photo:</strong> <span class="ref-desc">Tap screen &rarr; tap the hide icon (eye with a line). The photo stays in storage but won't show in the slideshow.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Adjust how a photo fits:</strong> <span class="ref-desc">Tap screen &rarr; tap <strong>Adjust</strong> &rarr; drag to reposition what part of the photo you see.</span></div></div>
+    <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Fill vs. Fit (most common confusion):</strong> <span class="ref-desc"><strong>Fill</strong> = photo fills the whole screen, but the edges may get trimmed. <strong>Fit</strong> = you see the whole photo, but there will be bars on the sides. Tip: Landscape photos taken on your phone usually look best.</span></div>
+    </div>
+    <div class="ref-row"><div class="ref-label"><strong>Sort order:</strong> <span class="ref-desc">Settings &rarr; Slideshow &rarr; Photo display order. Choose: Date received, Date taken, or Shuffle.</span></div></div>
+
+    <h3 class="ref-section-header brown">Display &amp; Sleep</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Brightness:</strong> <span class="ref-desc">Settings &rarr; Display &rarr; drag the brightness slider. Max brightness is best for well-lit rooms.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Sleep schedule:</strong> <span class="ref-desc">Settings &rarr; Display &rarr; Sleep schedule. Default: off at 11pm, on at 7am. Adjust to match your routine.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power off:</strong> <span class="ref-desc">Tap screen &rarr; tap the Power icon (top right) &rarr; tap <strong>Power off</strong>.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Sleep mode:</strong> <span class="ref-desc">Tap screen &rarr; tap the Power icon &rarr; tap the Moon icon. The frame goes dark but still receives photos.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Turn on:</strong> <span class="ref-desc">Press and hold the power button on the back of the frame. It's near the center &mdash; you may need to use both hands.</span></div></div>
+
+    <h3 class="ref-section-header red">Albums &amp; Organize</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Create an album:</strong> <span class="ref-desc">My Photos &rarr; My Albums &rarr; tap <strong>"+"</strong> to create a new album.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Add photo to album:</strong> <span class="ref-desc">While viewing a photo, tap screen &rarr; tap the "Add to album" icon.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Important:</strong> <span class="ref-desc">Deleting an album does NOT delete the photos inside it. The photos stay in your library.</span></div></div>
+
+    <h3 class="ref-section-header black">Videos &amp; Sound</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Play video:</strong> <span class="ref-desc">Play/pause controls appear automatically when a video comes up in the slideshow.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Volume:</strong> <span class="ref-desc">Tap the speaker icon on screen to adjust volume.</span></div></div>
+    <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><span class="tag-caution">HEADS UP</span> <span class="ref-desc">Videos play with sound during the slideshow. This can be startling, especially at night. To mute: Settings &rarr; Slideshow &rarr; Video volume &rarr; Mute.</span></div>
+    </div>
+    <div class="ref-row"><div class="ref-label"><strong>Video length:</strong> <span class="ref-desc">Free: up to 15 seconds per video. Frameo+ subscription: longer videos.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Widgets:</strong> <span class="ref-desc">Show clock, weather, or date on photos: Settings &rarr; Slideshow.</span></div></div>
+
+    <h3 class="ref-section-header purple">Loading Photos Without the App</h3>
+    <div class="ref-row"><div class="ref-label"><strong>SD card:</strong> <span class="ref-desc">Insert SD card &rarr; tap <strong>Import</strong> to copy photos to the frame. Card must be FAT32 format, max 32GB.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>USB drive:</strong> <span class="ref-desc">Insert USB stick (FAT32 format) &rarr; tap <strong>Import</strong>.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>From computer:</strong> <span class="ref-desc">Connect USB cable &rarr; enable in Settings. <span class="tag-no">Mac NOT supported</span> &mdash; Windows and Linux only.</span></div></div>
+    <div class="ref-row" style="background:#e8f5e9; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Tip:</strong> <span class="ref-desc">SD card is the easiest way to load hundreds of photos at once &mdash; no subscription needed, no 10-photo limit.</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== WHY PEOPLE LOVE IT OVERLAY ===== -->
+<div class="ref-overlay" id="highlightsOverlay" role="dialog" aria-label="Why People Love It" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f9a825,#f57f17); color:white;">
+    <h2 class="ref-overlay-title">Why People Love It</h2>
+    <button class="ref-overlay-close" onclick="closeHighlights()" aria-label="Close highlights">&#x2190; Back</button>
+  </div>
+  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header red">Family Connection</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Photos from anywhere:</strong> <span class="ref-desc">Family members in different cities, states, or countries can send photos instantly from their phone.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Always up to date:</strong> <span class="ref-desc">New photos appear on the frame within seconds &mdash; no action needed from the person receiving them.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Everyone can contribute:</strong> <span class="ref-desc">There's no limit to how many family members can send photos. Kids, grandkids, siblings &mdash; everyone connects through one frame.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Daily interaction:</strong> <span class="ref-desc">Many families send photos regularly, turning the frame into something they look forward to checking every day.</span></div></div>
+
+    <h3 class="ref-section-header green">Easy to Use</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Quick setup:</strong> <span class="ref-desc">Most people have it running in 5&ndash;10 minutes. Plug in, connect WiFi, share a code with family &mdash; done.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Touchscreen navigation:</strong> <span class="ref-desc">Swipe left and right to browse photos. Tap to open menus. No buttons to memorize.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>No subscription needed:</strong> <span class="ref-desc">The frame works fully without paying anything. Receiving photos, slideshows, and sleep schedules are all free.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>No account required:</strong> <span class="ref-desc">The person receiving the frame doesn't need to create any account or remember any login.</span></div></div>
+
+    <h3 class="ref-section-header blue">Display Quality</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Large, clear screen:</strong> <span class="ref-desc">Available in 10.1" and 15.6" &mdash; large enough to see faces clearly from across the room.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Vibrant colours:</strong> <span class="ref-desc">IPS display with wide viewing angles. Photos look sharp and lifelike from any seat in the room.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Auto slideshow:</strong> <span class="ref-desc">Photos rotate automatically at whatever speed you choose. The frame does all the work.</span></div></div>
+
+    <h3 class="ref-section-header purple">Practical Benefits</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Generous storage:</strong> <span class="ref-desc">16&ndash;32GB internal storage holds thousands of photos without needing cloud storage or a subscription.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Multiple ways to load photos:</strong> <span class="ref-desc">Frameo app, SD card, or USB drive &mdash; several paths to get photos on the frame.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Works without WiFi:</strong> <span class="ref-desc">Once photos are loaded, the slideshow runs without any internet connection. WiFi is only needed to receive new photos.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Sleep schedule:</strong> <span class="ref-desc">Set the frame to turn off at night and back on in the morning automatically. No need to remember.</span></div></div>
+
+    <h3 class="ref-section-header amber">Great as a Gift</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Loved by older adults:</strong> <span class="ref-desc">The passive, always-on display is ideal for people who don't want to learn a phone or tablet. Photos just appear.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Bridges distance:</strong> <span class="ref-desc">Especially valued when the recipient lives far from family. The frame becomes a daily connection point.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Repeat gift:</strong> <span class="ref-desc">Families often buy multiple frames so everyone stays connected &mdash; parents, grandparents, aunts, and uncles.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Helpful for memory care:</strong> <span class="ref-desc">The always-on photo display works well for people with dementia or Alzheimer's &mdash; comforting and familiar.</span></div></div>
+
+  </div>
+</div>
+
+<!-- ===== COMMON QUESTIONS OVERLAY ===== -->
+<div class="ref-overlay" id="commonQOverlay" role="dialog" aria-label="Common Questions" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#00897b,#00695c); color:white;">
+    <h2 class="ref-overlay-title">Common Questions</h2>
+    <button class="ref-overlay-close" onclick="closeCommonQ()" aria-label="Close common questions">&#x2190; Back</button>
+  </div>
+  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header green">Cost &amp; Subscription</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Do I need a subscription?</strong> <span class="ref-desc">No. The frame works fully without paying anything. Receiving photos, slideshows, sleep schedule, and SD card backup are all free.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>What does Frameo+ add?</strong> <span class="ref-desc">$1.99/month or $16.99/year. Lets you send up to 100 photos at once (instead of 10), longer videos, cloud backup, and remote management from the app. Nice to have, not necessary.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>What's the 10-photo limit?</strong> <span class="ref-desc">Without a subscription, the app sends 10 photos at a time. Just send multiple batches &mdash; there's no limit on total photos. Or use an SD card to load hundreds at once.</span></div></div>
+
+    <h3 class="ref-section-header blue">Storage &amp; Photos</h3>
+    <div class="ref-row"><div class="ref-label"><strong>How many photos can it hold?</strong> <span class="ref-desc">Thousands. With 16&ndash;32GB of storage, a 32GB model holds roughly 40,000&ndash;80,000 phone photos. You'll likely never run out of space.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Can I load photos without the app?</strong> <span class="ref-desc">Yes. Insert an SD card (FAT32, max 32GB) with photos and tap Import. You can also use a USB drive. This is the fastest way to load many photos at once.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Does USB work with Mac?</strong> <span class="ref-desc">No. USB transfer only works from Windows and Linux. Mac users can use the Frameo phone app or an SD card instead.</span></div></div>
+
+    <h3 class="ref-section-header red">WiFi &amp; Connectivity</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Does it work without WiFi?</strong> <span class="ref-desc">Yes. Once photos are loaded, the slideshow plays perfectly offline. WiFi is only needed to receive new photos from the app.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Why does it need 2.4GHz WiFi?</strong> <span class="ref-desc">The frame's WiFi chip only supports 2.4GHz. Most routers broadcast both 2.4GHz and 5GHz &mdash; you just need to connect the frame to the right one.</span></div></div>
+
+    <h3 class="ref-section-header purple">Family &amp; Sharing</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Can multiple people send photos?</strong> <span class="ref-desc">Yes, unlimited. Each family member downloads the free Frameo app, gets a friend code from the frame, and they're connected permanently.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Can family see what's on my frame?</strong> <span class="ref-desc">Not without a Frameo+ subscription. Without it, family can send photos but can't see or manage what's on the frame.</span></div></div>
+
+    <h3 class="ref-section-header amber">Setup &amp; Daily Use</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Is it easy to set up?</strong> <span class="ref-desc">Most people have it running in 5&ndash;10 minutes. Plug in, pick a language, connect WiFi, share a code with family &mdash; done.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Will I lose photos in a power outage?</strong> <span class="ref-desc">No. Photos are stored in internal memory and survive power outages. The only thing that resets is the clock, which fixes itself when WiFi reconnects.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>How long can videos be?</strong> <span class="ref-desc">Up to 15 seconds with the free version. Frameo+ allows longer videos. Videos play with sound during the slideshow &mdash; you can mute them in Settings.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Does the person receiving the frame need an account?</strong> <span class="ref-desc">No. No account, no login, no password. The frame just works once it's connected to WiFi.</span></div></div>
+
+  </div>
+</div>
+
+<!-- ===== CARE & INFO OVERLAY ===== -->
+<div class="ref-overlay" id="careOverlay" role="dialog" aria-label="Care and Info" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
+    <h2 class="ref-overlay-title">Care &amp; Info</h2>
+    <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2190; Back</button>
+  </div>
+  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+  <div class="ref-overlay-body">
+
+    <h3 class="ref-section-header red">Troubleshooting</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Won't turn on:</strong> <span class="ref-desc">Check the power outlet works. Try a different cord. Unplug for 5 minutes, then replug. Press and hold the power button on the back for 10 seconds.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Frozen screen:</strong> <span class="ref-desc">Press and hold the power button on the back until the frame turns off. Unplug for 5 minutes, then replug.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Hard reset (last resort):</strong> <span class="ref-desc">Find the tiny reset hole on the back. Push a toothpick or paperclip in and hold for 5 seconds. <span class="tag-no">WARNING</span> This deletes all photos and settings.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>WiFi keeps disconnecting:</strong> <span class="ref-desc">Restart the frame. Make sure you're on 2.4GHz WiFi. If it drops weekly, the WiFi chip may be faulty &mdash; contact the seller.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Photos not arriving:</strong> <span class="ref-desc">Check WiFi is connected (look for the WiFi icon in the top bar). Ask the sender to check if the frame shows as "online" in their Frameo app.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Screen flickers:</strong> <span class="ref-desc">Lower brightness in Settings &rarr; Display. If flickering persists, contact the seller for replacement.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Touch not responding:</strong> <span class="ref-desc">Peel off any screen protector. If the top of the screen is dead, try rotating the frame upside-down to reach menus. Contact the seller.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Clock/time wrong:</strong> <span class="ref-desc">The frame has no internal battery. After a power outage, the clock resets. Reconnect to WiFi to auto-set the time, or set it manually in Settings.</span></div></div>
+    <div class="ref-row" style="background:#e8f5e9; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>About the "don't unplug" warning:</strong> <span class="ref-desc">This sounds scary but just means: use the power button to shut down, don't yank the cord. If you lose power in a storm, <strong>your photos are safe</strong>. You may just need to reset the clock.</span></div>
+    </div>
+    <div class="ref-row"><div class="ref-label"><strong>Frame completely dead after months?</strong> <span class="ref-desc">This is likely a hardware failure. Contact the seller through your Amazon order for warranty replacement.</span></div></div>
+
+    <h3 class="ref-section-header blue">WiFi Problems</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Can't find network:</strong> <span class="ref-desc">Must be 2.4GHz (not 5GHz), must not be hidden, must use WPA2 (not WPA3).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Wrong password:</strong> <span class="ref-desc">Tap the eye icon to show the password as you type. WiFi passwords are case-sensitive.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Router combines 2.4 &amp; 5GHz:</strong> <span class="ref-desc">Ask someone to create a separate 2.4GHz network name in router settings. Connect the frame to that name.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Connected but no internet:</strong> <span class="ref-desc">Restart both the router and the frame.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Drops WiFi every few days:</strong> <span class="ref-desc">This is a known issue. Restarting the frame usually fixes it temporarily. If it happens constantly, the WiFi chip may need warranty replacement.</span></div></div>
+
+    <h3 class="ref-section-header green">Backup &amp; Storage</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Backup to SD card:</strong> <span class="ref-desc">Settings &rarr; Backup &rarr; Backup to external storage. Card must be FAT32 format, max 32GB.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Auto backup:</strong> <span class="ref-desc">With an SD card inserted, the frame can back up automatically within 30 hours of any changes.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Cloud backup:</strong> <span class="ref-desc">Requires Frameo+ subscription ($1.99/month).</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Import from SD card:</strong> <span class="ref-desc">Insert card &rarr; tap <strong>Import</strong>. Great for loading lots of photos at once.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>What is FAT32?</strong> <span class="ref-desc">It's a format for memory cards. Most new SD cards up to 32GB are already FAT32. Cards larger than 32GB may need to be reformatted &mdash; ask a family member for help if needed.</span></div></div>
+
+    <h3 class="ref-section-header amber">Frameo+ &mdash; What's Free vs. Paid</h3>
+    <div class="ref-row" style="background:#e8f5e9; border-radius:6px; padding:8px;">
+      <div class="ref-label" style="font-size:14px;"><span class="tag-yes">FREE</span> <span class="ref-desc">View all photos &bull; Receive photos from family &bull; Slideshow &bull; Sleep schedule &bull; SD card backup &bull; Send up to 10 photos at a time from app &bull; 15-second videos</span></div>
+    </div>
+    <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:14px;"><span class="tag-caution">PAID</span> <span class="ref-desc">$1.99/month or $16.99/year &bull; Send 100 photos at once &bull; Longer videos &bull; Cloud backup &bull; Manage photos remotely from app</span></div>
+    </div>
+    <div class="ref-row" style="background:#e8f5e9; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:14px;"><strong>Your frame works fully without a subscription.</strong> <span class="ref-desc">The 10-photo limit is per batch, not total. Just send more batches. Or use an SD card to load hundreds of photos at once &mdash; no subscription needed.</span></div>
+    </div>
+
+    <h3 class="ref-section-header grey">Specifications</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Model:</strong> <span class="ref-desc">Pastigio M10R5 / M10R7 / M15R5</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Display:</strong> <span class="ref-desc">10.1" IPS touchscreen, 1280x800 (also available in 15.6")</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Storage:</strong> <span class="ref-desc">16&ndash;32GB internal + microSD/SD card slot</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>WiFi:</strong> <span class="ref-desc">2.4GHz only (5GHz not supported)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Touch:</strong> <span class="ref-desc">Capacitive touchscreen</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power:</strong> <span class="ref-desc">AC adapter (must be plugged in &mdash; no built-in battery)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Software:</strong> <span class="ref-desc">Frameo (same software used by 55+ frame brands)</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>App:</strong> <span class="ref-desc">Frameo (free, iOS + Android)</span></div></div>
+
+    <h3 class="ref-section-header" style="background:#546e7a;">Official Support</h3>
+    <div class="ref-row"><div class="ref-label"><strong>Frameo software support:</strong> <span class="ref-desc"><a href="https://support.frameo.com" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">support.frameo.com</a></span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Frameo video tutorials:</strong> <span class="ref-desc"><a href="https://bit.ly/3zKtxWX" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">Frameo YouTube playlist</a></span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Hardware problems:</strong> <span class="ref-desc">Contact the seller through your Amazon order page, or email Pastigio directly.</span></div></div>
+    <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
+      <div class="ref-label" style="font-size:13px;"><strong>Important:</strong> <span class="ref-desc">Frameo only makes the software, not the frame hardware. For physical problems (cracked screen, won't power on), contact the seller &mdash; not Frameo.</span></div>
+    </div>
+
+    <div style="margin-top:16px; padding:12px; background:#fff8e1; border-left:4px solid #e6a000; border-radius:6px; font-size:13px; color:#5f6368; line-height:1.5;">
+      This tool is intended as a helpful guide and may contain errors. Always refer to the <a href="https://support.frameo.com" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">official Frameo support site</a> for complete and accurate information.
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== COMMON ISSUES OVERLAY ===== -->
+<div class="ref-overlay" id="commonIssuesOverlay" role="dialog" aria-label="Common Issues" aria-modal="true">
+  <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
+    <h2 class="ref-overlay-title">Common Issues</h2>
+    <button class="ref-overlay-close" onclick="closeCommonIssues()" aria-label="Close common issues">&#x2190; Back</button>
+  </div>
+  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
+    <div class="tech-level-label">Ollie's language:</div>
+    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
+      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
+      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
+      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
+    </div>
+  </div>
+  <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:12px; padding-top:16px;">
+    <p style="text-align:center; color:var(--text-light); font-size:15px; margin-bottom:4px;">Tap any issue — Ollie will walk you through it.</p>
+
+    <button class="issue-card" onclick="askFromIssue('My picture frame won\'t connect to WiFi. What do I do?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F4F6;</div>
+      <div>
+        <div class="issue-card-title">WiFi Won't Connect</div>
+        <div class="issue-card-desc">The #1 problem — your frame needs 2.4GHz WiFi</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('Do I need to pay for a subscription to use my picture frame?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F4B3;</div>
+      <div>
+        <div class="issue-card-title">Do I Need a Subscription?</div>
+        <div class="issue-card-desc">Short answer: no. Your frame works fully without paying.</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('Why are my photos cut off on the edges? How do I fix it?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F5BC;</div>
+      <div>
+        <div class="issue-card-title">Photos Look Cropped</div>
+        <div class="issue-card-desc">Fill vs. Fit — a quick fix that most people miss</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('I sent photos but they aren\'t showing up on the frame. What\'s wrong?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F4E9;</div>
+      <div>
+        <div class="issue-card-title">Photos Not Arriving</div>
+        <div class="issue-card-desc">Check WiFi status and sender's app connection</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('Can I load photos from my computer to the frame? I have a Mac.')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F4BB;</div>
+      <div>
+        <div class="issue-card-title">Loading Photos from Computer</div>
+        <div class="issue-card-desc">Mac users: USB won't work, but there's an easy workaround</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('The frame shows a warning about not unplugging. Is it safe? Will I lose my photos?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x26A0;</div>
+      <div>
+        <div class="issue-card-title">"Don't Unplug" Warning</div>
+        <div class="issue-card-desc">Sounds scary but your photos are safe — here's why</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('My frame\'s touch screen stopped responding. What should I do?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F446;</div>
+      <div>
+        <div class="issue-card-title">Touch Screen Not Working</div>
+        <div class="issue-card-desc">Quick fixes to try before contacting the seller</div>
+      </div>
+    </button>
+
+    <button class="issue-card" onclick="askFromIssue('Videos on my frame play sound at night and wake me up. How do I mute it?')">
+      <div class="issue-card-icon" aria-hidden="true">&#x1F50A;</div>
+      <div>
+        <div class="issue-card-title">Videos Playing Sound at Night</div>
+        <div class="issue-card-desc">How to mute slideshow sound so it doesn't startle you</div>
+      </div>
+    </button>
+
+  </div>
+</div>
+
+<!-- ===== CHAT VIEW ===== -->
+<div class="chat-view" id="chatView">
+  <button class="chat-back" onclick="goHome()">&#x2039; Back</button>
+  <div class="chat-messages" id="chatMessages" aria-live="polite" aria-relevant="additions"></div>
+</div>
+
+<!-- Input (always visible) -->
+<div class="chat-input-bar">
+  <div class="chat-input-bar-title">
+    <span class="chat-input-bar-icon" aria-hidden="true">&#x1F4AC;</span>
+    <label for="chatInput">Ask Ollie anything about your picture frame</label>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chatInput"
+           placeholder="Ask Ollie anything..."
+           enterkeyhint="send"
+           autocomplete="off">
+    <button class="chat-voice" id="chatVoice" onclick="toggleVoice()" aria-label="Voice input">&#x1F3A4;</button>
+    <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
+  </div>
+</div>
+
+<script>
+  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Pastigio Digital Picture Frame (powered by Frameo software).
+
+Your job is to help users — especially older adults who received this frame as a gift — understand how to use their digital picture frame. Always be warm, patient, and encouraging. Never be condescending.
+
+RULES:
+- Give short, clear, numbered steps. Maximum 5 steps per answer.
+- Use plain English. Say "tap the screen" not "interact with the touch interface."
+- Say "the little person icon with a plus sign" not "the Add Friend button."
+- If the user seems frustrated or confused, acknowledge it warmly first.
+- Only answer about this picture frame. For anything else: "I'm only set up to help with your Pastigio picture frame — for other questions, a quick web search should help!"
+- Never guess. If unsure, say so and suggest support.frameo.com
+- Keep answers under 150 words.
+- Your name is Ollie.
+
+ADAPTIVE TECH LEVEL:
+The user has chosen a language level via a control on the page. Their current setting is indicated at the end of this prompt as "USER TECH LEVEL." Do NOT ask the user about their comfort level — just use the setting automatically.
+
+Adjust your language based on the level:
+- "simple" (Plain English): Use simple analogies (e.g., WiFi bands = AM/FM radio, router = "the box with blinking lights from your internet company"). Avoid all jargon. Give them an exact sentence to say if they need to call their internet provider. End with reassurance: "You're not doing anything wrong."
+- "standard" (Some tech is fine): Use correct terms like "2.4GHz" and "5GHz" but explain them briefly. Give direct steps without analogies.
+- "technical" (Full tech details): Be concise and technical. Mention 2.4GHz only, WPA2 not WPA3, band steering, separate SSID, channels 1-11.
+
+HELPFUL RESOURCES — suggest these when relevant:
+When a user is struggling with WiFi, setup, or technical issues, offer these real external resources in addition to your answer. Pick the most relevant 1-2 links — don't dump all of them at once.
+
+WiFi & Setup:
+- Frameo official WiFi troubleshooting: https://support.frameo.com/hc/en-us/articles/10140527026834--WiFi-and-Connection-Problems
+- Frameo "Frame Can't Find My WiFi" guide: https://support.frameo.com/hc/en-us/articles/24804330613266--Frame-Can-t-Find-My-Wi-Fi
+- Frameo official setup guide: https://support.frameo.com/hc/en-us/articles/4412295914514--GET-STARTED-How-to-Set-Up-Your-Frameo
+- Frameo YouTube tutorials playlist: https://bit.ly/3zKtxWX
+- "How to connect smart home devices to 2.4GHz WiFi" (Asurion — simple, visual): https://www.asurion.com/connect/tech-tips/how-to-connect-your-smart-home-devices-to-2-4ghz-wi-fi/
+- "How to tell if your WiFi is 2.4GHz or 5GHz" (Nexx — with pictures): https://getnexx.com/pages/how-to-tell-if-you-have-2-4-ghz-or-5-ghz-wifi-network
+- "2.4GHz vs 5GHz explained simply" (ScreenBeam — plain English): https://www.screenbeam.com/wifihelp/wifibooster/2-4ghz-vs-5ghz-wifi/
+
+General Frameo help:
+- Frameo full user manual: https://support.frameo.com/hc/en-us/articles/360021234699--User-Manual
+- Frameo troubleshooting guide (community): https://geekbitz.com/frameo-troubleshooting/
+
+When suggesting resources, frame them warmly based on the user's tech level setting:
+- For "simple" level: "Here's a page with pictures that shows exactly what to look for — you can show it to a family member too: [link]"
+- For "standard" level: "Frameo has a helpful page on this exact issue: [link]"
+- For "technical" level: Just include the link inline.
+
+Also suggest these ACTIONS when the user seems stuck:
+- "If you have a family member nearby or on the phone, they could look at this guide with you: [link]"
+- "You can also call your internet provider — just say: 'I need a separate 2.4GHz network for a smart home device.' They do this all the time."
+
+IMPORTANT CONTEXT:
+- This frame uses Frameo software. The app is called "Frameo" (free, iOS + Android).
+- Most users are 65+ adults who received this as a gift from family.
+- The #1 problem is WiFi setup and understanding the friend code system.
+- Always explain that SOMEONE ELSE (family member) downloads the app and enters the code.
+
+DEVICE SPECS:
+- Pastigio 10.1" WiFi Digital Picture Frame (also 15.6" model)
+- Display: 10.1" or 15.6" IPS, 1280x800 resolution
+- Storage: 16-32GB internal + microSD/SD card slot (FAT32, max 32GB)
+- WiFi: 2.4GHz ONLY (not 5GHz)
+- Touch: capacitive touchscreen
+- Power: AC adapter, always plugged in (no built-in battery)
+- App: Frameo (iOS + Android)
+
+FIRST-TIME SETUP:
+1. Plug in → select language → connect WiFi (2.4GHz only) → set date/time
+2. May prompt for software update (do it)
+3. Enter name + location ("Mom's Kitchen")
+4. Tap "Add friend" → share the code with family → they download Frameo app → enter code
+
+WIFI REQUIREMENTS:
+- MUST be 2.4GHz (not 5GHz) — most common failure
+- Network must be visible (not hidden)
+- Must use WPA2 (not WPA3)
+- Channels 1-11 only
+- If dual-band router merges 2.4/5GHz, may need separate 2.4GHz network name
+
+FRIEND CODE SYSTEM:
+- Tap screen → Add Friend → code appears (valid 12 hours)
+- Share code via call, text, or email
+- Recipient downloads Frameo app → enters code → permanently connected
+- Each family member needs to do this separately
+- If code expires, just generate a new one — no limit
+
+QUICK MENU (tap screen once):
+- Top: WiFi status | Album selector | Power
+- Middle: Calendar | My Photos | Add Friend | Settings
+- Bottom: Add to album | Adjust | React | Hide | Delete
+
+PHOTO MANAGEMENT:
+- Swipe left/right to browse
+- Tap screen → Adjust → Fill frame (crops edges) vs. Fit to frame (full photo with bars)
+- Fill = photo fills the screen but edges get trimmed. Fit = you see the whole photo but with bars.
+- Landscape photos usually look best on this frame.
+- Hide = removes from slideshow but keeps in storage
+- Delete = permanent
+- Multi-select: tap and hold, then tap more photos
+
+SLIDESHOW SETTINGS:
+- Timer: how long each photo displays
+- Display order: Date received, Date taken, or Shuffle
+- Order: Newest first or Oldest first
+- Collage mode: groups 2-6 photos together
+
+DISPLAY:
+- Brightness: Settings → Display (max brightness for well-lit rooms)
+- Sleep mode: default off 11pm, on 7am (customizable in Settings → Display → Sleep schedule)
+- Power off: tap → Power icon → Power off
+- Frame still receives photos in sleep mode
+- Turn on: press and hold power button on back (near center, may need both hands)
+
+VIDEOS:
+- Play/pause controls appear for videos
+- Volume adjustable via speaker icon
+- Videos play WITH SOUND during slideshow — can startle at night!
+- To mute: Settings → Slideshow → Video volume → Mute
+- Free: up to 15 sec videos; Frameo+: longer
+
+BACKUP:
+- microSD: Settings → Backup → Backup to external storage (FAT32, max 32GB)
+- Cloud: requires Frameo+ subscription ($1.99/mo or $16.99/yr)
+- Automatic backup within 30 hours of changes (if SD card inserted)
+
+ADDING PHOTOS WITHOUT WIFI:
+- Import from SD card (FAT32, max 32GB) — easiest way to load many photos
+- Import from USB drive (FAT32)
+- Transfer from computer via USB cable — Windows and Linux ONLY, Mac NOT supported
+- Mac users: use the Frameo phone app or an SD card instead
+
+TROUBLESHOOTING:
+- Won't turn on: try different outlet, try different cord, unplug 5 min, hold power button 10 sec
+- Frozen: hold power button → power off → unplug 5 min → replug
+- Hard reset (LAST RESORT): toothpick in reset hole, hold 5 sec — DELETES EVERYTHING
+- WiFi won't connect: check 2.4GHz, not hidden, not WPA3, channels 1-11
+- WiFi keeps dropping: restart frame; if weekly, WiFi chip may be faulty — contact seller
+- Photos not arriving: check WiFi connected, check frame is online in app
+- Screen flickers: lower brightness; if persistent, contact seller
+- Touch issues: peel screen protector; if top of screen dead, rotate frame, then contact seller
+- Clock wrong after power outage: reconnect to WiFi to auto-set, or set manually in Settings
+- "Don't unplug" warning: just means use power button. Photos survive power outages — just reset clock.
+- Frame dead after months: hardware failure — contact seller through Amazon for warranty
+
+FRAMEO+ (OPTIONAL PAID):
+- $1.99/month or $16.99/year
+- Cloud backup, send up to 100 photos at once, longer videos, remote management from app
+- NOT required — frame works fully without it
+- Without subscription: send 10 photos at a time (just repeat), 15-sec video limit
+- Workaround: use SD card to load thousands of photos — no subscription needed
+
+COMMON MISCONCEPTIONS (address proactively):
+- "I need a subscription" → NO. Frame works fully free. Subscription just removes batch limits.
+- "Unplugging will destroy photos" → NO. Photos are safe. You may need to reset the clock.
+- "Only works with WiFi" → NO. Once photos are loaded, they play offline. WiFi only for receiving new photos.
+- "Family can see my photos remotely" → Only with Frameo+ subscription.
+- "Can't load from Mac" → Correct for USB cable. Use Frameo phone app or SD card instead.
+
+SUPPORT:
+- Software: support.frameo.com
+- Hardware: contact seller through Amazon order
+- Frameo only makes software, NOT the frame hardware
+- For physical problems (broken, won't power on), contact the seller — not Frameo
+
+SAFETY:
+- Use the on-screen power button or sleep schedule to turn off
+- Don't unplug during a software update
+- Photos survive power outages — just reset the clock
+- Use only the included AC adapter
+- Keep away from water/moisture`;
+
+  const homeView = document.getElementById("homeView");
+  const chatView = document.getElementById("chatView");
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const chatSend = document.getElementById("chatSend");
+  const chatVoice = document.getElementById("chatVoice");
+
+  let conversationHistory = [];
+  let isWaiting = false;
+  let techLevel = "simple";
+
+  function setTechLevel(level) {
+    techLevel = level;
+    document.querySelectorAll(".tech-pill").forEach(p => {
+      const isMatch = p.getAttribute("data-level") === level;
+      p.classList.toggle("active", isMatch);
+      p.setAttribute("aria-checked", isMatch ? "true" : "false");
+    });
+  }
+  let recognition = null;
+  let isListening = false;
+
+  // ===== VOICE INPUT (Web Speech API) =====
+  function toggleVoice() {
+    if (isListening) { stopVoice(); return; }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice input is not supported in this browser. Try Chrome or Safari.");
+      return;
+    }
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.onstart = function() {
+      isListening = true;
+      chatVoice.classList.add("listening");
+      chatInput.placeholder = "Listening...";
+    };
+    recognition.onresult = function(event) {
+      let transcript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      chatInput.value = transcript;
+    };
+    recognition.onend = function() {
+      isListening = false;
+      chatVoice.classList.remove("listening");
+      chatInput.placeholder = "Ask Ollie anything...";
+      if (chatInput.value.trim()) sendMessage();
+    };
+    recognition.onerror = function(event) {
+      isListening = false;
+      chatVoice.classList.remove("listening");
+      chatInput.placeholder = "Ask Ollie anything...";
+      if (event.error !== "no-speech" && event.error !== "aborted") {
+        console.error("Speech recognition error:", event.error);
+      }
+    };
+    recognition.start();
+  }
+  function stopVoice() {
+    if (recognition) recognition.stop();
+    isListening = false;
+    chatVoice.classList.remove("listening");
+    chatInput.placeholder = "Ask Ollie anything...";
+  }
+
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  // ===== OVERLAY MANAGEMENT =====
+  function openOverlay(id) {
+    const o = document.getElementById(id);
+    o.classList.add("active");
+    o.querySelector(".ref-overlay-close").focus();
+  }
+  function closeOverlay(id) {
+    document.getElementById(id).classList.remove("active");
+  }
+  function trapFocus(e, id) {
+    if (e.key === "Escape") { closeOverlay(id); return; }
+    if (e.key !== "Tab") return;
+    const o = document.getElementById(id);
+    const f = o.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (e.shiftKey) { if (document.activeElement === f[0]) { e.preventDefault(); f[f.length-1].focus(); } }
+    else { if (document.activeElement === f[f.length-1]) { e.preventDefault(); f[0].focus(); } }
+  }
+
+  // Quick Start Guide
+  let quickStartTrap = (e) => trapFocus(e, "quickStartOverlay");
+  function openQuickStart() { openOverlay("quickStartOverlay"); document.addEventListener("keydown", quickStartTrap); }
+  function closeQuickStart() { closeOverlay("quickStartOverlay"); document.removeEventListener("keydown", quickStartTrap); }
+
+  // Quick Reference
+  let refTrap = (e) => trapFocus(e, "refOverlay");
+  function openRef() { openOverlay("refOverlay"); document.addEventListener("keydown", refTrap); }
+  function closeRef() { closeOverlay("refOverlay"); document.removeEventListener("keydown", refTrap); }
+
+  // Why People Love It
+  let highlightsTrap = (e) => trapFocus(e, "highlightsOverlay");
+  function openHighlights() { openOverlay("highlightsOverlay"); document.addEventListener("keydown", highlightsTrap); }
+  function closeHighlights() { closeOverlay("highlightsOverlay"); document.removeEventListener("keydown", highlightsTrap); }
+
+  // Care & Info
+  let careTrap = (e) => trapFocus(e, "careOverlay");
+  function openCare() { openOverlay("careOverlay"); document.addEventListener("keydown", careTrap); }
+  function closeCare() { closeOverlay("careOverlay"); document.removeEventListener("keydown", careTrap); }
+
+  // Common Questions
+  let commonQTrap = (e) => trapFocus(e, "commonQOverlay");
+  function openCommonQ() { openOverlay("commonQOverlay"); document.addEventListener("keydown", commonQTrap); }
+  function closeCommonQ() { closeOverlay("commonQOverlay"); document.removeEventListener("keydown", commonQTrap); }
+
+  // Common Issues
+  let issuesTrap = (e) => trapFocus(e, "commonIssuesOverlay");
+  function openCommonIssues() { openOverlay("commonIssuesOverlay"); document.addEventListener("keydown", issuesTrap); }
+  function closeCommonIssues() { closeOverlay("commonIssuesOverlay"); document.removeEventListener("keydown", issuesTrap); }
+  function askFromIssue(text) { closeCommonIssues(); askQuestion(text); }
+
+  // ===== CHAT FUNCTIONS =====
+  function showChat() {
+    homeView.classList.add("hidden");
+    chatView.classList.add("active");
+  }
+  function goHome() {
+    chatView.classList.remove("active");
+    homeView.classList.remove("hidden");
+  }
+  function askQuestion(text) {
+    chatInput.value = text;
+    showChat();
+    sendMessage();
+  }
+  function addBubble(text, role) {
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble ${role}`;
+    bubble.textContent = text;
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return bubble;
+  }
+  function formatBubble(bubble, text) {
+    let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\n(\d+)\.\s/g, "<br>$1. ");
+    html = html.replace(/\n/g, "<br>");
+    bubble.innerHTML = html;
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || isWaiting) return;
+    showChat();
+    addBubble(text, "user");
+    chatInput.value = "";
+    isWaiting = true;
+    chatSend.disabled = true;
+    conversationHistory.push({ role: "user", content: text });
+
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble typing";
+    typing.setAttribute("role", "status");
+    typing.textContent = "Thinking...";
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 512,
+          system: SYSTEM_PROMPT + "\n\nUSER TECH LEVEL: " + techLevel,
+          messages: conversationHistory,
+          device_id: "pastigio-frameo-frame"
+        })
+      });
+      typing.remove();
+      if (!response.ok) {
+        const err = await response.text();
+        throw new Error(`API error ${response.status}: ${err}`);
+      }
+      const data = await response.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: "assistant", content: reply });
+      const bubble = addBubble("", "assistant");
+      formatBubble(bubble, reply);
+    } catch (err) {
+      typing.remove();
+      addBubble("Sorry, I couldn't connect right now. Please try again in a moment.", "assistant");
+      console.error("Chat error:", err);
+    }
+    isWaiting = false;
+    chatSend.disabled = false;
+    chatInput.focus();
+  }
+</script>
+
+</body>
+</html>
