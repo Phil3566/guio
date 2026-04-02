@@ -168,33 +168,37 @@
       font-size: 110%;
     }
 
-    /* Navigation buttons */
-    .ref-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 6px 12px 0;
-      padding: 12px 14px;
-      min-height: 44px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-      color: white;
-      border-radius: 10px;
+    /* Navigation card grid */
+    .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 8px 12px 0; }
+    .nav-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 2px solid transparent;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.1s;
-      border: none;
-      width: calc(100% - 24px);
       text-align: left;
       font-family: inherit;
       font-size: inherit;
+      color: inherit;
+      width: 100%;
     }
-    .ref-btn:active { transform: scale(0.97); }
-    .ref-btn:focus-visible { outline-color: #ffd54f; }
-    .ref-btn-icon { font-size: 22px; flex-shrink: 0; }
-    .ref-btn-text { flex: 1; }
-    .ref-btn-title { font-size: 15px; font-weight: 700; }
-    .ref-btn-desc { font-size: 12px; }
-    .ref-btn-chevron { font-size: 20px; }
+    .nav-card:active { transform: scale(0.97); }
+    .nav-card.green  { border-color: #a5d6a7; background: #e8f5e9; }
+    .nav-card.blue   { border-color: #90caf9; background: #e3f2fd; }
+    .nav-card.gold   { border-color: #ffe082; background: #fff8e1; }
+    .nav-card.teal   { border-color: #80cbc4; background: #e0f2f1; }
+    .nav-card.orange { border-color: #ffcc80; background: #fff3e0; }
+    .nav-card.purple { border-color: #ce93d8; background: #f3e5f5; }
+    .nav-card-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .nav-card.green  .nav-card-title { color: #2e7d32; }
+    .nav-card.blue   .nav-card-title { color: #1565c0; }
+    .nav-card.gold   .nav-card-title { color: #f57f17; }
+    .nav-card.teal   .nav-card-title { color: #00695c; }
+    .nav-card.orange .nav-card-title { color: #e65100; }
+    .nav-card.purple .nav-card-title { color: #6a1b9a; }
+    .nav-card-desc { font-size: 13px; color: var(--text-light); }
 
     /* Reference overlay */
     .ref-overlay {
@@ -568,65 +572,33 @@
     </div>
   </div>
 
-  <!-- Quick Start Guide Button -->
-  <button class="ref-btn" onclick="openQuickStart()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x1F381;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Quick Start Guide</div>
-      <div class="ref-btn-desc">Gift setup, WiFi, family codes &amp; first photo</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
-
-  <!-- Quick Reference Button -->
-  <button class="ref-btn" onclick="openRef()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x1F4CB;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Quick Reference</div>
-      <div class="ref-btn-desc">Photos, slideshow, display settings &amp; more</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
-
-  <!-- Why People Love It Button -->
-  <button class="ref-btn" onclick="openHighlights()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#f9a825,#f57f17); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x2B50;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Why People Love It</div>
-      <div class="ref-btn-desc">What makes this frame a great gift</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
-
-  <!-- Common Questions Button -->
-  <button class="ref-btn" onclick="openCommonQ()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#00897b,#00695c); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x2753;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Common Questions</div>
-      <div class="ref-btn-desc">Subscriptions, storage, WiFi, videos &amp; more</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
-
-  <!-- Common Issues Button -->
-  <button class="ref-btn" onclick="openCommonIssues()" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x26A0;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Common Issues</div>
-      <div class="ref-btn-desc">WiFi, subscriptions, photos &amp; quick fixes</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
-
-  <!-- Care & Info Button -->
-  <button class="ref-btn" onclick="openCare()" aria-haspopup="dialog" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
-    <div class="ref-btn-icon" aria-hidden="true">&#x1F6E0;</div>
-    <div class="ref-btn-text">
-      <div class="ref-btn-title">Care &amp; Info</div>
-      <div class="ref-btn-desc">Troubleshooting, specs, subscription info &amp; support</div>
-    </div>
-    <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
-  </button>
+  <!-- Navigation Cards -->
+  <div class="nav-grid">
+    <button class="nav-card green" onclick="openQuickStart()" aria-haspopup="dialog">
+      <div class="nav-card-title">Quick Start Guide</div>
+      <div class="nav-card-desc">Gift setup, WiFi, family codes &amp; first photo</div>
+    </button>
+    <button class="nav-card blue" onclick="openRef()" aria-haspopup="dialog">
+      <div class="nav-card-title">Quick Reference</div>
+      <div class="nav-card-desc">Photos, slideshow, display &amp; more</div>
+    </button>
+    <button class="nav-card gold" onclick="openHighlights()" aria-haspopup="dialog">
+      <div class="nav-card-title">Why People Love It</div>
+      <div class="nav-card-desc">What makes this frame a great gift</div>
+    </button>
+    <button class="nav-card teal" onclick="openCommonQ()" aria-haspopup="dialog">
+      <div class="nav-card-title">Common Questions</div>
+      <div class="nav-card-desc">Subscriptions, storage, WiFi &amp; more</div>
+    </button>
+    <button class="nav-card orange" onclick="openCommonIssues()" aria-haspopup="dialog">
+      <div class="nav-card-title">Common Issues</div>
+      <div class="nav-card-desc">WiFi, photos &amp; quick fixes</div>
+    </button>
+    <button class="nav-card purple" onclick="openCare()" aria-haspopup="dialog">
+      <div class="nav-card-title">Care &amp; Info</div>
+      <div class="nav-card-desc">Troubleshooting, specs &amp; support</div>
+    </button>
+  </div>
 
   <div class="bottom-spacer"></div>
 </div>
