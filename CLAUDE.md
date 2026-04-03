@@ -3,7 +3,7 @@
 > This file is read automatically by Claude Code at session start.
 > Update it at the end of every session: what was built, what decisions
 > were made, what to work on next.
-> Last updated: March 2026
+> Last updated: March 28, 2026
 
 ---
 
@@ -44,13 +44,15 @@ devices as gifts and want to reduce "how do I use this?" support calls.
 
 ---
 
-## Current Phase: Prototype + Market Research
+## Current Phase: Pre-Launch Hardening
 
 ### What's been built
 
-**Two working device pages:**
+**Four working device pages:**
 1. `public/index.html` — Panasonic NN-SC73LS microwave (hero product)
 2. `public/nespresso.html` — Nespresso Vertuo Next coffee machine
+3. `public/emeril-airfryer.html` — Emeril Lagasse Dual Zone 360 Air Fryer
+4. `public/pastigio-frame.html` — Pastigio Frameo 10.1" digital picture frame
 
 Each device page includes:
 - Interactive panel diagram with tappable buttons
@@ -60,6 +62,17 @@ Each device page includes:
 - QR codes for production URLs
 - WCAG 2.1 AA accessibility compliance
 - Mobile-first responsive design
+
+**Pastigio-specific features:**
+- 2x2 pastel card grid navigation (6 cards, no emojis/chevrons)
+- Tech level selector ("Plain English" / "Some tech is fine" / "Full tech details") in 2 overlays
+- Why People Love It overlay (5 sections from 3,465 Amazon reviews)
+- Common Questions overlay (5 Q&A sections)
+- Common Issues overlay (8 tappable issue cards)
+
+**Deployment:**
+- GitHub repo: `Phil3566/guio` (origin/master)
+- DigitalOcean: auto-deploys from GitHub master push
 
 **Backend:**
 - `server.js` — Express server on port 8080, proxies Anthropic API calls
@@ -183,8 +196,16 @@ in the project folder.
 ### Device pages (CLI phase)
 - `public/index.html` — Panasonic NN-SC73LS microwave: chat, panel diagram, Quick Reference, QR
 - `public/nespresso.html` — Nespresso Vertuo Next: chat, panel diagram, Quick Reference, QR
+- `public/emeril-airfryer.html` — Emeril Dual Zone 360: chat, 24 presets, dual-zone controls, QR
+- `public/pastigio-frame.html` — Pastigio Frameo 10.1": chat, 6 overlays, tech level, 2x2 card grid, QR
 - `server.js` — Express backend on port 8080, API proxy for Anthropic calls
 - `docs/microwave-layout-template.md` — standard layout template for microwave device pages
+
+### Documentation (Companion files)
+- `LEGAL-REQUIREMENTS.md` — 29-area legal compliance audit for public web app with AI chat
+- `GUARDRAILS.md` — security audit, 6 critical + 4 high + 5 medium vulnerabilities documented
+- `USER-INTERFACE.md` — comprehensive UI guide across all 4 device pages
+- `DEPLOYMENT.md` — deployment setup and instructions
 
 ### Research pipeline (CLI phase)
 - `research/amazon_scanner.py` — Best Sellers scraper, opportunity scoring
@@ -324,6 +345,14 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Mar 2026 | Discovered Frameo ecosystem: software licensed to dozens of hardware brands (BIGASUO, Akimart, Pastigio, Dragon Touch, etc.) — one guide covers many brands |
 | Mar 2026 | Digital picture frames chosen as next device category — strongest UX pain, perfect demographic, best licensing angle |
 | Mar 2026 | Frameo-powered frames preferred over Aura Carver — one page covers dozens of brands vs. just one |
+| Mar 2026 | Built Pastigio Frameo digital picture frame page with 6 overlays, chat, voice, tech level |
+| Mar 2026 | Deployed to DigitalOcean — auto-deploys from GitHub master push |
+| Mar 2026 | Converted Pastigio nav buttons from full-width gradient buttons to 2x2 pastel card grid |
+| Mar 2026 | Reduced tech level selector from 7 locations to 2 (Common Questions + Common Issues only) |
+| Mar 2026 | Updated pill labels from "Simple/Standard/Technical" to "Plain English/Some tech is fine/Full tech details" |
+| Mar 2026 | Created LEGAL-REQUIREMENTS.md — 29-area legal compliance audit for public web app with AI chat |
+| Mar 2026 | Updated GUARDRAILS.md — added model override vulnerability, 6 critical server-side fixes documented |
+| Mar 2026 | Product images changed from .jpg to .png for Pastigio (source files were PNG format) |
 
 ---
 
@@ -371,18 +400,26 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 - [x] Identified "gift setup failure" as the #1 pain point for digital frames
 - [ ] Import research files to `research/` folder: `cuisinart_review_analysis.md`, `aura_carver_review_analysis.md`, `Aura_Carver_Full_Manual.md`
 
-### Next up — Frameo digital picture frame page
-- [ ] Choose the best-selling Frameo-powered frame to build for (likely BIGASUO or Pastigio)
-- [ ] Gather Frameo app manual + WiFi setup steps
-- [ ] Build `public/frameo-frame.html` device page — focus on WiFi setup, adding photos, app pairing
-- [ ] Key CTA: "Just got this as a gift? Start here" — addresses the #1 failure point
-- [ ] QR code placement: gift box insert or frame back
+### Pastigio Frameo digital picture frame page — completed
+- [x] Chose Pastigio as the Frameo-powered frame to build for
+- [x] Built `public/pastigio-frame.html` — 6 overlays, chat, voice, tech level selector, 8 common issues
+- [x] Quick Start Guide: gift setup, WiFi, friend codes, first photo
+- [x] Quick Reference: photos, slideshow, display, albums, videos
+- [x] Why People Love It: 5 themed sections from 3,465 Amazon reviews
+- [x] Common Questions: 5 themed Q&A sections from Amazon reviews
+- [x] Common Issues: 8 tappable issue cards that pre-fill chat
+- [x] Care & Info: troubleshooting, WiFi, backup, Frameo+, specs
+- [x] QR code generated (`qr-pastigio.svg` + `qr-pastigio-print.html`)
+- [x] Product image added (`pastigio-frame.png` + `pastigio-frame-full.png`)
+- [x] Deployed to DigitalOcean (auto-deploys from GitHub master)
+- [x] Nav buttons converted to 2x2 pastel card grid (6 cards, no emojis)
+- [x] Tech level selector reduced from 7 locations to 2 (Common Questions + Common Issues only)
+- [x] Pill labels updated: "Plain English" / "Some tech is fine" / "Full tech details"
 
 ### Also next
 - [ ] Add sticker kit upsell section to device pages
-- [ ] Test on mobile (primary use case — user is standing at device)
-- [ ] Deploy to DigitalOcean (user has asked about this)
 - [ ] Add product images to Emeril page
+- [ ] Implement server-side guardrails (see Companion files/GUARDRAILS.md)
 
 ### Near-term
 - [ ] Register domain: clearlabel.com (or clearlabel.co, getclrlabel.com)
