@@ -28,6 +28,7 @@ app.post("/api/chat", async (req, res) => {
     const match = faqCache.match(deviceId, lastMessage.content);
     if (match) {
       console.log(`FAQ cache HIT (score=${match.score.toFixed(3)}): "${lastMessage.content}"`);
+      faqCache.recordHit(deviceId);
       return res.json({
         content: [{ type: "text", text: match.answer }],
         model: "faq-cache",
@@ -64,6 +65,8 @@ app.post("/api/chat", async (req, res) => {
       return res.status(response.status).json(data);
     }
 
+    faqCache.recordMiss(deviceId);
+
     // Save new Q&A to cache for future use
     if (isTextOnly && isFirstQuestion && data.content && data.content[0]) {
       try {
@@ -78,6 +81,138 @@ app.post("/api/chat", async (req, res) => {
     console.error("API proxy error:", err);
     res.status(500).json({ error: "Failed to reach AI service" });
   }
+});
+
+// Admin stats dashboard
+app.get("/admin/stats", (req, res) => {
+  const adminKey = process.env.ADMIN_KEY;
+  if (!adminKey || req.query.key !== adminKey) {
+    return res.status(403).send("Forbidden");
+  }
+
+  const stats = faqCache.getStats();
+  const totalHits = stats.allTimeStats.total_cache_hits;
+  const totalApi = stats.allTimeStats.total_api_calls;
+  const totalRequests = totalHits + totalApi;
+  const hitRate = totalRequests > 0 ? ((totalHits / totalRequests) * 100).toFixed(1) : "0.0";
+
+  const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  let deviceRows = stats.devices.map(d => `
+    <tr>
+      <td>${esc(d.device_id)}</td>
+      <td>${d.total_entries}</td>
+      <td>${d.seeded}</td>
+      <td>${d.generated}</td>
+      <td>${d.total_hits}</td>
+    </tr>`).join("");
+
+  let topRows = stats.topQuestions.map(q => `
+    <tr>
+      <td>${esc(q.device_id)}</td>
+      <td>${esc(q.question)}</td>
+      <td>${q.hit_count}</td>
+    </tr>`).join("");
+
+  let newRows = stats.newQuestions.length > 0
+    ? stats.newQuestions.map(q => `
+    <tr>
+      <td>${esc(q.device_id)}</td>
+      <td>${esc(q.question)}</td>
+      <td title="${esc(q.answer)}">${esc(q.answer.substring(0, 80))}${q.answer.length > 80 ? "..." : ""}</td>
+      <td>${q.created_at}</td>
+      <td>${q.hit_count}</td>
+    </tr>`).join("")
+    : '<tr><td colspan="5" style="text-align:center;color:#888;">No auto-cached questions yet</td></tr>';
+
+  let dailyRows = stats.dailyTotals.map(d => {
+    const dayTotal = d.cache_hits + d.api_calls;
+    const dayRate = dayTotal > 0 ? ((d.cache_hits / dayTotal) * 100).toFixed(1) : "0.0";
+    return `
+    <tr>
+      <td>${d.date}</td>
+      <td>${d.cache_hits}</td>
+      <td>${d.api_calls}</td>
+      <td>${dayRate}%</td>
+    </tr>`;
+  }).join("");
+
+  let zeroRows = stats.zeroHits.map(q => `
+    <tr>
+      <td>${esc(q.device_id)}</td>
+      <td>${esc(q.question)}</td>
+    </tr>`).join("");
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTFM For Me — Admin Stats</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 20px; max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 20px; color: #1a1a1a; }
+  h2 { font-size: 16px; margin: 28px 0 10px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .card { background: white; border-radius: 8px; padding: 16px 20px; flex: 1; min-width: 140px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .card .label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+  .card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .card .value.green { color: #2e7d32; }
+  .card .value.blue { color: #1565c0; }
+  .card .value.orange { color: #e65100; }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px; }
+  th { background: #fafafa; text-align: left; padding: 10px 12px; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #eee; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+  tr:last-child td { border-bottom: none; }
+  .ts { font-size: 12px; color: #aaa; margin-top: 20px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>RTFM For Me — Admin Stats</h1>
+
+<div class="summary">
+  <div class="card"><div class="label">Cache Hits</div><div class="value green">${totalHits}</div></div>
+  <div class="card"><div class="label">API Calls</div><div class="value blue">${totalApi}</div></div>
+  <div class="card"><div class="label">Hit Rate</div><div class="value orange">${hitRate}%</div></div>
+  <div class="card"><div class="label">Total Q&amp;As</div><div class="value">${stats.devices.reduce((s, d) => s + d.total_entries, 0)}</div></div>
+</div>
+
+<h2>Devices</h2>
+<table>
+  <tr><th>Device</th><th>Entries</th><th>Seeded</th><th>Auto-cached</th><th>Cache Hits</th></tr>
+  ${deviceRows}
+</table>
+
+<h2>Top Questions (by cache hits)</h2>
+<table>
+  <tr><th>Device</th><th>Question</th><th>Hits</th></tr>
+  ${topRows || '<tr><td colspan="3" style="text-align:center;color:#888;">No cache hits yet</td></tr>'}
+</table>
+
+<h2>New Questions Learned from Users</h2>
+<table>
+  <tr><th>Device</th><th>Question</th><th>Answer (preview)</th><th>Date</th><th>Hits Since</th></tr>
+  ${newRows}
+</table>
+
+<h2>Daily Breakdown (last 30 days)</h2>
+<table>
+  <tr><th>Date</th><th>Cache Hits</th><th>API Calls</th><th>Hit Rate</th></tr>
+  ${dailyRows || '<tr><td colspan="4" style="text-align:center;color:#888;">No data yet</td></tr>'}
+</table>
+
+<h2>Never-Hit Seed Questions</h2>
+<table>
+  <tr><th>Device</th><th>Question</th></tr>
+  ${zeroRows || '<tr><td colspan="2" style="text-align:center;color:#888;">All seed questions have been hit at least once</td></tr>'}
+</table>
+
+<div class="ts">Generated ${new Date().toISOString().replace("T", " ").slice(0, 19)} UTC</div>
+</body>
+</html>`;
+
+  res.send(html);
 });
 
 app.listen(PORT, () => {
