@@ -8,9 +8,9 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --brand: #e53935;
+      --brand: #c62828;
       --brand-dark: #b71c1c;
-      --orange: #e8710a;
+      --orange: #b45600;
       --orange-light: #fff3e6;
       --green-light: #e8f5e9;
       --blue-light: #e3f2fd;
@@ -194,9 +194,9 @@
     .nav-card-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
     .nav-card.green  .nav-card-title { color: #2e7d32; }
     .nav-card.blue   .nav-card-title { color: #1565c0; }
-    .nav-card.gold   .nav-card-title { color: #f57f17; }
+    .nav-card.gold   .nav-card-title { color: #8c5300; }
     .nav-card.teal   .nav-card-title { color: #00695c; }
-    .nav-card.orange .nav-card-title { color: #e65100; }
+    .nav-card.orange .nav-card-title { color: #bf3600; }
     .nav-card.purple .nav-card-title { color: #6a1b9a; }
     .nav-card-desc { font-size: 13px; color: var(--text-light); }
 
@@ -460,6 +460,16 @@
       padding: 12px 14px 10px;
       flex-shrink: 0;
     }
+    .chat-terms {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      margin-top: 6px;
+    }
+    .chat-terms a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: underline;
+    }
     .chat-input-bar-title {
       display: flex;
       align-items: center;
@@ -535,6 +545,10 @@
 
     /* Bottom spacing */
     .bottom-spacer { height: 4px; }
+    .site-footer { padding: 16px 20px 8px; text-align: center; font-size: 12px; color: #999; line-height: 1.8; }
+    .site-footer a { color: #888; text-decoration: underline; }
+    .site-footer .footer-links { margin-bottom: 6px; }
+    .site-footer .footer-links a { margin: 0 8px; }
   </style>
 </head>
 <body>
@@ -590,6 +604,14 @@
     </button>
   </div>
 
+  <div class="site-footer">
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <div>Ollie is an AI assistant powered by Claude (Anthropic). You are not chatting with a human. Responses may contain errors.</div>
+    <div>RTFM For Me is not affiliated with, endorsed by, or sponsored by Pastigio, Frameo, or any device manufacturer. All trademarks are the property of their respective owners.</div>
+  </div>
   <div class="bottom-spacer"></div>
 </div>
 
@@ -957,6 +979,7 @@
     <button class="chat-voice" id="chatVoice" onclick="toggleVoice()" aria-label="Voice input">&#x1F3A4;</button>
     <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
   </div>
+  <div class="chat-terms">By using this chat, you agree to our <a href="/terms.html">Terms of Service</a></div>
 </div>
 
 <script>
@@ -972,6 +995,63 @@
   let conversationHistory = [];
   let isWaiting = false;
   let techLevel = "simple";
+
+  // --- Device fingerprint + session token (invisible to user) ---
+  function generateFingerprint() {
+    const parts = [
+      screen.width, screen.height, screen.colorDepth,
+      navigator.language,
+      new Date().getTimezoneOffset(),
+      navigator.platform,
+      navigator.hardwareConcurrency || 0,
+      navigator.maxTouchPoints || 0
+    ];
+    const str = parts.join("|");
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    return Math.abs(hash).toString(16).padStart(8, "0");
+  }
+
+  const deviceFingerprint = generateFingerprint();
+  let sessionToken = localStorage.getItem("ollie_session");
+
+  async function initSession() {
+    if (sessionToken) return;
+    try {
+      const res = await fetch("/api/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fingerprint: deviceFingerprint })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        sessionToken = data.token;
+        localStorage.setItem("ollie_session", sessionToken);
+      }
+    } catch (e) { /* session init failed — chat still works via IP rate limiter */ }
+  }
+  initSession();
+
+  // --- Session expiry: auto-clear after 30 min of inactivity ---
+  const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+  let lastActivity = Date.now();
+
+  function resetActivityTimer() { lastActivity = Date.now(); }
+  document.addEventListener("click", resetActivityTimer);
+  document.addEventListener("keydown", resetActivityTimer);
+
+  setInterval(function() {
+    if (Date.now() - lastActivity >= SESSION_TIMEOUT && conversationHistory.length > 0) {
+      conversationHistory = [];
+      sessionToken = null;
+      localStorage.removeItem("ollie_session");
+      chatMessages.innerHTML = "";
+      initSession();
+    }
+  }, 60000); // check every minute
 
   function setTechLevel(level) {
     techLevel = level;
@@ -1140,10 +1220,18 @@
           max_tokens: 512,
           tech_level: techLevel,
           messages: conversationHistory,
-          device_id: "pastigio-frameo-frame"
+          device_id: "pastigio-frameo-frame",
+          session_token: sessionToken,
+          fingerprint: deviceFingerprint
         })
       });
       typing.remove();
+      if (response.status === 429) {
+        addBubble("I've been getting a lot of questions! Please wait a moment and try again.", "assistant");
+        isWaiting = false;
+        chatSend.disabled = false;
+        return;
+      }
       if (!response.ok) {
         const err = await response.text();
         throw new Error(`API error ${response.status}: ${err}`);

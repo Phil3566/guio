@@ -2,8 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const FaqCache = require("./lib/faq-cache");
-const { getPrompt, isOffTopic } = require("./lib/system-prompts");
+const { getPrompt, isOffTopic, isInjection } = require("./lib/system-prompts");
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
+const helmet = require("helmet");
+const crypto = require("crypto");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -11,6 +14,16 @@ const PORT = process.env.PORT || 8080;
 // Initialize FAQ cache
 const DB_PATH = path.join(__dirname, "db", "faq.db");
 const faqCache = new FaqCache(DB_PATH);
+
+// Security headers
+app.use(helmet());
+
+// CORS — only allow requests from our own domain (and localhost for dev)
+app.use(cors({
+  origin: process.env.NODE_ENV === "production"
+    ? "https://rtfmforme.app"
+    : true
+}));
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -24,6 +37,33 @@ const chatLimiter = rateLimit({
   message: { error: "Too many requests — please wait a moment" }
 });
 
+// Session creation — rate-limited to prevent flooding
+const sessionLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many session requests" }
+});
+
+app.post("/api/session", sessionLimiter, (req, res) => {
+  const fingerprint = req.body.fingerprint;
+  if (!fingerprint || typeof fingerprint !== "string" || fingerprint.length > 64) {
+    return res.status(400).json({ error: "Invalid fingerprint" });
+  }
+  const token = crypto.randomBytes(16).toString("hex");
+  faqCache.createSession(token, fingerprint, req.ip);
+  res.json({ token });
+});
+
+// Device ID whitelist — reject unknown devices
+const VALID_DEVICES = new Set([
+  // "panasonic-nn-sc73ls",
+  "pastigio-frameo-frame",
+  // "toshiba-em131a5c",
+  // "emeril-air-fryer",
+]);
+
 // Chat API proxy — keeps the API key on the server
 app.post("/api/chat", chatLimiter, async (req, res) => {
   // --- FAQ cache intercept (before API key check — cached answers are free) ---
@@ -35,6 +75,28 @@ app.post("/api/chat", chatLimiter, async (req, res) => {
   const isFirstQuestion = messages.filter(m => m.role === "user").length === 1;
   const deviceId = req.body.device_id || "panasonic-nn-sc73ls";
   const questionText = isTextOnly ? lastMessage.content : "";
+
+  // --- Device ID validation ---
+  if (!VALID_DEVICES.has(deviceId)) {
+    return res.status(400).json({ error: "Unknown device" });
+  }
+
+  // --- Message length validation ---
+  if (isTextOnly && questionText.length > 2000) {
+    return res.status(400).json({ error: "Message too long — please keep questions under 2,000 characters" });
+  }
+
+  // --- Session + fingerprint validation ---
+  const sessionToken = req.body.session_token;
+  const fingerprint = req.body.fingerprint;
+  if (sessionToken && fingerprint) {
+    const limits = faqCache.checkLimits(sessionToken, fingerprint);
+    if (!limits.allowed) {
+      console.log(`SESSION BLOCKED (${limits.reason}): token=${sessionToken.slice(0, 8)}... fp=${fingerprint}`);
+      return res.status(429).json({ error: "Usage limit reached — please try again later" });
+    }
+    faqCache.incrementSession(sessionToken);
+  }
 
   if (isTextOnly) {
     const match = faqCache.match(deviceId, questionText);
@@ -51,6 +113,18 @@ app.post("/api/chat", chatLimiter, async (req, res) => {
     }
   }
 
+  // --- Daily API cost cap ---
+  const dailyLimit = parseInt(process.env.DAILY_API_LIMIT) || 500;
+  if (faqCache.getTodayApiCalls() >= dailyLimit) {
+    console.log(`DAILY CAP reached (${dailyLimit} API calls)`);
+    return res.json({
+      content: [{ type: "text", text: "Ollie is taking a quick rest — I've had a lot of questions today! Cached answers still work, but for new questions please try again tomorrow. Thanks for your patience!" }],
+      model: "daily-cap",
+      stop_reason: "end_turn",
+      usage: { input_tokens: 0, output_tokens: 0 }
+    });
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: "API key not configured" });
@@ -64,6 +138,28 @@ app.post("/api/chat", chatLimiter, async (req, res) => {
   // Detect off-topic questions
   const offTopic = isTextOnly ? isOffTopic(deviceId, questionText) : false;
 
+  // --- Prompt injection detection ---
+  if (isTextOnly && isInjection(questionText)) {
+    console.log(`INJECTION BLOCKED: "${questionText}"`);
+    faqCache.logRequest(deviceId, questionText, "blocked", 1);
+    return res.json({
+      content: [{ type: "text", text: "I'm only set up to help with your device — could you rephrase your question?" }],
+      model: "guardrail",
+      stop_reason: "end_turn",
+      usage: { input_tokens: 0, output_tokens: 0 }
+    });
+  }
+
+  // Cap conversation history — keep last 10 messages (5 user + 5 assistant)
+  const MAX_MESSAGES = 10;
+  const trimmedMessages = messages.length > MAX_MESSAGES
+    ? messages.slice(-MAX_MESSAGES)
+    : messages;
+
+  // 30-second timeout — prevents hanging API calls from tying up the server
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -72,11 +168,12 @@ app.post("/api/chat", chatLimiter, async (req, res) => {
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
       },
+      signal: controller.signal,
       body: JSON.stringify({
-        model: req.body.model || "claude-haiku-4-5-20251001",
-        max_tokens: req.body.max_tokens || 512,
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 512,
         system: system,
-        messages: req.body.messages,
+        messages: trimmedMessages,
       }),
     });
 
@@ -105,8 +202,14 @@ app.post("/api/chat", chatLimiter, async (req, res) => {
       }
     }
 
+    clearTimeout(timeout);
     res.json(data);
   } catch (err) {
+    clearTimeout(timeout);
+    if (err.name === "AbortError") {
+      console.error("API timeout after 30s");
+      return res.status(504).json({ error: "AI service took too long — please try again" });
+    }
     console.error("API proxy error:", err);
     res.status(500).json({ error: "Failed to reach AI service" });
   }
@@ -120,6 +223,7 @@ app.get("/admin/stats", (req, res) => {
   }
 
   const stats = faqCache.getStats();
+  const sessionStats = faqCache.getSessionStats();
   const recentRequests = faqCache.getRecentRequests(50);
   const totalHits = stats.allTimeStats.total_cache_hits;
   const totalApi = stats.allTimeStats.total_api_calls;
@@ -219,6 +323,7 @@ app.get("/admin/stats", (req, res) => {
   <div class="card"><div class="label">Hit Rate</div><div class="value orange">${hitRate}%</div></div>
   <div class="card"><div class="label">Total Q&amp;As</div><div class="value">${stats.devices.reduce((s, d) => s + d.total_entries, 0)}</div></div>
   <div class="card"><div class="label">Off-Topic</div><div class="value red">${recentRequests.filter(r => r.off_topic).length}</div></div>
+  <div class="card"><div class="label">Sessions (24h)</div><div class="value">${sessionStats.active}</div></div>
 </div>
 
 <h2>Devices</h2>
@@ -257,7 +362,20 @@ app.get("/admin/stats", (req, res) => {
   ${zeroRows || '<tr><td colspan="2" style="text-align:center;color:#888;">All seed questions have been hit at least once</td></tr>'}
 </table>
 
-<div class="ts">Generated ${new Date().toISOString().replace("T", " ").slice(0, 19)} UTC</div>
+<h2>Top Devices by Requests (fingerprint)</h2>
+<table>
+  <tr><th>Fingerprint</th><th>Sessions</th><th>Total Requests</th></tr>
+  ${sessionStats.topFingerprints.length > 0
+    ? sessionStats.topFingerprints.map(f => `
+    <tr>
+      <td><code>${esc(f.fingerprint.slice(0, 12))}...</code></td>
+      <td>${f.session_count}</td>
+      <td>${f.total_requests}</td>
+    </tr>`).join("")
+    : '<tr><td colspan="3" style="text-align:center;color:#888;">No sessions yet</td></tr>'}
+</table>
+
+<div class="ts">Sessions: ${sessionStats.total} total, ${sessionStats.blocked} blocked | Generated ${new Date().toISOString().replace("T", " ").slice(0, 19)} UTC</div>
 </body>
 </html>`;
 
@@ -268,4 +386,5 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   const devices = [...faqCache.cache.keys()];
   console.log(`FAQ cache loaded: ${devices.length ? devices.join(", ") : "no devices"}`);
+  faqCache.cleanOldSessions();
 });
