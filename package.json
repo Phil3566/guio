@@ -4,10 +4,12 @@
   "description": "Ollie — AI-powered device guides",
   "main": "server.js",
   "scripts": {
+    "prestart": "node db/seed-panasonic.js && node db/seed-toshiba.js && node db/seed-pastigio-faq.js",
     "start": "node server.js",
     "seed": "node db/seed-panasonic.js",
     "seed-toshiba": "node db/seed-toshiba.js",
-    "seed-all": "node db/seed-panasonic.js && node db/seed-toshiba.js"
+    "seed-pastigio": "node db/seed-pastigio-faq.js",
+    "seed-all": "node db/seed-panasonic.js && node db/seed-toshiba.js && node db/seed-pastigio-faq.js"
   },
   "engines": {
     "node": ">=18.0.0"
