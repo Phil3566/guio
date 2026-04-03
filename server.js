@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const FaqCache = require("./lib/faq-cache");
+const { getPrompt, isOffTopic } = require("./lib/system-prompts");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -23,12 +24,14 @@ app.post("/api/chat", async (req, res) => {
     && typeof lastMessage.content === "string";
   const isFirstQuestion = messages.filter(m => m.role === "user").length === 1;
   const deviceId = req.body.device_id || "panasonic-nn-sc73ls";
+  const questionText = isTextOnly ? lastMessage.content : "";
 
-  if (isTextOnly && isFirstQuestion) {
-    const match = faqCache.match(deviceId, lastMessage.content);
+  if (isTextOnly) {
+    const match = faqCache.match(deviceId, questionText);
     if (match) {
-      console.log(`FAQ cache HIT (score=${match.score.toFixed(3)}): "${lastMessage.content}"`);
+      console.log(`FAQ cache HIT (score=${match.score.toFixed(3)}): "${questionText}"`);
       faqCache.recordHit(deviceId);
+      faqCache.logRequest(deviceId, questionText, "cache", 0);
       return res.json({
         content: [{ type: "text", text: match.answer }],
         model: "faq-cache",
@@ -43,6 +46,14 @@ app.post("/api/chat", async (req, res) => {
     return res.status(500).json({ error: "API key not configured" });
   }
 
+  // Use server-side system prompt if available; fall back to client-sent for other devices
+  const techLevel = req.body.tech_level || "simple";
+  const serverPrompt = getPrompt(deviceId, techLevel);
+  const system = serverPrompt || req.body.system;
+
+  // Detect off-topic questions
+  const offTopic = isTextOnly ? isOffTopic(deviceId, questionText) : false;
+
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -54,7 +65,7 @@ app.post("/api/chat", async (req, res) => {
       body: JSON.stringify({
         model: req.body.model || "claude-haiku-4-5-20251001",
         max_tokens: req.body.max_tokens || 512,
-        system: req.body.system,
+        system: system,
         messages: req.body.messages,
       }),
     });
@@ -67,10 +78,18 @@ app.post("/api/chat", async (req, res) => {
 
     faqCache.recordMiss(deviceId);
 
-    // Save new Q&A to cache for future use
-    if (isTextOnly && isFirstQuestion && data.content && data.content[0]) {
+    // Log the question
+    if (isTextOnly) {
+      faqCache.logRequest(deviceId, questionText, "api", offTopic);
+      if (offTopic) {
+        console.log(`OFF-TOPIC (not cached): "${questionText}"`);
+      }
+    }
+
+    // Save new Q&A to cache for future use — skip off-topic questions
+    if (isTextOnly && !offTopic && questionText.length >= 30 && data.content && data.content[0]) {
       try {
-        faqCache.insert(deviceId, lastMessage.content, data.content[0].text, 1);
+        faqCache.insert(deviceId, questionText, data.content[0].text, 1);
       } catch (e) {
         console.error("FAQ cache insert error:", e.message);
       }
@@ -91,6 +110,7 @@ app.get("/admin/stats", (req, res) => {
   }
 
   const stats = faqCache.getStats();
+  const recentRequests = faqCache.getRecentRequests(50);
   const totalHits = stats.allTimeStats.total_cache_hits;
   const totalApi = stats.allTimeStats.total_api_calls;
   const totalRequests = totalHits + totalApi;
@@ -143,6 +163,17 @@ app.get("/admin/stats", (req, res) => {
       <td>${esc(q.question)}</td>
     </tr>`).join("");
 
+  let requestRows = recentRequests.length > 0
+    ? recentRequests.map(r => `
+    <tr${r.off_topic ? ' style="background:#fff3e0;"' : ""}>
+      <td>${r.created_at}</td>
+      <td>${esc(r.device_id)}</td>
+      <td>${esc(r.question)}</td>
+      <td>${r.source}</td>
+      <td>${r.off_topic ? "Yes" : ""}</td>
+    </tr>`).join("")
+    : '<tr><td colspan="5" style="text-align:center;color:#888;">No requests logged yet</td></tr>';
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,6 +192,7 @@ app.get("/admin/stats", (req, res) => {
   .card .value.green { color: #2e7d32; }
   .card .value.blue { color: #1565c0; }
   .card .value.orange { color: #e65100; }
+  .card .value.red { color: #c62828; }
   table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px; }
   th { background: #fafafa; text-align: left; padding: 10px 12px; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #eee; }
   td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
@@ -176,6 +208,7 @@ app.get("/admin/stats", (req, res) => {
   <div class="card"><div class="label">API Calls</div><div class="value blue">${totalApi}</div></div>
   <div class="card"><div class="label">Hit Rate</div><div class="value orange">${hitRate}%</div></div>
   <div class="card"><div class="label">Total Q&amp;As</div><div class="value">${stats.devices.reduce((s, d) => s + d.total_entries, 0)}</div></div>
+  <div class="card"><div class="label">Off-Topic</div><div class="value red">${recentRequests.filter(r => r.off_topic).length}</div></div>
 </div>
 
 <h2>Devices</h2>
@@ -194,6 +227,12 @@ app.get("/admin/stats", (req, res) => {
 <table>
   <tr><th>Device</th><th>Question</th><th>Answer (preview)</th><th>Date</th><th>Hits Since</th></tr>
   ${newRows}
+</table>
+
+<h2>Recent Questions (last 50)</h2>
+<table>
+  <tr><th>Date</th><th>Device</th><th>Question</th><th>Source</th><th>Off-Topic</th></tr>
+  ${requestRows}
 </table>
 
 <h2>Daily Breakdown (last 30 days)</h2>
