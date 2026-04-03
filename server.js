@@ -87,7 +87,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     // Save new Q&A to cache for future use — skip off-topic questions
-    if (isTextOnly && !offTopic && questionText.length >= 30 && data.content && data.content[0]) {
+    if (isTextOnly && !offTopic && questionText.length >= 20 && data.content && data.content[0]) {
       try {
         faqCache.insert(deviceId, questionText, data.content[0].text, 1);
       } catch (e) {
