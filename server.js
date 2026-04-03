@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const FaqCache = require("./lib/faq-cache");
 const { getPrompt, isOffTopic } = require("./lib/system-prompts");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -14,8 +15,17 @@ const faqCache = new FaqCache(DB_PATH);
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, "public")));
 
+// Rate limiting — 10 requests per minute per IP
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests — please wait a moment" }
+});
+
 // Chat API proxy — keeps the API key on the server
-app.post("/api/chat", async (req, res) => {
+app.post("/api/chat", chatLimiter, async (req, res) => {
   // --- FAQ cache intercept (before API key check — cached answers are free) ---
   const messages = req.body.messages || [];
   const lastMessage = messages[messages.length - 1];
