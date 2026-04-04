@@ -518,26 +518,6 @@
       cursor: not-allowed;
     }
     .chat-send:active:not(:disabled) { background: #d06000; }
-    .chat-voice {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--brand);
-      color: white;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .chat-voice:active { background: var(--brand-dark); }
-    .chat-voice.listening {
-      background: #b71c1c;
-      animation: pulse-mic 1s infinite;
-    }
     @keyframes pulse-mic {
       0%, 100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.4); }
       50% { box-shadow: 0 0 0 10px rgba(229,57,53,0); }
@@ -976,7 +956,6 @@
            placeholder="Ask Ollie anything..."
            enterkeyhint="send"
            autocomplete="off">
-    <button class="chat-voice" id="chatVoice" onclick="toggleVoice()" aria-label="Voice input">&#x1F3A4;</button>
     <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
   </div>
   <div class="chat-terms">By using this chat, you agree to our <a href="/terms.html">Terms of Service</a></div>
@@ -990,7 +969,6 @@
   const chatMessages = document.getElementById("chatMessages");
   const chatInput = document.getElementById("chatInput");
   const chatSend = document.getElementById("chatSend");
-  const chatVoice = document.getElementById("chatVoice");
 
   let conversationHistory = [];
   let isWaiting = false;
@@ -1061,56 +1039,6 @@
       p.setAttribute("aria-checked", isMatch ? "true" : "false");
     });
   }
-  let recognition = null;
-  let isListening = false;
-
-  // ===== VOICE INPUT (Web Speech API) =====
-  function toggleVoice() {
-    if (isListening) { stopVoice(); return; }
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Voice input is not supported in this browser. Try Chrome or Safari.");
-      return;
-    }
-    recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = true;
-    recognition.continuous = false;
-    recognition.onstart = function() {
-      isListening = true;
-      chatVoice.classList.add("listening");
-      chatInput.placeholder = "Listening...";
-    };
-    recognition.onresult = function(event) {
-      let transcript = "";
-      for (let i = 0; i < event.results.length; i++) {
-        transcript += event.results[i][0].transcript;
-      }
-      chatInput.value = transcript;
-    };
-    recognition.onend = function() {
-      isListening = false;
-      chatVoice.classList.remove("listening");
-      chatInput.placeholder = "Ask Ollie anything...";
-      if (chatInput.value.trim()) sendMessage();
-    };
-    recognition.onerror = function(event) {
-      isListening = false;
-      chatVoice.classList.remove("listening");
-      chatInput.placeholder = "Ask Ollie anything...";
-      if (event.error !== "no-speech" && event.error !== "aborted") {
-        console.error("Speech recognition error:", event.error);
-      }
-    };
-    recognition.start();
-  }
-  function stopVoice() {
-    if (recognition) recognition.stop();
-    isListening = false;
-    chatVoice.classList.remove("listening");
-    chatInput.placeholder = "Ask Ollie anything...";
-  }
-
   chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
