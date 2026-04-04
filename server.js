@@ -15,12 +15,13 @@ const PORT = process.env.PORT || 8080;
 const DB_PATH = path.join(__dirname, "db", "faq.db");
 const faqCache = new FaqCache(DB_PATH);
 
-// Security headers (allow inline scripts — device pages use inline JS + onclick)
+// Security headers (allow inline scripts + onclick — device pages use inline JS throughout)
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
       connectSrc: ["'self'"],
