@@ -106,18 +106,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
     return res.status(400).json({ error: "Message too long — please keep questions under 2,000 characters" });
   }
 
-  // --- Session + fingerprint validation ---
-  const sessionToken = req.body.session_token;
-  const fingerprint = req.body.fingerprint;
-  if (sessionToken && fingerprint) {
-    const limits = faqCache.checkLimits(sessionToken, fingerprint);
-    if (!limits.allowed) {
-      console.log(`SESSION BLOCKED (${limits.reason}): token=${sessionToken.slice(0, 8)}... fp=${fingerprint}`);
-      return res.status(429).json({ error: "Usage limit reached — please try again later", reason: limits.reason });
-    }
-    faqCache.incrementSession(sessionToken);
-  }
-
+  // --- FAQ cache intercept (before session check — cached answers are free) ---
   if (isTextOnly) {
     const match = faqCache.match(deviceId, questionText);
     if (match) {
@@ -133,6 +122,18 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
         usage: { input_tokens: 0, output_tokens: 0 }
       });
     }
+  }
+
+  // --- Session + fingerprint validation (only needed for API calls) ---
+  const sessionToken = req.body.session_token;
+  const fingerprint = req.body.fingerprint;
+  if (sessionToken && fingerprint) {
+    const limits = faqCache.checkLimits(sessionToken, fingerprint);
+    if (!limits.allowed) {
+      console.log(`SESSION BLOCKED (${limits.reason}): token=${sessionToken.slice(0, 8)}... fp=${fingerprint}`);
+      return res.status(429).json({ error: "Usage limit reached — please try again later", reason: limits.reason });
+    }
+    faqCache.incrementSession(sessionToken);
   }
 
   // --- Daily API cost cap ---
