@@ -151,8 +151,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
   }
 
   // Use server-side system prompt if available; fall back to client-sent for other devices
-  const techLevel = req.body.tech_level || "simple";
-  const serverPrompt = getPrompt(deviceId, techLevel);
+  const serverPrompt = getPrompt(deviceId);
   const system = serverPrompt || req.body.system;
 
   // Detect off-topic questions

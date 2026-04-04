@@ -342,53 +342,6 @@
     .issue-card-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
     .issue-card-desc { font-size: 13px; color: var(--text-light); }
 
-    /* Tech level selector */
-    .tech-level-bar {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin: 8px 12px 4px;
-      background: white;
-      border-radius: 10px;
-      padding: 6px;
-      border: 1px solid var(--border);
-    }
-    .tech-level-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-light);
-      padding: 0 10px 0 6px;
-      white-space: nowrap;
-    }
-    .tech-level-pills {
-      display: flex;
-      flex: 1;
-      gap: 0;
-      background: #f0ebe6;
-      border-radius: 8px;
-      padding: 3px;
-    }
-    .tech-pill {
-      flex: 1;
-      padding: 8px 4px;
-      border: none;
-      background: transparent;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-light);
-      cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.2s;
-      text-align: center;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .tech-pill.active {
-      background: var(--orange);
-      color: white;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-    }
-
     /* Chat view */
     .chat-view {
       display: none;
@@ -450,6 +403,30 @@
       border-bottom-left-radius: 4px;
       margin-right: auto;
       color: var(--text-light);
+    }
+    .tech-details {
+      margin-top: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+    .tech-details summary {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--orange);
+      cursor: pointer;
+      list-style: none;
+    }
+    .tech-details summary::before {
+      content: "\25B8 ";
+    }
+    .tech-details[open] summary::before {
+      content: "\25BE ";
+    }
+    .tech-details div {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.5;
     }
 
     /* Input bar */
@@ -746,14 +723,6 @@
     <h2 class="ref-overlay-title">Common Questions</h2>
     <button class="ref-overlay-close" onclick="closeCommonQ()" aria-label="Close common questions">&#x2190; Back</button>
   </div>
-  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
-    <div class="tech-level-label">Ollie's language:</div>
-    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
-      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
-      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
-      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
-    </div>
-  </div>
   <div class="ref-overlay-body">
 
     <h3 class="ref-section-header green">Cost &amp; Subscription</h3>
@@ -861,14 +830,6 @@
     <h2 class="ref-overlay-title">Common Issues</h2>
     <button class="ref-overlay-close" onclick="closeCommonIssues()" aria-label="Close common issues">&#x2190; Back</button>
   </div>
-  <div class="tech-level-bar" style="margin:8px 12px 0; flex-shrink:0;">
-    <div class="tech-level-label">Ollie's language:</div>
-    <div class="tech-level-pills" role="radiogroup" aria-label="Ollie's language level">
-      <button class="tech-pill active" data-level="simple" onclick="setTechLevel('simple')" role="radio" aria-checked="true">Plain English</button>
-      <button class="tech-pill" data-level="standard" onclick="setTechLevel('standard')" role="radio" aria-checked="false">Some tech is fine</button>
-      <button class="tech-pill" data-level="technical" onclick="setTechLevel('technical')" role="radio" aria-checked="false">Full tech details</button>
-    </div>
-  </div>
   <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:12px; padding-top:16px;">
     <p style="text-align:center; color:var(--text-light); font-size:15px; margin-bottom:4px;">Tap any issue — Ollie will walk you through it.</p>
 
@@ -972,7 +933,6 @@
 
   let conversationHistory = [];
   let isWaiting = false;
-  let techLevel = "simple";
 
   // --- Device fingerprint + session token (invisible to user) ---
   function generateFingerprint() {
@@ -1036,14 +996,6 @@
     }
   }, 60000); // check every minute
 
-  function setTechLevel(level) {
-    techLevel = level;
-    document.querySelectorAll(".tech-pill").forEach(p => {
-      const isMatch = p.getAttribute("data-level") === level;
-      p.classList.toggle("active", isMatch);
-      p.setAttribute("aria-checked", isMatch ? "true" : "false");
-    });
-  }
   chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
@@ -1124,6 +1076,10 @@
     html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
     html = html.replace(/\n(\d+)\.\s/g, "<br>$1. ");
     html = html.replace(/\n/g, "<br>");
+    // Render [TECHNICAL]...[/TECHNICAL] as collapsible details
+    html = html.replace(/\[TECHNICAL\]([\s\S]*?)\[\/TECHNICAL\]/g, function(m, content) {
+      return '<details class="tech-details"><summary>Technical details</summary><div>' + content.replace(/^(<br>)+/, '') + '</div></details>';
+    });
     bubble.innerHTML = html;
   }
 
@@ -1151,7 +1107,6 @@
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 512,
-          tech_level: techLevel,
           messages: conversationHistory,
           device_id: "pastigio-frameo-frame",
           session_token: sessionToken,
