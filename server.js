@@ -294,6 +294,48 @@ app.post("/admin/settings", (req, res) => {
   res.json({ ok: true, updated: updates });
 });
 
+// --- Resource management endpoints ---
+
+const VALID_CATEGORIES = new Set(["video", "article", "support", "search_youtube", "search_google"]);
+
+app.get("/admin/resources", (req, res) => {
+  const adminKey = process.env.ADMIN_KEY;
+  if (!adminKey || req.query.key !== adminKey) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+  res.json(faqCache.getAllResources());
+});
+
+app.post("/admin/resources", (req, res) => {
+  const adminKey = process.env.ADMIN_KEY;
+  if (!adminKey || req.query.key !== adminKey) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+  const { device_id, topic, category, title, url, display_order } = req.body;
+  if (!device_id || !topic || !category || !title || !url) {
+    return res.status(400).json({ error: "Missing required fields: device_id, topic, category, title, url" });
+  }
+  if (!VALID_CATEGORIES.has(category)) {
+    return res.status(400).json({ error: "Invalid category. Must be one of: " + [...VALID_CATEGORIES].join(", ") });
+  }
+  const order = parseInt(display_order) || 0;
+  faqCache.addResource(device_id, topic, category, title, url, order);
+  res.json({ ok: true });
+});
+
+app.delete("/admin/resources/:id", (req, res) => {
+  const adminKey = process.env.ADMIN_KEY;
+  if (!adminKey || req.query.key !== adminKey) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "Invalid resource ID" });
+  }
+  faqCache.deleteResource(id);
+  res.json({ ok: true });
+});
+
 // Admin stats dashboard
 app.get("/admin/stats", (req, res) => {
   const adminKey = process.env.ADMIN_KEY;
@@ -319,6 +361,9 @@ app.get("/admin/stats", (req, res) => {
   // Current settings for the form
   const settings = faqCache.getAllSettings();
   const settingVal = (key, def) => settings[key] !== undefined ? settings[key] : def;
+
+  // Fetch resources for the dashboard
+  const allResources = faqCache.getAllResources();
 
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -385,6 +430,35 @@ app.get("/admin/stats", (req, res) => {
       <td>${r.off_topic ? "Yes" : ""}</td>
     </tr>`).join("")
     : '<tr><td colspan="5" style="text-align:center;color:#888;">No requests logged yet</td></tr>';
+
+  // Group resources by topic for display
+  const resourcesByTopic = {};
+  for (const r of allResources) {
+    if (!resourcesByTopic[r.topic]) resourcesByTopic[r.topic] = [];
+    resourcesByTopic[r.topic].push(r);
+  }
+  const topics = Object.keys(resourcesByTopic).sort();
+
+  let resourceTableHtml = "";
+  if (topics.length === 0) {
+    resourceTableHtml = '<p style="color:#888;font-size:14px;">No resources yet. Add one below.</p>';
+  } else {
+    for (const topic of topics) {
+      resourceTableHtml += `<h3 style="font-size:14px;color:#555;margin:16px 0 8px;text-transform:uppercase;letter-spacing:0.5px;">${esc(topic)}</h3>`;
+      resourceTableHtml += `<table><tr><th>Cat</th><th>Title</th><th>URL</th><th>Order</th><th></th></tr>`;
+      for (const r of resourcesByTopic[topic]) {
+        const shortUrl = r.url.length > 40 ? r.url.substring(0, 40) + "..." : r.url;
+        resourceTableHtml += `<tr>
+          <td><code>${esc(r.category)}</code></td>
+          <td>${esc(r.title)}</td>
+          <td><a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:#1565c0;">${esc(shortUrl)}</a></td>
+          <td>${r.display_order}</td>
+          <td><button onclick="deleteResource(${r.id})" style="background:none;border:none;color:#c62828;cursor:pointer;font-size:16px;padding:4px 8px;" title="Delete">&times;</button></td>
+        </tr>`;
+      }
+      resourceTableHtml += `</table>`;
+    }
+  }
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -527,6 +601,51 @@ app.get("/admin/stats", (req, res) => {
   </div>
 </div>
 
+<div class="settings-box" style="margin-top:28px;">
+  <h2 style="margin-top:0;">Resources</h2>
+  ${resourceTableHtml}
+  <hr style="margin:24px 0;border:none;border-top:1px solid #eee;">
+  <h3 style="font-size:14px;color:#555;margin-bottom:12px;">Add Resource</h3>
+  <div class="settings-grid">
+    <div class="setting-row">
+      <label for="r_device_id">Device</label>
+      <select id="r_device_id" style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit;">
+        ${allDeviceIds.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join("")}
+      </select>
+    </div>
+    <div class="setting-row">
+      <label for="r_topic">Topic</label>
+      <input type="text" id="r_topic" placeholder="e.g. wifi_connect" style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit;">
+    </div>
+    <div class="setting-row">
+      <label for="r_category">Category</label>
+      <select id="r_category" style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit;">
+        <option value="video">video</option>
+        <option value="article">article</option>
+        <option value="support">support</option>
+        <option value="search_youtube">search_youtube</option>
+        <option value="search_google">search_google</option>
+      </select>
+    </div>
+    <div class="setting-row">
+      <label for="r_order">Display order</label>
+      <input type="number" id="r_order" value="1" min="0" max="99" style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit;">
+    </div>
+  </div>
+  <div class="setting-row" style="margin-top:12px;">
+    <label for="r_title">Title</label>
+    <input type="text" id="r_title" placeholder="Resource title" style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit;">
+  </div>
+  <div class="setting-row" style="margin-top:12px;">
+    <label for="r_url">URL</label>
+    <input type="text" id="r_url" placeholder="https://..." style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit;">
+  </div>
+  <div style="margin-top:16px;">
+    <button class="save-btn" onclick="addResource()">Add Resource</button>
+    <span class="status-msg" id="resourceStatusMsg"></span>
+  </div>
+</div>
+
 <div class="ts">Sessions: ${sessionStats.total} total, ${sessionStats.blocked} blocked | Generated ${new Date().toISOString().replace("T", " ").slice(0, 19)} UTC</div>
 
 <script>
@@ -560,6 +679,56 @@ function saveSettings() {
     })
     .catch(function() {
       btn.disabled = false;
+      msg.textContent = "Network error";
+      msg.className = "status-msg err";
+    });
+}
+
+function deleteResource(id) {
+  if (!confirm("Delete this resource?")) return;
+  fetch("/admin/resources/" + id + "?key=${encodeURIComponent(req.query.key)}", {
+    method: "DELETE"
+  }).then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok) location.reload();
+      else alert(data.error || "Delete failed");
+    })
+    .catch(function() { alert("Network error"); });
+}
+
+function addResource() {
+  var msg = document.getElementById("resourceStatusMsg");
+  var body = {
+    device_id: document.getElementById("r_device_id").value,
+    topic: document.getElementById("r_topic").value.trim(),
+    category: document.getElementById("r_category").value,
+    title: document.getElementById("r_title").value.trim(),
+    url: document.getElementById("r_url").value.trim(),
+    display_order: parseInt(document.getElementById("r_order").value) || 0
+  };
+  if (!body.topic || !body.title || !body.url) {
+    msg.textContent = "Topic, title, and URL are required";
+    msg.className = "status-msg err";
+    return;
+  }
+  msg.textContent = "Adding...";
+  msg.className = "status-msg";
+  fetch("/admin/resources?key=${encodeURIComponent(req.query.key)}", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  }).then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+      if (res.ok) {
+        msg.textContent = "Resource added";
+        msg.className = "status-msg ok";
+        setTimeout(function() { location.reload(); }, 500);
+      } else {
+        msg.textContent = res.data.error || "Add failed";
+        msg.className = "status-msg err";
+      }
+    })
+    .catch(function() {
       msg.textContent = "Network error";
       msg.className = "status-msg err";
     });
