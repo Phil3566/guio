@@ -15,8 +15,21 @@ const PORT = process.env.PORT || 8080;
 const DB_PATH = path.join(__dirname, "db", "faq.db");
 const faqCache = new FaqCache(DB_PATH);
 
-// Security headers
-app.use(helmet());
+// Security headers (allow inline scripts — device pages use inline JS + onclick)
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"]
+    }
+  }
+}));
 
 // CORS — only allow requests from our own domain (and localhost for dev)
 app.use(cors({
