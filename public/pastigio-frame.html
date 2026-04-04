@@ -996,8 +996,10 @@
   const deviceFingerprint = generateFingerprint();
   let sessionToken = localStorage.getItem("ollie_session");
 
-  async function initSession() {
-    if (sessionToken) return;
+  async function initSession(force) {
+    if (sessionToken && !force) return;
+    sessionToken = null;
+    localStorage.removeItem("ollie_session");
     try {
       const res = await fetch("/api/session", {
         method: "POST",
@@ -1158,6 +1160,17 @@
       });
       typing.remove();
       if (response.status === 429) {
+        var errData = {};
+        try { errData = await response.json(); } catch(e) {}
+        if (errData.reason === "invalid_session") {
+          await initSession(true);
+          isWaiting = false;
+          chatSend.disabled = false;
+          conversationHistory.pop();
+          chatInput.value = text;
+          addBubble("Session refreshed — please send your question again.", "assistant");
+          return;
+        }
         addBubble("I've been getting a lot of questions! Please wait a moment and try again.", "assistant");
         isWaiting = false;
         chatSend.disabled = false;

@@ -113,7 +113,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
     const limits = faqCache.checkLimits(sessionToken, fingerprint);
     if (!limits.allowed) {
       console.log(`SESSION BLOCKED (${limits.reason}): token=${sessionToken.slice(0, 8)}... fp=${fingerprint}`);
-      return res.status(429).json({ error: "Usage limit reached — please try again later" });
+      return res.status(429).json({ error: "Usage limit reached — please try again later", reason: limits.reason });
     }
     faqCache.incrementSession(sessionToken);
   }
