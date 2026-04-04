@@ -1013,8 +1013,11 @@
   }
   initSession();
 
-  // --- Session expiry: auto-clear after 30 min of inactivity ---
-  const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+  // --- Session expiry: auto-clear after configurable inactivity period ---
+  let SESSION_TIMEOUT = 30 * 60 * 1000; // default 30 minutes
+  fetch("/api/config").then(function(r) { return r.json(); }).then(function(c) {
+    SESSION_TIMEOUT = (c.session_timeout_minutes || 30) * 60 * 1000;
+  }).catch(function() {});
   let lastActivity = Date.now();
 
   function resetActivityTimer() { lastActivity = Date.now(); }
