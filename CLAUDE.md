@@ -3,7 +3,7 @@
 > This file is read automatically by Claude Code at session start.
 > Update it at the end of every session: what was built, what decisions
 > were made, what to work on next.
-> Last updated: March 28, 2026
+> Last updated: April 3, 2026
 
 ---
 
@@ -65,10 +65,13 @@ Each device page includes:
 
 **Pastigio-specific features:**
 - 2x2 pastel card grid navigation (6 cards, no emojis/chevrons)
-- Tech level selector ("Plain English" / "Some tech is fine" / "Full tech details") in 2 overlays
-- Why People Love It overlay (5 sections from 3,465 Amazon reviews)
+- Collapsible `[TECHNICAL]...[/TECHNICAL]` sections in AI chat responses (replaced tech level selector)
+- Why People Love It overlay (5 sections from customer reviews, source note)
 - Common Questions overlay (5 Q&A sections)
-- Common Issues overlay (8 tappable issue cards)
+- Common Issues overlay (9 tappable issue cards, including SD Card Not Recognized)
+- All overlays include disclaimer with link to official Frameo user manual
+- Cross-references between overlays specify exact sub-section
+- FAQ seed system for pre-cached hand-written answers
 
 **Deployment:**
 - GitHub repo: `Phil3566/guio` (origin/master)
@@ -76,7 +79,14 @@ Each device page includes:
 
 **Backend:**
 - `server.js` — Express server on port 8080, proxies Anthropic API calls
-- `.env` — stores `ANTHROPIC_API_KEY`
+- `lib/faq-cache.js` — SQLite-backed FAQ cache, session management, admin settings
+- `.env` — stores `ANTHROPIC_API_KEY`, `ADMIN_KEY`
+
+**Admin dashboard** (`/admin/stats?key=...`):
+- Per-device stats filtering (device selector buttons)
+- Summary cards: cache hits, API calls, hit rate, total Q&As, daily API calls remaining, sessions
+- Adjustable settings form: IP rate limit, session creation rate, session request cap, fingerprint lifetime cap, daily API cap, session expiry minutes
+- Settings stored in SQLite `settings` table, persist across restarts
 
 **Market research pipeline:**
 - `research/amazon_scanner.py` — scrapes Amazon Best Sellers, ranks by opportunity score
@@ -92,7 +102,8 @@ Each device page includes:
 - **Backend:** Express.js proxy server (hides API key from browser)
 - **AI:** Claude Haiku 4.5 via Anthropic API
 - **Research:** Python + Playwright + Claude API for automated product analysis
-- **No build step, no login, no database**
+- **Database:** SQLite via `better-sqlite3` — FAQ cache, sessions, daily stats, admin settings
+- **No build step, no login required**
 
 ---
 
@@ -353,6 +364,25 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Mar 2026 | Created LEGAL-REQUIREMENTS.md — 29-area legal compliance audit for public web app with AI chat |
 | Mar 2026 | Updated GUARDRAILS.md — added model override vulnerability, 6 critical server-side fixes documented |
 | Mar 2026 | Product images changed from .jpg to .png for Pastigio (source files were PNG format) |
+| Apr 2026 | Admin dashboard redesigned: per-device stats filtering, adjustable rate limits/caps stored in SQLite settings table |
+| Apr 2026 | Added `POST /admin/settings` endpoint — validates and saves 6 configurable settings, hot-swaps rate limiters |
+| Apr 2026 | Added `GET /api/config` endpoint — serves non-sensitive settings (session timeout) to client |
+| Apr 2026 | `pastigio-frame.html` session timeout now fetched dynamically from `/api/config` instead of hardcoded 30 min |
+| Apr 2026 | `ADMIN_KEY` env var required on DigitalOcean for admin dashboard access (set to `rtfm-admin-2026`) |
+| Apr 2026 | Removed tech level selector entirely — replaced with collapsible `[TECHNICAL]...[/TECHNICAL]` sections in AI responses |
+| Apr 2026 | System prompt tone: direct, no apologies, explicit banned phrases list ("Great question!", "I understand that's frustrating", etc.) |
+| Apr 2026 | Quick Start Guide overhauled: explicit (you, on the frame) / (them, on their phone) labels, merged duplicate sender sections |
+| Apr 2026 | Quick Reference overhauled: all paths start with "tap the screen", new entries (multi-select, remove person, WiFi status), reordered sections |
+| Apr 2026 | Cross-references between overlays now specify exact sub-section (e.g., "Common Issues → WiFi Won't Connect") |
+| Apr 2026 | All overlays now include disclaimer linking to official Frameo user manual |
+| Apr 2026 | FAQ seed system added to `faq-cache.js` — pre-caches hand-written answers, overwrites AI-generated ones on restart |
+| Apr 2026 | Cleaned apologetic language from existing cached FAQ answers in DB |
+| Apr 2026 | Added SD Card Not Recognized card to Common Issues overlay |
+| Apr 2026 | iOS Safari text-size-adjust fix for rotation bug |
+| Apr 2026 | "Why People Love It" nav card updated: "From actual customer reviews" + source note in overlay |
+| Apr 2026 | Care & Info overlay overhauled: all Settings paths start with "tap the screen", specified eye icon location, added router restart instructions, clarified SD card import, added Frameo+ pricing variability note |
+| Apr 2026 | Common Issues: added "Frame Won't Turn On" and "Frame Frozen / Not Responding" cards (11 total) |
+| Apr 2026 | Final sweep of all cached FAQ answers — cleaned remaining apologetic/filler language (IDs 215, 497, 502, 548, 564, 565) |
 
 ---
 
@@ -415,6 +445,39 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 - [x] Nav buttons converted to 2x2 pastel card grid (6 cards, no emojis)
 - [x] Tech level selector reduced from 7 locations to 2 (Common Questions + Common Issues only)
 - [x] Pill labels updated: "Plain English" / "Some tech is fine" / "Full tech details"
+
+### Pastigio content & tone overhaul — completed
+- [x] Removed tech level selector — replaced with collapsible `[TECHNICAL]...[/TECHNICAL]` in AI responses
+- [x] System prompt: direct tone, banned apologetic phrases, no filler
+- [x] Quick Start Guide: explicit device labels (you/on the frame, them/on their phone), merged duplicate sender sections
+- [x] Quick Reference: all Settings/My Photos paths start with "tap the screen", added multi-select, remove person, WiFi status entries
+- [x] Quick Reference reordered: Loading Photos before Albums & Organize
+- [x] Cross-references specify exact sub-section (Common Issues → WiFi Won't Connect, etc.)
+- [x] All overlays include disclaimer with link to official Frameo user manual
+- [x] "Why People Love It" updated: source note from customer reviews, removed dementia reference
+- [x] FAQ seed system: `_seedFAQs()` in faq-cache.js pre-caches hand-written answers, overwrites AI-generated ones
+- [x] SD Card Not Recognized card added to Common Issues
+- [x] iOS Safari text-size-adjust rotation fix
+- [x] Cleaned apologetic language from cached FAQ answers in DB
+- [x] Common Questions overhauled: consistent "people" language (not "family"), added delete photos and slideshow speed questions
+- [x] Cross-references throughout all overlays: Quick Start, Quick Reference, Common Questions, Common Issues, Care & Info all interlinked
+- [x] Frameo+ pricing note added: "pricing may vary — check the Frameo app"
+- [x] Care & Info overlay overhauled: Settings paths, eye icon location, router restart instructions, SD card import, Frameo+ pricing note, Amazon support path
+- [x] Common Issues: added "Frame Won't Turn On" and "Frame Frozen / Not Responding" cards (11 total)
+- [x] Final sweep of all cached FAQ answers — cleaned remaining apologetic/filler language
+
+### Admin dashboard — completed
+- [x] Added `settings` table to SQLite schema in `faq-cache.js`
+- [x] Added `getSetting()`, `setSetting()`, `getAllSettings()` methods
+- [x] `checkLimits()` reads session cap and fingerprint cap from settings table (no longer hardcoded)
+- [x] `getStats()` and `getRecentRequests()` accept optional device filter
+- [x] Rate limiters built from DB settings with hot-swap on save (wrapper middleware pattern)
+- [x] Daily API cap reads from settings table (falls back to `DAILY_API_LIMIT` env var)
+- [x] `GET /api/config` — public endpoint returning `session_timeout_minutes`
+- [x] `POST /admin/settings` — admin-key protected, validates 6 settings with min/max bounds
+- [x] Dashboard HTML: device selector buttons, "Daily Left" card, settings form with save button
+- [x] `pastigio-frame.html` fetches session timeout dynamically from `/api/config`
+- [x] Pushed to GitHub / deployed to DigitalOcean
 
 ### Also next
 - [ ] Add sticker kit upsell section to device pages
