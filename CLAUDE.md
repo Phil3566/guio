@@ -383,6 +383,8 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Apr 2026 | Care & Info overlay overhauled: all Settings paths start with "tap the screen", specified eye icon location, added router restart instructions, clarified SD card import, added Frameo+ pricing variability note |
 | Apr 2026 | Common Issues: added "Frame Won't Turn On" and "Frame Frozen / Not Responding" cards (11 total) |
 | Apr 2026 | Final sweep of all cached FAQ answers — cleaned remaining apologetic/filler language (IDs 215, 497, 502, 548, 564, 565) |
+| Apr 2026 | Added WiFi won't connect seed to `_seedFAQs()` — exact match for Common Issues card question, guarantees cache hit |
+| Apr 2026 | Key learning: Common Issues cards send specific question text; if similarity score is below threshold (0.45), it falls through to live API which may generate apologetic responses. Seeds with exact card question text prevent this. |
 
 ---
 

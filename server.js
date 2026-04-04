@@ -124,8 +124,10 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
       console.log(`FAQ cache HIT (score=${match.score.toFixed(3)}): "${questionText}"`);
       faqCache.recordHit(deviceId);
       faqCache.logRequest(deviceId, questionText, "cache", 0);
+      const resources = match.topic ? faqCache.getResources(deviceId, match.topic) : null;
       return res.json({
         content: [{ type: "text", text: match.answer }],
+        resources: resources,
         model: "faq-cache",
         stop_reason: "end_turn",
         usage: { input_tokens: 0, output_tokens: 0 }
