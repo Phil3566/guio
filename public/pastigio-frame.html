@@ -495,9 +495,9 @@
       transform: translateX(-50%);
       background: rgba(0,0,0,0.85);
       color: white;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-size: 14px;
+      padding: 14px 24px;
+      border-radius: 24px;
+      font-size: 17px;
       z-index: 9999;
       opacity: 0;
       transition: opacity 0.3s;
@@ -1185,14 +1185,26 @@
     toast.textContent = msg;
     document.body.appendChild(toast);
     setTimeout(function() { toast.classList.add("show"); }, 10);
-    setTimeout(function() { toast.classList.remove("show"); setTimeout(function() { toast.remove(); }, 300); }, 2500);
+    setTimeout(function() { toast.classList.remove("show"); setTimeout(function() { toast.remove(); }, 300); }, 4000);
+  }
+
+  function isYouTubeUrl(url) {
+    return url.includes("youtube.com") || url.includes("youtu.be");
   }
 
   function handleResourceClick(e) {
-    e.preventDefault();
     var url = e.currentTarget.href;
-    showToast("Swipe from the left edge to come back");
-    setTimeout(function() { window.location.href = url; }, 600);
+    if (isYouTubeUrl(url)) {
+      // YouTube: open in new tab (swipe-back doesn't work in YouTube player)
+      e.preventDefault();
+      showToast("Opening YouTube — close the tab to come back");
+      setTimeout(function() { window.open(url, "_blank", "noopener"); }, 800);
+    } else {
+      // Articles/support: open in same tab (swipe from left edge to return)
+      e.preventDefault();
+      showToast("Swipe from the left edge to come back");
+      setTimeout(function() { window.location.href = url; }, 800);
+    }
   }
 
   function renderResources(bubble, resources) {
