@@ -394,6 +394,12 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Apr 2026 | WiFi answer wording: "When you see the list of WiFi networks on the frame", "you or someone familiar with routers", "weak signal can cause the connection to fail", cross-reference to resource videos/articles |
 | Apr 2026 | Resource links: YouTube opens in new tab ("close the tab to come back"), articles/support open in same tab ("swipe from the left edge to come back"). Toast notification before navigation (17px, 4s duration) |
 | Apr 2026 | "Click for Technical details" label color changed from orange to blue (#1565c0) to match resource sections |
+| Apr 2026 | Rebranded to Artie Manual — owl logo, hero text references QR sticker, admin dashboard renamed |
+| Apr 2026 | Hero simplified: removed product image/fullscreen overlay, centered "Digital Picture Frame AI User Manual" text, removed chat input title bar |
+| Apr 2026 | Off-topic questions now blocked before API call — zero cost canned response, runs before session validation |
+| Apr 2026 | Added 12 hand-written FAQ seeds: SD card, WiFi, broken glass, videos, sideways photo, storage full, remote control, captions, tablet, WiFi status, icons, multi-frame |
+| Apr 2026 | Admin dashboard: merged "Never-Hit Seed Questions" into "All Cached Q&A" section — browse all entries with expandable answers |
+| Apr 2026 | QR sticker print page updated with Artie Manual owl logo alongside QR code |
 
 ---
 
