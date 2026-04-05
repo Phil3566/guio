@@ -1128,6 +1128,13 @@
     html = html.replace(/\[TECHNICAL\]([\s\S]*?)\[\/TECHNICAL\]/g, function(m, content) {
       return '<details class="tech-details"><summary>Click for Technical details</summary><div>' + content.replace(/^(<br>)+/, '') + '</div></details>';
     });
+    // Render [CROSSREF:overlay]link text[/CROSSREF] as clickable links to overlays
+    var overlayMap = { quickstart: "openQuickStart", ref: "openRef", highlights: "openHighlights", commonq: "openCommonQ", issues: "openCommonIssues", care: "openCare" };
+    html = html.replace(/\[CROSSREF:(\w+)\](.*?)\[\/CROSSREF\]/g, function(m, key, label) {
+      var fn = overlayMap[key];
+      if (!fn) return label;
+      return '<a href="#" onclick="goHome(); setTimeout(' + fn + ', 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">' + label + '</a>';
+    });
     bubble.innerHTML = html;
   }
 
