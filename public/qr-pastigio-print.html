@@ -10,15 +10,32 @@
       min-height: 100vh; margin: 0; background: white;
     }
     .print-card { text-align: center; padding: 40px; }
-    .print-card img { width: 200px; height: 200px; }
+    .sticker {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
+    }
+    .sticker .owl { width: 80px; height: auto; }
+    .sticker .qr { width: 120px; height: 120px; }
     .print-card h2 { margin: 16px 0 4px; font-size: 18px; }
     .print-card p { color: #666; font-size: 13px; margin: 0; }
-    @media print { .print-card img { width: 150px; height: 150px; } }
+    .brand { font-weight: 700; font-size: 11px; color: #333; margin-top: 6px; letter-spacing: 0.5px; }
+    @media print {
+      .sticker .owl { width: 60px; }
+      .sticker .qr { width: 100px; height: 100px; }
+      .sticker { border-color: #ccc; }
+    }
   </style>
 </head>
 <body>
   <div class="print-card">
-    <img src="qr-pastigio.svg" alt="QR Code">
+    <div class="sticker">
+      <img src="artie-manual.png" alt="Artie Manual owl logo" class="owl">
+      <img src="qr-pastigio.svg" alt="QR Code" class="qr">
+    </div>
     <h2>Scan for Picture Frame Guide</h2>
     <p>Pastigio Digital Picture Frame (Frameo)</p>
   </div>
