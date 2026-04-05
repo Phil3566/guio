@@ -87,6 +87,8 @@ Each device page includes:
 - Summary cards: cache hits, API calls, hit rate, total Q&As, daily API calls remaining, sessions
 - Adjustable settings form: IP rate limit, session creation rate, session request cap, fingerprint lifetime cap, daily API cap, session expiry minutes
 - Settings stored in SQLite `settings` table, persist across restarts
+- Resources management: view all curated resources grouped by topic, add new resources, delete resources
+- Resource API: `GET/POST/DELETE /admin/resources` endpoints (admin-key protected)
 
 **Market research pipeline:**
 - `research/amazon_scanner.py` — scrapes Amazon Best Sellers, ranks by opportunity score
@@ -385,6 +387,13 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Apr 2026 | Final sweep of all cached FAQ answers — cleaned remaining apologetic/filler language (IDs 215, 497, 502, 548, 564, 565) |
 | Apr 2026 | Added WiFi won't connect seed to `_seedFAQs()` — exact match for Common Issues card question, guarantees cache hit |
 | Apr 2026 | Key learning: Common Issues cards send specific question text; if similarity score is below threshold (0.45), it falls through to live API which may generate apologetic responses. Seeds with exact card question text prevent this. |
+| Apr 2026 | Curated resources system: `resources` table in SQLite, `_seedResources()` for wifi_connect topic (3 videos, 2 articles, 3 support links, 2 search fallbacks), `topic` column on `faq` table, frontend renders collapsible `<details>` sections |
+| Apr 2026 | Admin dashboard: added Resources management section — view/add/delete resources via `GET/POST/DELETE /admin/resources` endpoints, `getAllResources()`, `addResource()`, `deleteResource()` methods in faq-cache.js |
+| Apr 2026 | Fixed: FAQ cache check now runs before session validation — stale session tokens no longer block cached answers |
+| Apr 2026 | WiFi answer rewritten using Frameo support articles — added WPA3, hidden SSID, band steering/mesh, channel width, client isolation, MAC filtering, phone hotspot diagnostic. 5 main steps + expanded TECHNICAL section |
+| Apr 2026 | WiFi answer wording: "When you see the list of WiFi networks on the frame", "you or someone familiar with routers", "weak signal can cause the connection to fail", cross-reference to resource videos/articles |
+| Apr 2026 | Resource links: YouTube opens in new tab ("close the tab to come back"), articles/support open in same tab ("swipe from the left edge to come back"). Toast notification before navigation (17px, 4s duration) |
+| Apr 2026 | "Click for Technical details" label color changed from orange to blue (#1565c0) to match resource sections |
 
 ---
 
@@ -479,6 +488,9 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 - [x] `POST /admin/settings` — admin-key protected, validates 6 settings with min/max bounds
 - [x] Dashboard HTML: device selector buttons, "Daily Left" card, settings form with save button
 - [x] `pastigio-frame.html` fetches session timeout dynamically from `/api/config`
+- [x] Resources management: `getAllResources()`, `addResource()`, `deleteResource()` in faq-cache.js
+- [x] Resource API: `GET/POST/DELETE /admin/resources` endpoints (admin-key protected, validates category)
+- [x] Dashboard Resources section: table grouped by topic, delete buttons, Add Resource form (device, topic, category, title, URL, order)
 - [x] Pushed to GitHub / deployed to DigitalOcean
 
 ### Also next
