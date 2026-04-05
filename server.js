@@ -422,12 +422,6 @@ app.get("/admin/stats", (req, res) => {
     </tr>`;
   }).join("");
 
-  let zeroRows = stats.zeroHits.map(q => `
-    <tr>
-      <td>${esc(q.device_id)}</td>
-      <td>${esc(q.question)}</td>
-    </tr>`).join("");
-
   let allFaqRows = stats.allFaqs.length > 0
     ? stats.allFaqs.map(q => `
     <tr>
@@ -485,7 +479,7 @@ app.get("/admin/stats", (req, res) => {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RTFM For Me — Admin Dashboard</title>
+<title>Artie Manual — Admin Dashboard</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 20px; max-width: 960px; margin: 0 auto; }
@@ -522,7 +516,7 @@ app.get("/admin/stats", (req, res) => {
 </style>
 </head>
 <body>
-<h1>RTFM For Me — Admin Dashboard</h1>
+<h1>Artie Manual — Admin Dashboard</h1>
 
 <div class="device-bar">
   <div class="device-bar-label">Filter by device</div>
@@ -566,12 +560,6 @@ app.get("/admin/stats", (req, res) => {
 <table>
   <tr><th>Date</th><th>Cache Hits</th><th>API Calls</th><th>Hit Rate</th></tr>
   ${dailyRows || '<tr><td colspan="4" style="text-align:center;color:#888;">No data yet</td></tr>'}
-</table>
-
-<h2>Never-Hit Seed Questions</h2>
-<table>
-  <tr><th>Device</th><th>Question</th></tr>
-  ${zeroRows || '<tr><td colspan="2" style="text-align:center;color:#888;">All seed questions have been hit at least once</td></tr>'}
 </table>
 
 <h2>All Cached Q&amp;A (${stats.allFaqs.length} entries)</h2>
