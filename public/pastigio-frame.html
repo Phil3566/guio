@@ -488,6 +488,25 @@
       color: #1565c0;
       text-decoration: underline;
     }
+    .nav-toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .nav-toast.show {
+      opacity: 1;
+    }
 
     /* Input bar */
     .chat-input-bar {
@@ -1158,6 +1177,24 @@
     bubble.innerHTML = html;
   }
 
+  function showToast(msg) {
+    var existing = document.querySelector(".nav-toast");
+    if (existing) existing.remove();
+    var toast = document.createElement("div");
+    toast.className = "nav-toast";
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(function() { toast.classList.add("show"); }, 10);
+    setTimeout(function() { toast.classList.remove("show"); setTimeout(function() { toast.remove(); }, 300); }, 2500);
+  }
+
+  function handleResourceClick(e) {
+    e.preventDefault();
+    var url = e.currentTarget.href;
+    showToast("Swipe from the left edge to come back");
+    setTimeout(function() { window.location.href = url; }, 600);
+  }
+
   function renderResources(bubble, resources) {
     const categories = [
       { key: "video", label: "Click for suggested YouTube videos that explain the issue", searchKey: "search_youtube" },
@@ -1179,9 +1216,9 @@
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = item.url;
-        a.target = "_blank";
         a.rel = "noopener";
         a.textContent = item.title;
+        a.addEventListener("click", handleResourceClick);
         li.appendChild(a);
         ul.appendChild(li);
       }
@@ -1191,10 +1228,10 @@
         if (searchItems && searchItems.length > 0) {
           const searchLink = document.createElement("a");
           searchLink.href = searchItems[0].url;
-          searchLink.target = "_blank";
           searchLink.rel = "noopener";
           searchLink.className = "resource-search-link";
           searchLink.textContent = searchItems[0].title;
+          searchLink.addEventListener("click", handleResourceClick);
           div.appendChild(searchLink);
         }
       }
