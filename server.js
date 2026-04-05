@@ -124,6 +124,19 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
     }
   }
 
+  // Detect off-topic questions — return canned response without calling API
+  const offTopic = isTextOnly ? isOffTopic(deviceId, questionText) : false;
+  if (offTopic) {
+    console.log(`OFF-TOPIC (blocked): "${questionText}"`);
+    faqCache.logRequest(deviceId, questionText, "off-topic", 1);
+    return res.json({
+      content: [{ type: "text", text: "I'm only set up to help with your Pastigio picture frame — for other questions, a quick web search should help!" }],
+      model: "guardrail",
+      stop_reason: "end_turn",
+      usage: { input_tokens: 0, output_tokens: 0 }
+    });
+  }
+
   // --- Session + fingerprint validation (only needed for API calls) ---
   const sessionToken = req.body.session_token;
   const fingerprint = req.body.fingerprint;
@@ -156,9 +169,6 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
   // Use server-side system prompt if available; fall back to client-sent for other devices
   const serverPrompt = getPrompt(deviceId);
   const system = serverPrompt || req.body.system;
-
-  // Detect off-topic questions
-  const offTopic = isTextOnly ? isOffTopic(deviceId, questionText) : false;
 
   // --- Prompt injection detection ---
   if (isTextOnly && isInjection(questionText)) {
@@ -209,14 +219,11 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
 
     // Log the question
     if (isTextOnly) {
-      faqCache.logRequest(deviceId, questionText, "api", offTopic);
-      if (offTopic) {
-        console.log(`OFF-TOPIC (not cached): "${questionText}"`);
-      }
+      faqCache.logRequest(deviceId, questionText, "api", false);
     }
 
-    // Save new Q&A to cache for future use — skip off-topic questions
-    if (isTextOnly && !offTopic && questionText.length >= 20 && data.content && data.content[0]) {
+    // Save new Q&A to cache for future use
+    if (isTextOnly && questionText.length >= 20 && data.content && data.content[0]) {
       try {
         faqCache.insert(deviceId, questionText, data.content[0].text, 1);
       } catch (e) {
