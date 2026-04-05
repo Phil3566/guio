@@ -428,6 +428,18 @@ app.get("/admin/stats", (req, res) => {
       <td>${esc(q.question)}</td>
     </tr>`).join("");
 
+  let allFaqRows = stats.allFaqs.length > 0
+    ? stats.allFaqs.map(q => `
+    <tr>
+      <td>${q.id}</td>
+      <td>${esc(q.question)}</td>
+      <td><details><summary>${esc(q.answer.substring(0, 60))}${q.answer.length > 60 ? "..." : ""}</summary><div style="white-space:pre-wrap;font-size:12px;padding:8px;background:#f5f5f5;border-radius:4px;margin-top:4px;">${esc(q.answer)}</div></details></td>
+      <td>${q.hit_count}</td>
+      <td>${q.is_generated ? "AI" : "Seed"}</td>
+      <td>${q.topic || ""}</td>
+    </tr>`).join("")
+    : '<tr><td colspan="6" style="text-align:center;color:#888;">No cached Q&A entries</td></tr>';
+
   let requestRows = recentRequests.length > 0
     ? recentRequests.map(r => `
     <tr${r.off_topic ? ' style="background:#fff3e0;"' : ""}>
@@ -560,6 +572,12 @@ app.get("/admin/stats", (req, res) => {
 <table>
   <tr><th>Device</th><th>Question</th></tr>
   ${zeroRows || '<tr><td colspan="2" style="text-align:center;color:#888;">All seed questions have been hit at least once</td></tr>'}
+</table>
+
+<h2>All Cached Q&amp;A (${stats.allFaqs.length} entries)</h2>
+<table>
+  <tr><th>ID</th><th>Question</th><th>Answer</th><th>Hits</th><th>Source</th><th>Topic</th></tr>
+  ${allFaqRows}
 </table>
 
 <h2>Top Devices by Requests (fingerprint)</h2>
