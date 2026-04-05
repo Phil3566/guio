@@ -141,7 +141,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
   if (faqCache.getTodayApiCalls() >= dailyLimit) {
     console.log(`DAILY CAP reached (${dailyLimit} API calls)`);
     return res.json({
-      content: [{ type: "text", text: "Ollie is taking a quick rest — I've had a lot of questions today! Cached answers still work, but for new questions please try again tomorrow. Thanks for your patience!" }],
+      content: [{ type: "text", text: "Artie is taking a quick rest — I've had a lot of questions today! Cached answers still work, but for new questions please try again tomorrow. Thanks for your patience!" }],
       model: "daily-cap",
       stop_reason: "end_turn",
       usage: { input_tokens: 0, output_tokens: 0 }
