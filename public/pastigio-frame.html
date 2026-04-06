@@ -94,7 +94,8 @@
       border-radius: 50%;
     }
     .hero-text p {
-      font-size: 14px;
+      font-size: 22px;
+      font-weight: 700;
       opacity: 1;
       line-height: 1.5;
       text-align: center;
@@ -572,27 +573,27 @@
   <!-- Navigation Cards -->
   <div class="nav-grid">
     <button class="nav-card green" onclick="openQuickStart()" aria-haspopup="dialog">
-      <div class="nav-card-title">Quick Start Guide</div>
+      <div class="nav-card-title">🚀 Quick Start Guide</div>
       <div class="nav-card-desc">Gift setup, WiFi, family codes &amp; first photo</div>
     </button>
     <button class="nav-card blue" onclick="openRef()" aria-haspopup="dialog">
-      <div class="nav-card-title">Quick Reference</div>
+      <div class="nav-card-title">📖 Quick Reference</div>
       <div class="nav-card-desc">Photos, slideshow, display &amp; more</div>
     </button>
     <button class="nav-card gold" onclick="openHighlights()" aria-haspopup="dialog">
-      <div class="nav-card-title">Why People Love It</div>
+      <div class="nav-card-title">⭐ Why People Love It</div>
       <div class="nav-card-desc">From actual customer reviews</div>
     </button>
     <button class="nav-card teal" onclick="openCommonQ()" aria-haspopup="dialog">
-      <div class="nav-card-title">Common Questions</div>
+      <div class="nav-card-title">❓ Common Questions</div>
       <div class="nav-card-desc">Subscriptions, storage, WiFi &amp; more</div>
     </button>
     <button class="nav-card orange" onclick="openCommonIssues()" aria-haspopup="dialog">
-      <div class="nav-card-title">Common Issues</div>
+      <div class="nav-card-title">🔧 Common Issues</div>
       <div class="nav-card-desc">WiFi, photos &amp; quick fixes</div>
     </button>
     <button class="nav-card purple" onclick="openCare()" aria-haspopup="dialog">
-      <div class="nav-card-title">Care &amp; Info</div>
+      <div class="nav-card-title">🛡️ Care &amp; Info</div>
       <div class="nav-card-desc">Troubleshooting, specs &amp; support</div>
     </button>
   </div>
@@ -611,13 +612,13 @@
 <!-- ===== QUICK START GUIDE OVERLAY ===== -->
 <div class="ref-overlay" id="quickStartOverlay" role="dialog" aria-label="Quick Start Guide" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
-    <h2 class="ref-overlay-title">Quick Start Guide</h2>
+    <h2 class="ref-overlay-title">🚀 Quick Start Guide</h2>
     <button class="ref-overlay-close" onclick="closeQuickStart()" aria-label="Close quick start guide">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
     <div style="font-size:12px; color:#888; line-height:1.4; margin-bottom:12px;">Based on the <a href="https://support.frameo.com/hc/en-us/articles/360021234699--User-Manual" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">official Frameo user manual</a>. This guide may contain errors &mdash; always refer to the official manual for complete information.</div>
 
-    <h3 class="ref-section-header red">Gift Setup &mdash; Just Unboxed? Start Here</h3>
+    <h3 class="ref-section-header red">START HERE</h3>
     <div class="ref-row"><div class="ref-label"><strong>Step 1:</strong> <span class="ref-desc">Plug in the frame using the included power cord. The screen turns on automatically.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 2 (on the frame):</strong> <span class="ref-desc">Select your language.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 3 (on the frame):</strong> <span class="ref-desc">Connect the frame to WiFi &mdash; tap your network name, then type the password. <strong>Must be 2.4GHz WiFi</strong> (not 5GHz). This is the most common issue. If you're having trouble with this step, see <a href="#" onclick="closeQuickStart(); setTimeout(openCommonIssues, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; WiFi Won't Connect</a>.</span></div></div>
@@ -646,7 +647,7 @@
 <!-- ===== QUICK REFERENCE OVERLAY ===== -->
 <div class="ref-overlay" id="refOverlay" role="dialog" aria-label="Quick Reference" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#1e88e5,#1565c0); color:white;">
-    <h2 class="ref-overlay-title">Quick Reference</h2>
+    <h2 class="ref-overlay-title">📖 Quick Reference</h2>
     <button class="ref-overlay-close" onclick="closeRef()" aria-label="Close quick reference">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
@@ -702,7 +703,7 @@
 <!-- ===== WHY PEOPLE LOVE IT OVERLAY ===== -->
 <div class="ref-overlay" id="highlightsOverlay" role="dialog" aria-label="Why People Love It" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f9a825,#f57f17); color:white;">
-    <h2 class="ref-overlay-title">Why People Love It</h2>
+    <h2 class="ref-overlay-title">⭐ Why People Love It</h2>
     <button class="ref-overlay-close" onclick="closeHighlights()" aria-label="Close highlights">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
@@ -742,7 +743,7 @@
 <!-- ===== COMMON QUESTIONS OVERLAY ===== -->
 <div class="ref-overlay" id="commonQOverlay" role="dialog" aria-label="Common Questions" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#00897b,#00695c); color:white;">
-    <h2 class="ref-overlay-title">Common Questions</h2>
+    <h2 class="ref-overlay-title">❓ Common Questions</h2>
     <button class="ref-overlay-close" onclick="closeCommonQ()" aria-label="Close common questions">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
@@ -780,7 +781,7 @@
 <!-- ===== CARE & INFO OVERLAY ===== -->
 <div class="ref-overlay" id="careOverlay" role="dialog" aria-label="Care and Info" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#8e24aa,#6a1b9a); color:white;">
-    <h2 class="ref-overlay-title">Care &amp; Info</h2>
+    <h2 class="ref-overlay-title">🛡️ Care &amp; Info</h2>
     <button class="ref-overlay-close" onclick="closeCare()" aria-label="Close care and info">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body">
@@ -853,7 +854,7 @@
 <!-- ===== COMMON ISSUES OVERLAY ===== -->
 <div class="ref-overlay" id="commonIssuesOverlay" role="dialog" aria-label="Common Issues" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
-    <h2 class="ref-overlay-title">Common Issues</h2>
+    <h2 class="ref-overlay-title">🔧 Common Issues</h2>
     <button class="ref-overlay-close" onclick="closeCommonIssues()" aria-label="Close common issues">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:12px; padding-top:16px;">
