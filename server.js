@@ -35,7 +35,7 @@ app.use(helmet({
 // CORS — only allow requests from our own domain (and localhost for dev)
 app.use(cors({
   origin: process.env.NODE_ENV === "production"
-    ? "https://rtfmforme.app"
+    ? "https://artiemanual.com"
     : true
 }));
 
