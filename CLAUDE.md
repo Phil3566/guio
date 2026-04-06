@@ -397,9 +397,13 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Apr 2026 | Rebranded to Artie Manual — owl logo, hero text references QR sticker, admin dashboard renamed |
 | Apr 2026 | Hero simplified: removed product image/fullscreen overlay, centered "Digital Picture Frame AI User Manual" text, removed chat input title bar |
 | Apr 2026 | Off-topic questions now blocked before API call — zero cost canned response, runs before session validation |
-| Apr 2026 | Added 12 hand-written FAQ seeds: SD card, WiFi, broken glass, videos, sideways photo, storage full, remote control, captions, tablet, WiFi status, icons, multi-frame |
+| Apr 2026 | Added 12 hand-written FAQ seeds: SD card, WiFi, broken glass, videos, sideways photo, storage full, remote control, captions, tablet, WiFi status, icons, multi-frame (later expanded to 22) |
 | Apr 2026 | Admin dashboard: merged "Never-Hit Seed Questions" into "All Cached Q&A" section — browse all entries with expandable answers |
 | Apr 2026 | QR sticker print page updated with Artie Manual owl logo alongside QR code |
+| Apr 2026 | Systematic Common Issues FAQ improvement: searched Google for each question, compared to cached answer, identified gaps, wrote improved seeds with exact card question text, updated related DB entries |
+| Apr 2026 | Improved FAQ seeds added: power warning/unplug, touch screen not responding, video sound at night, SD card not recognized (improved), frame won't turn on, frame frozen — 22 seeds total |
+| Apr 2026 | Seed answer pattern established: answer the question first (reassure the user), then provide detailed steps and edge cases |
+| Apr 2026 | All power-related answers now consistent: 10-minute unplug wait, 15-second power button hold, unplug both ends, factory reset pinhole details, photo recovery info (senders' phones still have originals) |
 
 ---
 
