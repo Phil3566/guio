@@ -42,6 +42,9 @@ app.use(cors({
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, "public")));
 
+// Redirect root to the active device page
+app.get("/", (req, res) => res.redirect("/pastigio-frame.html"));
+
 // Rate limiting — configurable via admin settings
 function buildLimiter(maxRequests, message) {
   return rateLimit({
