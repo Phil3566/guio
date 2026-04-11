@@ -35,7 +35,7 @@ app.use(helmet({
 // CORS — only allow requests from our own domain (and localhost for dev)
 app.use(cors({
   origin: process.env.NODE_ENV === "production"
-    ? "https://artiemanual.com"
+    ? "https://owlxplain.com"
     : true
 }));
 
@@ -44,6 +44,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Redirect root to the active device page
 app.get("/", (req, res) => res.redirect("/pastigio-frame.html"));
+app.get("/app", (req, res) => res.redirect("https://onelink.to/ztmhrw"));
 
 // Rate limiting — configurable via admin settings
 function buildLimiter(maxRequests, message) {
@@ -482,7 +483,7 @@ app.get("/admin/stats", (req, res) => {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artie Manual — Admin Dashboard</title>
+<title>Owlxplain — Admin Dashboard</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 20px; max-width: 960px; margin: 0 auto; }
@@ -519,7 +520,7 @@ app.get("/admin/stats", (req, res) => {
 </style>
 </head>
 <body>
-<h1>Artie Manual — Admin Dashboard</h1>
+<h1>Owlxplain — Admin Dashboard</h1>
 
 <div class="device-bar">
   <div class="device-bar-label">Filter by device</div>

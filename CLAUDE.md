@@ -3,7 +3,32 @@
 > This file is read automatically by Claude Code at session start.
 > Update it at the end of every session: what was built, what decisions
 > were made, what to work on next.
-> Last updated: April 3, 2026
+> Last updated: April 7, 2026 (Pastigio 10.1" deep dive — 17 ASINs, sales volume analysis, CSV expanded to 22 columns)
+
+---
+
+## Companion Files (read on demand — don't load all at once)
+
+| Area | File | What's in it |
+|---|---|---|
+| Business plan | `../Companion files/business/CLEARLABEL_BUSINESS_PLAN.md` | Full business plan, revenue model, market sizing |
+| Amazon launch | `../Companion files/business/AMAZON-LAUNCH.md` | FBA setup, listing strategy, launch checklist |
+| LLC formation | `../Companion files/business/LLC-FORMATION.md` | Entity setup steps and status |
+| Collateral | `../Companion files/business/Collateral.md` | Marketing materials and assets |
+| Skill file | `../Companion files/business/SKILL.md` | Condensed project context for Claude projects |
+| Frameo support | `../Companion files/Frameo/Frameo_Support_Articles.md` | Official Frameo help articles (WiFi, setup, etc.) |
+| Pastigio reviews | `../Companion files/Frameo/PASTIGIO-REVIEW-SUMMARY.md` | Amazon review analysis for Pastigio frame |
+| Sticker optimization | `../Companion files/research/STICKER-OPTIMIZATION.md` | How many sticker designs, phased rollout, validation plan |
+| Legal requirements | `../Companion files/legal/LEGAL-REQUIREMENTS.md` | 29-area legal compliance audit |
+| Compliance status | `../Companion files/legal/COMPLIANCE-STATUS.md` | Current compliance progress |
+| Caching & guardrails | `../Companion files/technical/CACHING-AND-GUARDRAILS.md` | Security audit, rate limiting, vulnerabilities |
+| Deployment | `../Companion files/technical/DEPLOYMENT.md` | DigitalOcean setup and deploy instructions |
+| UI guide | `../Companion files/technical/USER-INTERFACE.md` | Comprehensive UI guide across all device pages |
+| Aura Carver manual | `../Companion files/research/Aura_Carver_Full_Manual.md` | Full device manual (future device page) |
+| Aura Carver reviews | `../Companion files/research/aura_carver_review_analysis.md` | Review confusion analysis |
+| Cuisinart reviews | `../Companion files/research/cuisinart_review_analysis.md` | Review confusion analysis |
+| Pastigio 10.1" specs | `../Companion files/Pastigio/10p1inchers.docx` | Amazon product specs for all Pastigio 10.1" ASINs |
+| Todo list | `../TODO.md` | Master task list |
 
 ---
 
@@ -26,12 +51,12 @@ devices as gifts and want to reduce "how do I use this?" support calls.
 ## Business Model
 
 ### Revenue streams (in priority order for launch)
-1. **Physical sticker kits** — device-specific removable sticker sets, $12–$24,
-   sold on Amazon FBA and via the website. This is the primary revenue driver.
-2. **PDF downloads** — printable sticker sheets, $4–$8, ~95% margin.
-3. **Manufacturer licensing** — sell to brands (e.g. Panasonic) to bundle with
-   products. Pitch: reduces 1-star "confusing setup" reviews and support costs.
-   Target price: $0.50–$2.00 per unit or $20k–$100k/year per model.
+1. **Frameo Setup Kit** — QR sticker + laminated quick-start card + port labels,
+   **$12.99** single / **$19.99** 2-pack on Amazon FBA. COGS ~$2.00, profit
+   ~$5.18/unit (or ~$3.23 after ads in Year 1). Core revenue driver.
+2. **PDF downloads** — printable guide, **$4.99** on own website, ~95% margin.
+3. **Manufacturer licensing** — QR sticker in-box, **$0.75/unit** to brands
+   (Pastigio, Akimart, BIGASUO). ~$124K/year at 15,300 frames/mo. Near-passive.
 4. **Family subscription** — $4.99/month, covers unlimited devices for one
    household. Buyer is adult child, user is parent.
 5. **B2B white-label** — license the full platform to retailers or care companies.
@@ -223,6 +248,7 @@ in the project folder.
 ### Research pipeline (CLI phase)
 - `research/amazon_scanner.py` — Best Sellers scraper, opportunity scoring
 - `research/review_analyzer.py` — Playwright + Claude API confusion analyzer
+- `research/frameo_catalog.py` — Frameo frame discovery, spec extraction, QR sticker clustering
 - `research/category_picks.csv` — 127 categories, 39 selected
 - `research/product_research_template.csv` — pre-formatted research spreadsheet
 - `research/README.md` — usage instructions for research tools
@@ -268,12 +294,42 @@ Full list in `research/category_picks.csv`. Groups include:
 
 ### Digital Picture Frames — Deep Dive
 
-**Frameo ecosystem (software platform, not a brand):**
-Frameo licenses its app to third-party hardware manufacturers. One ClearLabel guide covers all of them.
-- **Brands using Frameo:** BIGASUO, Akimart, Pastigio, Dragon Touch, YunQiDeer, Pexar (by Lexar), and many others
+**Frameo ecosystem (software-only platform, NOT a hardware brand):**
+Frameo licenses its app to third-party hardware manufacturers. Frameo does not make frames. One Artie Manual guide covers all Frameo-powered frames with the same hardware profile.
+- **Confirmed Frameo brands:** Akimart, BIGASUO, Pastigio, YunQiDeer, Pexar (by Lexar), and many others
+- **NOT Frameo (despite similar listings):** Dragon Touch (own app), Uhale/WONNIE (own app), Aura Carver (proprietary)
 - **Common hardware:** 10.1" 1280x800 IPS, 16-32GB, 2.4GHz WiFi only, plastic build
 - **Premium tier:** Pexar — 2K resolution, anti-glare, 64GB, rear gallery lighting
 - **Key differentiators:** screen size, storage, anti-glare (Pexar only), 5GHz WiFi (BIGASUO 21.5" only)
+- **Note:** Many sellers use "FRAMEO" or "Frameo" as their Amazon brand name even though they are white-label manufacturers (e.g., the #5 best seller branded "FRAMEO" is actually Akimart)
+
+**Amazon Best Sellers research (April 2026):**
+12 of the top 30 Digital Picture Frames on Amazon are Frameo-powered. Top Frameo sellers by monthly volume:
+
+| Rank | Brand (actual) | Size | Bought/mo | Reviews | ASIN |
+|------|---------------|------|-----------|---------|------|
+| #5 | Akimart (listed as "FRAMEO") | 10.1" | 4K+ | 10,104 | B083SH697H |
+| #6 | Pastigio (listed as "Frameo") | 10.1" | 3K+ (lead ASIN; 4,150–4,500+ combined across 16 ASINs) | 2,170 | B0D41ZMYB2 |
+| #9 | BIGASUO | 10.1" | 2K+ | 9,035 | B088NHSVJN |
+| #10 | Pastigio | 15.6" | 2K+ | 3,117 | B0CQN2PKQR |
+
+**QR sticker strategy (see `Companion files/research/STICKER-OPTIMIZATION.md` for full analysis):**
+
+**Two OEM factories confirmed via FCC filings (April 7, 2026):**
+- **SSA Electronic** (FCC 2A4D2) → Akimart, BIGASUO, YunQiDeer, ~18 brands
+- **Somy Technology** (FCC 2AFW7) → Pastigio, FLYRUIT
+
+Pastigio and Akimart have identical specs on paper but **different PCBs from different factories** — likely need separate sticker designs.
+
+| Phase | Design | OEM | ASINs | Est. Sales/mo |
+|-------|--------|-----|-------|--------------|
+| 1 (launch) | SSA 10.1" | SSA (ZN-DP1002) | ~42 | 6,000+ |
+| 1 (launch) | Somy 10.1" | Somy (M10R7 platform) | 16 | 4,150–4,500+ |
+| 1 (launch) | 15.6" (verify OEM split) | Mixed | ~21 | 3,000+ |
+| 2 | SSA 21.5" XL | SSA (ZN-DP2101) | 6 | low |
+| 2 | SSA 8" Compact | SSA (ZN-DP8002) | 4 | low |
+
+**Critical validation before print**: Compare Pastigio 10.1" (Somy) vs Akimart 10.1" (SSA) back panels — expect different layouts. Then compare Pastigio 15.6" (Somy M15R2) vs BIGASUO 15.6" (likely SSA ZN-DP1501) to determine if 15.6" also needs an OEM split.
 
 **Aura Carver (separate ecosystem, proprietary software):**
 - NOT compatible with Frameo
@@ -315,8 +371,22 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
    - Dependencies: `playwright`, `requests`, `beautifulsoup4`, `anthropic` API key in `.env`
    - Known issue: ~13 categories return wrong products due to Amazon URL slug mismatches
 
+3. **`research/frameo_catalog.py`** — Frameo frame cataloger and QR sticker clustering
+   - Three-phase pipeline: Discovery → Spec Extraction → Clustering
+   - **Phase 1 (Discovery):** Searches Amazon with 6 generic queries + 29 brand-specific queries, deduplicates ASINs, filters out accessories/non-frames
+   - **Phase 2 (Spec Extraction):** Opens each product page with Playwright, extracts title/bullets/spec table/A+ content, sends to Claude Haiku to normalize 19 hardware fields + sales data (bought/month, BSR rank, review count, rating)
+   - **Phase 3 (Clustering):** Groups frames by screen size class, WiFi bands, port set, button layout, battery, and special features. Assigns cluster IDs to determine how many distinct QR code stickers are needed
+   - **Checkpoint/resume:** Saves progress to `frameo_progress.json` after each ASIN — can resume if interrupted
+   - **Flags:** `--skip-discovery` (reuse cached ASINs), `--skip-specs` (reuse cached specs)
+   - **Output:** `frameo_catalog_YYYY-MM-DD.csv` with cluster assignments + console summary
+   - Dependencies: `playwright`, `requests`, `beautifulsoup4`, `anthropic` API key in `.env`
+   - Usage: `cd research && python frameo_catalog.py`
+   - Known issue: Amazon aggressively blocks Playwright on product pages (~45% return insufficient data). Mobile viewport helps. May need multiple runs or manual ASIN additions via `MANUAL_ASINS` list at top of script.
+   - First run (April 2026): discovered 211 ASINs, 108 extracted, 10 confirmed Frameo. Low confirmation rate due to Amazon blocking — the Best Sellers page scrape (separate Playwright run) was more reliable for identifying top sellers.
+
 ### External (free)
-- **Amazon Best Sellers pages** — direct browsing for category discovery
+- **Amazon Best Sellers pages** — direct browsing for category discovery. The Digital Picture Frames Best Sellers page (`/zgbs/electronics/525460`) is the most reliable way to find top-selling Frameo frames. Load with Playwright using a mobile viewport for best results.
+- **Keepa** (free browser extension) — BSR history graphs on every Amazon product page, shows sales trends over time
 - **Amazon Rufus AI** — ask about common complaints and confusion signals
 - **ImportYeti** (free) — US customs data, supplier country of origin
 
@@ -404,6 +474,52 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 | Apr 2026 | Improved FAQ seeds added: power warning/unplug, touch screen not responding, video sound at night, SD card not recognized (improved), frame won't turn on, frame frozen — 22 seeds total |
 | Apr 2026 | Seed answer pattern established: answer the question first (reassure the user), then provide detailed steps and edge cases |
 | Apr 2026 | All power-related answers now consistent: 10-minute unplug wait, 15-second power button hold, unplug both ends, factory reset pinhole details, photo recovery info (senders' phones still have originals) |
+| Apr 2026 | Rebranded remaining "RTFM For Me" references: privacy.html, terms.html, pastigio-frame.html footer, server.js CORS origin — all now "Artie Manual" / artiemanual.com. "Ollie" → "Artie" in legal pages. |
+| Apr 2026 | UI polish: hero title enlarged to 22px bold with responsive scaling (`min(22px, 5vw)`, `white-space: nowrap`), emojis added to all 6 nav cards and overlay titles, Quick Start header simplified to "START HERE" |
+| Apr 2026 | Added root redirect: `server.js` now redirects `/` to `/pastigio-frame.html` (fixed "Cannot GET /" error on desktop) |
+| Apr 2026 | Added `/app` redirect: `server.js` routes `owlxplain.com/app` → `https://onelink.to/ztmhrw` (Frameo app universal download link, detects iOS vs Android) |
+| Apr 2026 | Quick Start rewritten from firsthand M10R7 unboxing: 9-step setup (stand, power, update, language, WiFi, time zone, firmware, setup as new, name/location), physical setup details (foot slot location, screw holes for H/V, edge power port) |
+| Apr 2026 | "Add People" section reordered: friend downloads app first (Step 1), then owner generates code on frame. Renamed to "Adding People to the Frame". |
+| Apr 2026 | Copy-to-clipboard invite message: inline "Copy invite message" link in Step 1, copies ready-made text with owlxplain.com/app download link + toast confirmation |
+| Apr 2026 | Optional self-send: blue info box after setup steps tells frame owner how to download the app themselves if they also want to send photos |
+| Apr 2026 | WiFi requirement softened: "Must be 2.4GHz" → "May require 2.4GHz depending on your model" (some models have dual-band) |
+| Apr 2026 | Frameo manual disclaimer link now shows toast ("Opening in a new tab — close it to come back") before navigating |
+| Apr 2026 | Built `frameo_catalog.py` — 3-phase pipeline: discovery (Amazon search), spec extraction (Playwright + Claude), clustering (rule-based grouping for QR sticker count) |
+| Apr 2026 | Frameo is software-only, NOT a hardware brand. Amazon sellers use "FRAMEO" as brand name but are white-label manufacturers |
+| Apr 2026 | Dragon Touch and Uhale/WONNIE confirmed NOT Frameo — they use their own apps |
+| Apr 2026 | Best Sellers research: Akimart (#5, 4K+/mo), Pastigio (#6 10.1" 3K+/mo, #10 15.6" 2K+/mo), BIGASUO (#9, 2K+/mo) are the top Frameo sellers |
+| Apr 2026 | QR sticker strategy revised: start with 3 designs (SSA 10.1" + Somy 10.1" + 15.6") — SSA and Somy have different PCBs/back panels |
+| Apr 2026 | Companion files directory added to CLAUDE.md — 16 files indexed with paths and descriptions for on-demand loading |
+| Apr 2026 | SSA model mapping completed: `research/ssa_model_mapping.csv` — 96 ASINs, 21 brands, 8 SSA hardware groups |
+| Apr 2026 | Manufacturer partnership strategy documented in business plan — brands first (Pastigio → Akimart/BIGASUO), factory (SSA) second after proof |
+| Apr 2026 | Aftermarket IP risk assessed — Section 6a added to LEGAL-REQUIREMENTS.md: nominative fair use, Amazon takedown risk, C&D risk, protective measures |
+| Apr 2026 | Sticker optimization analysis: launch with 2 designs (10.1" + 15.6") covering ~85% of market, expand to 4–5 later. Full analysis in `STICKER-OPTIMIZATION.md` |
+| Apr 2026 | ZN-DP8001 added to SSA mapping — 10.1" battery model (5000mAh), NOT 8". "80" prefix = battery line. Akimart/iYooker brand, B0DKNTPP54, ~$100. |
+| Apr 2026 | Pastigio 10.1" deep dive: 4 models (M10R5, M10R7, M10R8, ZC002), 9 ASINs. M10R5 uses OurPhoto (not Frameo) — excluded. M10R8 has 5 active keyword-variant listings. ZC002 is the flagship with MUSE design award. CSV updated from 2 to 9 Pastigio 10.1" entries. |
+| Apr 2026 | **MAJOR CORRECTION — Pastigio is NOT SSA hardware.** FCC filings confirm Pastigio is made by Shenzhen Somy Technology (FCC 2AFW7), not SSA Electronic (FCC 2A4D2). Different PCBs, different factories. FLYRUIT also confirmed as Somy hardware. Sticker count revised from 2 to 3 at launch (SSA 10.1" + Somy 10.1" + 15.6" TBD). CSV column renamed from `ssa_model` to `oem_model`. |
+| Apr 2026 | Pastigio 10.1" deep dive: 17 ASINs cataloged (16 active Frameo, 1 OurPhoto excluded). 3 model families: ZC002 (Micro SD), M10R8 (Full Size SD), M10R7 (original). Parent ASIN B0DB8BTVYJ consolidates ~11 children. |
+| Apr 2026 | SD card type difference discovered: ZC002 uses Micro SD, M10R8 uses Full Size SD. Same PCB per FCC but different port — handle with conditional note in guide, not separate sticker. |
+| Apr 2026 | Combined Pastigio 10.1" volume: 4,150–4,500+/mo across 16 active Frameo ASINs. Lead ASIN B0D41ZMYB2 = 3,000+. Caveat: may overlap with child ASIN counts. |
+| Apr 2026 | CSV expanded to 22 columns: added model_number, color, frame_material, sd_card_type, wall_mount, app, parent_asin, status. 113 rows total. |
+| Apr 2026 | B08TWZN2TP (Pastigio M10R5) confirmed NOT Frameo — uses OurPhoto app. Excluded from sticker coverage. |
+| Apr 2026 | ~~Frameo Setup Kit pricing: $12.99 single, $19.99 2-pack, $4.99 PDF. COGS ~$2.00.~~ **Superseded** — product simplified to sticker-only (see below). |
+| Apr 2026 | ~~Kit contents: QR sticker + laminated quick-start card (4x6) + port label strip.~~ **Superseded** — laminated card and port labels removed. |
+| Apr 2026 | **Product pivot: sticker-only.** Laminated card removed — gets lost. Sticker stays on device permanently. COGS drops from ~$2.00 to ~$0.25. |
+| Apr 2026 | **Tiered pricing by frame size:** $5.99 (10.1"), $8.99 (15.6"), $9.99 (21.5"). Price = 6–15% of frame price. Larger frames subsidize thinner 10.1" margins. Blended profit: $2.89/unit. |
+| Apr 2026 | **FBA required from day one.** Sticker must arrive same day as frame (Prime 1-day). FBM delivery days later = useless. FBA fee (≤2oz): $3.06/unit. |
+| Apr 2026 | Thin margins ($1.78 on 10.1") are strategic moat — deters competitors from entering the market. |
+| Apr 2026 | Rebranded from "Artie Manual" to "Owlxplain" — ARTIE registered in Classes 9/42 by Artie, Inc. New name: Owlxplain (owl + explain). Mascot "Artie" kept. |
+| Apr 2026 | Owlxplain, LLC filed in California (Doc B20260169375). EIN obtained. Domain owlxplain.com registered. |
+| Apr 2026 | All code updated: server.js CORS, pastigio-frame.html, privacy.html, terms.html, system-prompts.js — all now Owlxplain / owlxplain.com. |
+| Apr 2026 | Operating Agreement created for Owlxplain, LLC. Stored in Companion files/business/. |
+| Apr 2026 | Profit projections modeled: Y1 Pastigio-only $15K–$27K, Y1 expanded $45K, Y2 full Frameo $109K, Y2+B2B $233K, Y3 $300K–$450K |
+| Apr 2026 | B2B licensing: $0.75/unit, ~$124K/year passive profit at 15,300 frames/mo across 4+ brands. Stacks with aftermarket Amazon sales. |
+| Apr 2026 | Attachment rate is the critical unknown — 3% conservative, 7% moderate, 12% optimistic. No direct precedent for this product category. |
+| Apr 2026 | LLC-FORMATION.md expanded: added Operating Agreement template, liability shield maintenance rules, tax filing requirements (Schedule C, Form 568, 3522), SE tax note, Amazon Brand Registry section, status tracker, recommended order of operations |
+| Apr 2026 | AMAZON-LAUNCH.md rewritten for Artie Manual: $12.99 kit/$19.99 2-pack pricing, 6 ASIN association mechanisms (listing copy, Sponsored Products ASIN targeting, FBT, Posts, A+ Content, Sponsored Brands), top 5 ASINs to target, nominative fair use rules, launch sequence, startup costs $660–$1,060 |
+| Apr 2026 | Trademark search: "ARTIE" registered in Classes 9 and 42 by Artie, Inc. (AI avatar/VR software) — blocking conflict for "Artie Manual" name |
+| Apr 2026 | Rebranded from Artie Manual to **Owlxplain** — domain owlxplain.com registered, DNS configured at Porkbun, added to DigitalOcean App Platform, 301 redirects from artiemanual.com and rtfmforme.app |
+| Apr 2026 | Updated all code references: server.js CORS origin, privacy.html, terms.html, pastigio-frame.html title, system-prompts.js, admin dashboard, qr-pastigio-print.html — all now "Owlxplain" / owlxplain.com. Mascot still named "Artie" (the owl character, not the brand). |
 
 ---
 
@@ -503,6 +619,36 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 - [x] Dashboard Resources section: table grouped by topic, delete buttons, Add Resource form (device, topic, category, title, URL, order)
 - [x] Pushed to GitHub / deployed to DigitalOcean
 
+### Frameo catalog research — mostly complete
+- [x] Built `frameo_catalog.py` — discovery, spec extraction, QR clustering pipeline
+- [x] First run: discovered 211 ASINs, 108 specs extracted, 10 confirmed Frameo
+- [x] Best Sellers page scrape: identified top Frameo sellers (Akimart, Pastigio, BIGASUO)
+- [x] Confirmed Dragon Touch and Uhale/WONNIE are NOT Frameo
+- [x] SSA model mapping completed: `research/ssa_model_mapping.csv` — 113 ASINs, 21 brands, 10 hardware groups, 22 columns
+- [x] Sticker optimization analysis: 3 designs at launch (SSA 10.1" + Somy 10.1" + 15.6"), 4–5 at scale — see `STICKER-OPTIMIZATION.md`
+- [x] Manufacturer partnership strategy: brands first (Pastigio → Akimart/BIGASUO), SSA factory second
+- [x] Aftermarket IP risk assessed: nominative fair use, Amazon takedown mitigation, C&D response plan
+- [x] Pastigio 10.1" deep dive: 17 ASINs cataloged (16 active Frameo), 3 model families, SD card difference, combined volume 4,150–4,500+/mo
+- [x] CSV enriched with color, frame_material, sd_card_type, wall_mount, app, parent_asin, model_number, status columns
+- [x] B08TWZN2TP confirmed OurPhoto (not Frameo) — excluded
+- [ ] **Physical validation**: buy Akimart 10.1" (B083SH697H, ~$50) and compare back panel to Pastigio 10.1" — confirm different layout (SSA vs Somy)
+- [ ] **Physical validation**: compare Pastigio 15.6" to BIGASUO 15.6" back panel (if budget allows)
+- [ ] Confirm model numbers for 5 unassigned Pastigio ASINs: B0GC6C9195, B0FX3WFRN7, B0FX3Y8GPG, B0FX3X4Z5B, B0GC94VXZJ
+- [ ] Verify B0GC6C9195 (Glossy Black, $89.99) — may be 64GB/WUXGA premium variant
+- [ ] Confirm B0FMXSFN5G and B0FX3X4Z5B status (not in current parent groups — delisted?)
+- [ ] Re-run spec extraction with sales data fields (bought/mo, BSR, reviews, rating) — run `python frameo_catalog.py --skip-discovery`
+- [ ] Add top-seller ASINs to `MANUAL_ASINS` in `frameo_catalog.py` for guaranteed extraction
+
+### Quick Start guide rewrite (from M10R7 unboxing) — completed
+- [x] Added `/app` redirect to `server.js` → `https://onelink.to/ztmhrw`
+- [x] Rewrote START HERE: 9-step setup flow based on firsthand unboxing (stand, power, update, language, WiFi, time zone, firmware, setup as new, name/location)
+- [x] Physical details: foot slot location, two screw holes (H/V), edge power port, wall outlet
+- [x] Rewrote "Adding People to the Frame": friend downloads app first, inline "Copy invite message" link, `copyInviteMessage()` JS function
+- [x] Added optional self-send box for frame owners who want to also send photos
+- [x] WiFi requirement softened to "May require 2.4GHz" for dual-band models
+- [x] Frameo manual disclaimer link shows toast before opening new tab
+- [ ] Embed actual Frameo "add friend" icon (need asset from user or manual)
+
 ### Also next
 - [ ] Add sticker kit upsell section to device pages
 - [ ] Add product images to Emeril page
@@ -513,6 +659,8 @@ Frameo licenses its app to third-party hardware manufacturers. One ClearLabel gu
 - [ ] Find sticker/label print supplier (Sticker Mule, StickerGiant, Lightning Labels for Amazon FBA)
 - [ ] Create Amazon seller account and claim New Seller Incentives
   ($50 coupon credits + $200 ad credit + free Vine enrollment — expire 90 days)
+- [ ] Design 3 QR sticker variants: SSA 10.1" + Somy 10.1" + 15.6" (pending physical validation — see Frameo catalog research tasks)
+- [ ] File ClearLabel trademark application (enables Amazon Brand Registry — see Legal Section 6a)
 
 ### Later
 - [ ] Build Aura Carver device page (separate from Frameo — proprietary software)
