@@ -487,6 +487,37 @@
       opacity: 1;
     }
 
+    .img-tooltip {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      padding: 16px;
+      z-index: 10000;
+      text-align: center;
+      max-width: 200px;
+    }
+    .img-tooltip img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .img-tooltip .tooltip-label {
+      font-size: 13px;
+      color: #555;
+      margin-top: 8px;
+    }
+    .img-tooltip-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 9999;
+    }
+
     /* Input bar */
     .chat-input-bar {
       margin: 6px 12px 0;
@@ -617,6 +648,14 @@
   <div class="bottom-spacer"></div>
 </div>
 
+<!-- Image tooltip popup -->
+<div class="img-tooltip-backdrop" id="imgTooltipBackdrop"></div>
+<div class="img-tooltip" id="imgTooltip">
+  <img id="imgTooltipImg" src="" alt="Example">
+  <div class="tooltip-label" id="imgTooltipLabel"></div>
+  <div style="font-size:11px; color:#999; margin-top:4px;">Tap anywhere to close</div>
+</div>
+
 <!-- ===== QUICK START GUIDE OVERLAY ===== -->
 <div class="ref-overlay" id="quickStartOverlay" role="dialog" aria-label="Quick Start Guide" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#43a047,#2e7d32); color:white;">
@@ -631,7 +670,7 @@
     <div class="ref-row"><div class="ref-label"><strong>Step 2:</strong> <span class="ref-desc">Plug the power cord into the port on the edge of the frame (look sideways &mdash; hard to spot on black frames) and into a wall outlet. The screen turns on automatically.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 3 (on the frame):</strong> <span class="ref-desc">If the frame asks to update software, tap <strong>"Download and Install"</strong> and wait a few minutes. If no update appears, continue to the next step.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 4 (on the frame):</strong> <span class="ref-desc">Select your language.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Step 5 (on the frame):</strong> <span class="ref-desc">Connect to WiFi &mdash; tap your network name, then type the password on the on-screen keyboard. <strong>May require 2.4GHz WiFi</strong> (not 5GHz) depending on your model. This is the most common issue. If you're having trouble, see <a href="#" onclick="closeQuickStart(); setTimeout(openCommonIssues, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; WiFi Won't Connect</a>.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Step 5 (on the frame):</strong> <span class="ref-desc">Connect to WiFi &mdash; tap your network name, then type the password on the on-screen keyboard. <strong>May require 2.4GHz WiFi</strong> (not 5GHz) depending on your model. This is the most common issue. If you're having trouble, see <a href="#" onclick="closeQuickStart(); setTimeout(function(){openCommonIssues('issue-wifi')}, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; WiFi Won't Connect</a>.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 6 (on the frame):</strong> <span class="ref-desc">Select your time zone. The date and time should already be set &mdash; just pick your zone. Choose 12-hour or 24-hour format (default is 12-hour). Tap the right arrow at the bottom to continue.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 7 (on the frame):</strong> <span class="ref-desc">If prompted to download firmware, tap <strong>"Download and Install"</strong> again and wait.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Step 8 (on the frame):</strong> <span class="ref-desc">Choose <strong>"Setup as new"</strong> (not "Restore from backup" &mdash; that's only if you've had this frame before).</span></div></div>
@@ -665,46 +704,45 @@
     <h3 class="ref-section-header blue">Viewing Photos</h3>
     <div class="ref-row"><div class="ref-label"><strong>Browse:</strong> <span class="ref-desc">Swipe left or right anywhere on the frame's screen, just like on a phone. A light, steady swipe works best.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Quick menu:</strong> <span class="ref-desc">Tap anywhere on the screen once. Icons appear for settings, friends, albums, and more.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>React:</strong> <span class="ref-desc">Double-tap anywhere on the screen to send a heart reaction. On some frames, a few preset emojis appear to choose from (heart, thumbs up, laugh, etc.). The person who sent the photo will see it in their Frameo app.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Slideshow:</strong> <span class="ref-desc">Photos rotate automatically every 10 seconds (default). To change the speed, tap the screen &rarr; Settings &rarr; Slideshow &rarr; Timer. This is done on the frame, not the app.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>React:</strong> <span class="ref-desc">Double-tap anywhere on the screen to send an emoji. On some frames, a few preset emojis appear to choose from (heart, thumbs up, laugh, etc.). The person who sent the photo will see it in their Frameo app.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Slideshow:</strong> <span class="ref-desc">Photos rotate automatically every 10 seconds (default may vary). To change the speed, tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Slideshow &rarr; Timer. This is done on the frame, not the app.</span></div></div>
 
     <h3 class="ref-section-header green">Managing Photos</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Delete a photo:</strong> <span class="ref-desc">Swipe to the photo you want to delete, tap the screen to open the menu, then tap the trash icon. This permanently removes the photo.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Hide a photo:</strong> <span class="ref-desc">Swipe to the photo, tap the screen, then tap the hide icon (eye with a line). The photo stays in storage but won't appear in the slideshow. To unhide: tap the screen &rarr; My Photos &rarr; Hidden &rarr; select the photo &rarr; tap Unhide.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Adjust how a photo fits:</strong> <span class="ref-desc">Swipe to the photo you want to adjust, tap the screen, then tap <strong>Adjust</strong>. Drag to reposition what part of the photo you see.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Delete a photo:</strong> <span class="ref-desc">Swipe to the photo you want to delete, tap the screen to open the menu, then tap the <strong>Delete</strong> icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="16" height="18" viewBox="0 0 20 22" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M1 5h18"/><path d="M7 1h6a1 1 0 011 1v2H6V2a1 1 0 011-1z"/><path d="M4 5l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14"/><path d="M7 9l3 3m0-3l-3 3" stroke-width="2.5"/></svg>. This permanently removes the photo.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Hide a photo:</strong> <span class="ref-desc">Swipe to the photo, tap the screen, then tap the <strong>Hide</strong> icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="18" height="14" viewBox="0 0 24 20" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M2 2l20 16"/><path d="M6.7 6.7C5.3 8.1 4.2 9.5 3 11c2.5 3.5 5.5 6 9 6 1.5 0 3-.5 4.3-1.3"/><path d="M11 5c3.5 0 6.5 2.5 9 6-.7 1-1.5 2-2.3 2.8"/><circle cx="12" cy="11" r="3"/></svg>. The photo stays in storage but won't appear in the slideshow. To unhide: tap the screen &rarr; My Photos <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 18 18" fill="#333" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3" r="2"/><circle cx="9" cy="3" r="2"/><circle cx="15" cy="3" r="2"/><circle cx="3" cy="9" r="2"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="3" cy="15" r="2"/><circle cx="9" cy="15" r="2"/><circle cx="15" cy="15" r="2"/></svg> &rarr; Hidden &rarr; select the photo &rarr; tap Unhide.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Adjust how a photo fits:</strong> <span class="ref-desc">Swipe to the photo you want to adjust, tap the screen, then tap <strong>Adjust</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="18" height="18" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="14" height="14" rx="2" fill="none" stroke="#333" stroke-width="2"/><path d="M5 16l3-4 2 2 3-4 4 6z"/><path d="M14 2l8 8-2 2-8-8z"/><path d="M20.5 5.5l-2-2"/></svg>. Drag to reposition what part of the photo you see.</span></div></div>
     <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
-      <div class="ref-label" style="font-size:13px;"><strong>Fill vs. Fit:</strong> <span class="ref-desc"><strong>Fill</strong> = photo fills the screen, edges may get trimmed. <strong>Fit</strong> = full photo visible, with bars on the sides. Landscape photos look best.</span></div>
+      <div class="ref-label" style="font-size:13px;"><strong>Fill vs. Fit:</strong> <span class="ref-desc"><strong>Fill</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="18" height="18" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="#333" stroke-width="2"/><path d="M14 4h6v6M10 20H4v-6"/><path d="M20 4L13 11M4 20l7-7" stroke="#333" stroke-width="2.5" fill="none"/></svg> = photo fills the screen, edges may get trimmed. <strong>Fit</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="#333" stroke-width="2"/><path d="M6 18l5-5" stroke="#333" stroke-width="2.5" fill="none"/><polygon points="7,13 11,13 7,17" fill="#333"/><path d="M18 6l-5 5" stroke="#333" stroke-width="2.5" fill="none"/><polygon points="17,11 13,11 17,7" fill="#333"/></svg> = full photo visible, with bars on the sides.</span></div>
     </div>
-    <div class="ref-row"><div class="ref-label"><strong>Select multiple photos:</strong> <span class="ref-desc">Tap and hold on a photo until it's selected, then tap additional photos to add them. Useful for deleting or hiding several at once.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Sort order:</strong> <span class="ref-desc">Tap the screen &rarr; Settings &rarr; Slideshow &rarr; Photo display order. Choose: Date received, Date taken, or Shuffle.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Sort order:</strong> <span class="ref-desc">Tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Slideshow &rarr; Photo display order. Choose: Date received, Date taken, or Shuffle.</span></div></div>
 
     <h3 class="ref-section-header brown">Display &amp; Sleep</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Check WiFi status:</strong> <span class="ref-desc">Tap the screen once. The WiFi icon appears in the top bar. If it's missing or has an X, the frame is not connected to WiFi.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Check WiFi status:</strong> <span class="ref-desc">Tap the screen once. The WiFi icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="12" viewBox="0 0 24 20" fill="#333" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="18" r="2.5"/><path d="M7.5 13.5a6.5 6.5 0 019 0" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/><path d="M3.5 9.5a12 12 0 0117 0" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/></svg> appears in the top bar. If it's missing or has an X, the frame is not connected to WiFi.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Turn on:</strong> <span class="ref-desc">Press and hold the power button on the back of the frame. It's near the center &mdash; you may need to use both hands.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Power off:</strong> <span class="ref-desc">Tap anywhere on the screen &rarr; tap the Power icon (top right) &rarr; tap <strong>Power off</strong>.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Sleep mode:</strong> <span class="ref-desc">Tap anywhere on the screen &rarr; tap the Power icon &rarr; tap the Moon icon. The frame goes dark but still receives photos. To wake it up, tap the screen.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Sleep schedule:</strong> <span class="ref-desc">Tap the screen &rarr; Settings &rarr; Display &rarr; Sleep schedule. Default: off at 11pm, on at 7am. Tap the times to change them.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Brightness:</strong> <span class="ref-desc">Tap the screen &rarr; Settings &rarr; Display &rarr; drag the brightness slider. There is no auto-brightness &mdash; you set it manually.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Power off:</strong> <span class="ref-desc">Tap anywhere on the screen &rarr; tap the <strong>Power</strong> icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v8"/><path d="M18.4 6.6a9 9 0 11-12.8 0"/></svg> (top right) &rarr; tap <strong>Power off</strong>.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Sleep mode:</strong> <span class="ref-desc">Tap anywhere on the screen &rarr; tap the <strong>Power</strong> icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v8"/><path d="M18.4 6.6a9 9 0 11-12.8 0"/></svg> &rarr; tap the <strong>Moon</strong> icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>. The frame goes dark but still receives photos. To wake it up, tap the screen.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Sleep schedule:</strong> <span class="ref-desc">Tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Display &rarr; Sleep schedule. Default: off at 11pm, on at 7am. Tap the times to change them.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Brightness:</strong> <span class="ref-desc">Tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Display &rarr; drag the brightness slider. There is no auto-brightness &mdash; you set it manually.</span></div></div>
 
     <h3 class="ref-section-header purple">Loading Photos Without the App</h3>
-    <div class="ref-row"><div class="ref-label"><strong>SD card:</strong> <span class="ref-desc">Insert SD card &rarr; tap <strong>Import</strong> to copy photos to the frame. Card must be FAT32 format, max 32GB. This is a common issue &mdash; see <a href="#" onclick="closeRef(); setTimeout(openCommonIssues, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; SD Card Not Recognized</a> if your card isn't working.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Micro SD card:</strong> <span class="ref-desc">Insert <a href="#" onclick="showImageTooltip('/sd-card-example.png', 'Micro SD card (FAT32, max 32GB)'); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Micro SD card</a> &rarr; tap <strong>Import</strong> to copy photos to the frame. Card must be FAT32 format, max 32GB. This is a common issue &mdash; see <a href="#" onclick="closeRef(); setTimeout(function(){openCommonIssues('issue-sd-card')}, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; SD Card Not Recognized</a> if your card isn't working.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>USB drive:</strong> <span class="ref-desc">Insert a USB stick (FAT32 format) into the USB port on the back of the frame &rarr; tap <strong>Import</strong>.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>From computer:</strong> <span class="ref-desc">Connect USB cable &rarr; tap the screen &rarr; Settings &rarr; enable USB transfer. <span class="tag-no">Mac NOT supported</span> &mdash; Windows and Linux only. See <a href="#" onclick="closeRef(); setTimeout(openCommonIssues, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; Loading Photos from Computer</a> for Mac workarounds.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>From computer:</strong> <span class="ref-desc">Connect USB cable &rarr; tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; enable USB transfer. <span class="tag-no">Mac NOT supported</span> &mdash; Windows and Linux only. See <a href="#" onclick="closeRef(); setTimeout(function(){openCommonIssues('issue-loading-from-computer')}, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; Loading Photos from Computer</a> for Mac workarounds.</span></div></div>
 
     <h3 class="ref-section-header red">Albums &amp; Organize</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Create an album:</strong> <span class="ref-desc">Tap the screen &rarr; My Photos &rarr; My Albums &rarr; tap <strong>"+"</strong> to create a new album.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Create an album:</strong> <span class="ref-desc">Tap the screen &rarr; My Photos <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 18 18" fill="#333" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3" r="2"/><circle cx="9" cy="3" r="2"/><circle cx="15" cy="3" r="2"/><circle cx="3" cy="9" r="2"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="3" cy="15" r="2"/><circle cx="9" cy="15" r="2"/><circle cx="15" cy="15" r="2"/></svg> &rarr; My Albums &rarr; tap <strong>"+"</strong> to create a new album.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Add photo to album:</strong> <span class="ref-desc">Swipe to the photo on the frame, tap the screen, then tap the "Add to album" icon.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Important:</strong> <span class="ref-desc">Deleting an album does NOT delete the photos inside it. The photos stay in your library.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Remove a person:</strong> <span class="ref-desc">To stop someone from sending photos: tap the screen &rarr; Settings &rarr; My Friends &rarr; select the person &rarr; tap <strong>Remove</strong>. Their previously sent photos stay on the frame.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Remove a person:</strong> <span class="ref-desc">To stop someone from sending photos: tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; My Friends &rarr; select the person &rarr; tap <strong>Remove</strong>. Their previously sent photos stay on the frame.</span></div></div>
 
     <h3 class="ref-section-header black">Videos &amp; Sound</h3>
     <div class="ref-row"><div class="ref-label"><strong>Play video:</strong> <span class="ref-desc">Play/pause controls appear on the frame's screen automatically when a video comes up in the slideshow.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Volume:</strong> <span class="ref-desc">Tap the speaker icon on screen to adjust volume for the current video. To change the default volume for all videos: tap the screen &rarr; Settings &rarr; Slideshow &rarr; Video volume.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Volume:</strong> <span class="ref-desc">Tap the speaker icon on screen to adjust volume for the current video. To change the default volume for all videos: tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Slideshow &rarr; Video volume.</span></div></div>
     <div class="ref-row" style="background:#fff8e1; border-radius:6px; padding:8px; margin-top:4px;">
-      <div class="ref-label" style="font-size:13px;"><span class="tag-caution">HEADS UP</span> <span class="ref-desc">Videos play with sound during the slideshow. To mute: tap the screen &rarr; Settings &rarr; Slideshow &rarr; Video volume &rarr; Mute. During sleep schedule, no sound plays.</span></div>
+      <div class="ref-label" style="font-size:13px;"><span class="tag-caution">HEADS UP</span> <span class="ref-desc">Videos play with sound during the slideshow. To mute: tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Slideshow &rarr; Video volume &rarr; Mute. During sleep schedule, no sound plays.</span></div>
     </div>
     <div class="ref-row"><div class="ref-label"><strong>Video length:</strong> <span class="ref-desc">Free: up to 15 seconds per video. Frameo+ allows longer videos (see <a href="#" onclick="closeRef(); setTimeout(openCommonQ, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Questions &rarr; Cost &amp; Subscription</a> for Frameo+ details).</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Widgets:</strong> <span class="ref-desc">Overlay a clock, weather, or date on top of your photos as they display. To enable: tap the screen &rarr; Settings &rarr; Slideshow.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Widgets:</strong> <span class="ref-desc">Overlay a clock, weather, or date on top of your photos as they display. To enable: tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Slideshow.</span></div></div>
 
   </div>
 </div>
@@ -765,15 +803,15 @@
 
     <h3 class="ref-section-header blue">Storage &amp; Photos</h3>
     <div class="ref-row"><div class="ref-label"><strong>How many photos can it hold?</strong> <span class="ref-desc">Thousands. With 16&ndash;32GB of storage, a 32GB model holds roughly 40,000&ndash;80,000 phone photos. You'll likely never run out of space.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Can I load photos without the app?</strong> <span class="ref-desc">Yes. Insert an SD card (FAT32, max 32GB) with photos and tap Import. You can also use a USB drive. If your card isn't recognized, see <a href="#" onclick="closeCommonQ(); setTimeout(openCommonIssues, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; SD Card Not Recognized</a>.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Does USB work with Mac?</strong> <span class="ref-desc">No. USB transfer only works from Windows and Linux. Mac users can use the Frameo phone app or an SD card instead. See <a href="#" onclick="closeCommonQ(); setTimeout(openCommonIssues, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; Loading Photos from Computer</a> for details.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Can I load photos without the app?</strong> <span class="ref-desc">Yes. Insert an SD card (FAT32, max 32GB) with photos and tap Import. You can also use a USB drive. If your card isn't recognized, see <a href="#" onclick="closeCommonQ(); setTimeout(function(){openCommonIssues('issue-sd-card')}, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; SD Card Not Recognized</a>.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Does USB work with Mac?</strong> <span class="ref-desc">No. USB transfer only works from Windows and Linux. Mac users can use the Frameo phone app or an SD card instead. See <a href="#" onclick="closeCommonQ(); setTimeout(function(){openCommonIssues('issue-loading-from-computer')}, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Common Issues &rarr; Loading Photos from Computer</a> for details.</span></div></div>
 
     <h3 class="ref-section-header red">WiFi &amp; Connectivity</h3>
     <div class="ref-row"><div class="ref-label"><strong>Does it work without WiFi?</strong> <span class="ref-desc">Yes. Once photos are loaded, the slideshow runs offline. WiFi is only needed to receive new photos.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Why 2.4GHz only?</strong> <span class="ref-desc">The frame's WiFi chip only supports 2.4GHz. Most routers broadcast both &mdash; connect the frame to the 2.4GHz one. See <a href="#" onclick="closeCommonQ(); setTimeout(openCare, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Care &amp; Info &rarr; WiFi Problems</a> for details.</span></div></div>
 
     <h3 class="ref-section-header purple">Family &amp; Sharing</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Can multiple people send photos?</strong> <span class="ref-desc">Yes, unlimited. Each person downloads the free Frameo app on their phone, gets a friend code from the frame, and they're connected. You can remove someone later in Settings &rarr; My Friends.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Can multiple people send photos?</strong> <span class="ref-desc">Yes, unlimited. Each person downloads the free Frameo app on their phone, gets a friend code from the frame, and they're connected. You can remove someone later in <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; My Friends.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Can family see what's on my frame?</strong> <span class="ref-desc">Not without a Frameo+ subscription. Without it, people can send photos but can't see or manage what's on your frame.</span></div></div>
 
     <h3 class="ref-section-header amber">Setup &amp; Daily Use</h3>
@@ -781,8 +819,8 @@
     <div class="ref-row"><div class="ref-label"><strong>Will I lose photos in a power outage?</strong> <span class="ref-desc">No. Photos are stored in internal memory and survive power outages. The only thing that resets is the clock, which fixes itself when WiFi reconnects.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>How long can videos be?</strong> <span class="ref-desc">Up to 15 seconds with the free version. Frameo+ allows longer videos. Videos play with sound during the slideshow &mdash; see <a href="#" onclick="closeCommonQ(); setTimeout(openRef, 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">Quick Reference &rarr; Videos &amp; Sound</a> for how to mute.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Does the person receiving the frame need an account?</strong> <span class="ref-desc">No. No account, no login, no password. The frame just works once it's connected to WiFi.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Can I delete photos someone sent me?</strong> <span class="ref-desc">Yes. Swipe to the photo, tap the screen, then tap the trash icon. The sender will not be notified.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>How do I change the slideshow speed?</strong> <span class="ref-desc">Tap the screen &rarr; Settings &rarr; Slideshow &rarr; Timer. Default is 10 seconds per photo.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Can I delete photos someone sent me?</strong> <span class="ref-desc">Yes. Swipe to the photo, tap the screen, then tap the <strong>Delete</strong> icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="16" height="18" viewBox="0 0 20 22" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M1 5h18"/><path d="M7 1h6a1 1 0 011 1v2H6V2a1 1 0 011-1z"/><path d="M4 5l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14"/><path d="M7 9l3 3m0-3l-3 3" stroke-width="2.5"/></svg>. The sender will not be notified.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>How do I change the slideshow speed?</strong> <span class="ref-desc">Tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Slideshow &rarr; Timer. Default is 10 seconds per photo.</span></div></div>
 
   </div>
 </div>
@@ -801,10 +839,10 @@
     <div class="ref-row"><div class="ref-label"><strong>Frozen screen:</strong> <span class="ref-desc">Press and hold the power button on the back (near center) until the frame turns off. Unplug for 5 minutes, then plug back in.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Hard reset (last resort):</strong> <span class="ref-desc">Find the tiny reset hole on the back. Push a toothpick or paperclip in and hold for 5 seconds. <span class="tag-no">WARNING</span> This deletes all photos and settings.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>WiFi keeps disconnecting:</strong> <span class="ref-desc">Restart the frame. Confirm you're on 2.4GHz. If it drops weekly, the WiFi chip may be faulty &mdash; contact the seller. See <strong>WiFi Problems</strong> below for more.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Photos not arriving:</strong> <span class="ref-desc">Check WiFi is connected (look for the WiFi icon in the top bar). Ask the sender to check if the frame shows as "online" in their Frameo app.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Screen flickers:</strong> <span class="ref-desc">Lower brightness: tap the screen &rarr; Settings &rarr; Display. If flickering persists, contact the seller for replacement.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Photos not arriving:</strong> <span class="ref-desc">Check WiFi is connected (look for the WiFi icon <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="12" viewBox="0 0 24 20" fill="#333" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="18" r="2.5"/><path d="M7.5 13.5a6.5 6.5 0 019 0" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/><path d="M3.5 9.5a12 12 0 0117 0" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/></svg> in the top bar). Ask the sender to check if the frame shows as "online" in their Frameo app.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Screen flickers:</strong> <span class="ref-desc">Lower brightness: tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Display. If flickering persists, contact the seller for replacement.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Touch not responding:</strong> <span class="ref-desc">Peel off any screen protector. If the top of the screen is dead, try rotating the frame upside-down to reach menus. Contact the seller.</span></div></div>
-    <div class="ref-row"><div class="ref-label"><strong>Clock/time wrong:</strong> <span class="ref-desc">The frame has no internal battery. After a power outage, the clock resets. Reconnect to WiFi to auto-set the time, or set it manually: tap the screen &rarr; Settings &rarr; Date &amp; Time.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Clock/time wrong:</strong> <span class="ref-desc">The frame has no internal battery. After a power outage, the clock resets. Reconnect to WiFi to auto-set the time, or set it manually: tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Date &amp; Time.</span></div></div>
     <div class="ref-row" style="background:#e8f5e9; border-radius:6px; padding:8px; margin-top:4px;">
       <div class="ref-label" style="font-size:13px;"><strong>"Don't unplug" warning:</strong> <span class="ref-desc">This means: use the on-screen power button to shut down instead of pulling the cord. If you lose power in a storm, <strong>your photos are safe</strong>. You may need to reset the clock.</span></div>
     </div>
@@ -818,7 +856,7 @@
     <div class="ref-row"><div class="ref-label"><strong>Drops WiFi every few days:</strong> <span class="ref-desc">This is a known issue. Restarting the frame usually fixes it temporarily. If it happens constantly, the WiFi chip may need warranty replacement.</span></div></div>
 
     <h3 class="ref-section-header green">Backup &amp; Storage</h3>
-    <div class="ref-row"><div class="ref-label"><strong>Backup to SD card:</strong> <span class="ref-desc">Tap the screen &rarr; Settings &rarr; Backup &rarr; Backup to external storage. Card must be FAT32 format, max 32GB.</span></div></div>
+    <div class="ref-row"><div class="ref-label"><strong>Backup to SD card:</strong> <span class="ref-desc">Tap the screen &rarr; <strong>Settings</strong> <svg style="vertical-align:middle; display:inline-block; margin:0 2px;" width="14" height="14" viewBox="0 0 24 24" fill="#333" xmlns="http://www.w3.org/2000/svg"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.47.41L9.25 5.35c-.59.24-1.13.57-1.62.94L5.24 5.33a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg> &rarr; Backup &rarr; Backup to external storage. Card must be FAT32 format, max 32GB.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Auto backup:</strong> <span class="ref-desc">With an SD card inserted, the frame can back up automatically within 30 hours of any changes.</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Cloud backup:</strong> <span class="ref-desc">Requires Frameo+ subscription ($1.99/month).</span></div></div>
     <div class="ref-row"><div class="ref-label"><strong>Import from SD card:</strong> <span class="ref-desc">Insert card into the slot on the back of the frame &rarr; the frame will prompt you to import. The fastest way to load lots of photos at once.</span></div></div>
@@ -870,7 +908,7 @@
     <div style="font-size:12px; color:#888; line-height:1.4; margin-bottom:4px; text-align:center;">Based on the <a href="https://support.frameo.com/hc/en-us/articles/360021234699--User-Manual" target="_blank" rel="noopener" style="color:var(--brand); text-decoration:underline;">official Frameo user manual</a> and common customer issues. Answers may contain errors.</div>
     <p style="text-align:center; color:var(--text-light); font-size:15px; margin-bottom:4px;">Tap an issue to get step-by-step help.</p>
 
-    <button class="issue-card" onclick="askFromIssue('My picture frame won\'t connect to WiFi. What do I do?')">
+    <button class="issue-card" id="issue-wifi" onclick="askFromIssue('My picture frame won\'t connect to WiFi. What do I do?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F4F6;</div>
       <div>
         <div class="issue-card-title">WiFi Won't Connect</div>
@@ -878,7 +916,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('Do I need to pay for a subscription to use my picture frame?')">
+    <button class="issue-card" id="issue-subscription" onclick="askFromIssue('Do I need to pay for a subscription to use my picture frame?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F4B3;</div>
       <div>
         <div class="issue-card-title">Do I Need a Subscription?</div>
@@ -886,7 +924,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('Why are my photos cut off on the edges? How do I fix it?')">
+    <button class="issue-card" id="issue-photos-cut-off" onclick="askFromIssue('Why are my photos cut off on the edges? How do I fix it?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F5BC;</div>
       <div>
         <div class="issue-card-title">Photos Look Cropped</div>
@@ -894,7 +932,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('I sent photos but they aren\'t showing up on the frame. What\'s wrong?')">
+    <button class="issue-card" id="issue-photos-not-arriving" onclick="askFromIssue('I sent photos but they aren\'t showing up on the frame. What\'s wrong?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F4E9;</div>
       <div>
         <div class="issue-card-title">Photos Not Arriving</div>
@@ -902,7 +940,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('Can I load photos from my computer to the frame? I have a Mac.')">
+    <button class="issue-card" id="issue-loading-from-computer" onclick="askFromIssue('Can I load photos from my computer to the frame? I have a Mac.')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F4BB;</div>
       <div>
         <div class="issue-card-title">Loading Photos from Computer</div>
@@ -910,7 +948,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('The frame shows a warning about not unplugging. Is it safe? Will I lose my photos?')">
+    <button class="issue-card" id="issue-unplug-warning" onclick="askFromIssue('The frame shows a warning about not unplugging. Is it safe? Will I lose my photos?')">
       <div class="issue-card-icon" aria-hidden="true">&#x26A0;</div>
       <div>
         <div class="issue-card-title">"Don't Unplug" Warning</div>
@@ -918,7 +956,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('My frame\'s touch screen stopped responding. What should I do?')">
+    <button class="issue-card" id="issue-touch-screen" onclick="askFromIssue('My frame\'s touch screen stopped responding. What should I do?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F446;</div>
       <div>
         <div class="issue-card-title">Touch Screen Not Working</div>
@@ -926,7 +964,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('Videos on my frame play sound at night and wake me up. How do I mute it?')">
+    <button class="issue-card" id="issue-video-sound" onclick="askFromIssue('Videos on my frame play sound at night and wake me up. How do I mute it?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F50A;</div>
       <div>
         <div class="issue-card-title">Videos Playing Sound at Night</div>
@@ -934,7 +972,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('I inserted an SD card but the frame doesn\'t recognize it. What\'s wrong?')">
+    <button class="issue-card" id="issue-sd-card" onclick="askFromIssue('I inserted an SD card but the frame doesn\'t recognize it. What\'s wrong?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F4BE;</div>
       <div>
         <div class="issue-card-title">SD Card Not Recognized</div>
@@ -942,7 +980,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('My frame won\'t turn on at all. What should I do?')">
+    <button class="issue-card" id="issue-wont-turn-on" onclick="askFromIssue('My frame won\'t turn on at all. What should I do?')">
       <div class="issue-card-icon" aria-hidden="true">&#x1F50C;</div>
       <div>
         <div class="issue-card-title">Frame Won't Turn On</div>
@@ -950,7 +988,7 @@
       </div>
     </button>
 
-    <button class="issue-card" onclick="askFromIssue('My frame is frozen and not responding to anything. How do I fix it?')">
+    <button class="issue-card" id="issue-frozen" onclick="askFromIssue('My frame is frozen and not responding to anything. How do I fix it?')">
       <div class="issue-card-icon" aria-hidden="true">&#x2744;</div>
       <div>
         <div class="issue-card-title">Frame Frozen / Not Responding</div>
@@ -1103,7 +1141,21 @@
 
   // Common Issues
   let issuesTrap = (e) => trapFocus(e, "commonIssuesOverlay");
-  function openCommonIssues() { openOverlay("commonIssuesOverlay"); document.addEventListener("keydown", issuesTrap); }
+  function openCommonIssues(targetId) {
+    openOverlay("commonIssuesOverlay");
+    document.addEventListener("keydown", issuesTrap);
+    if (targetId) {
+      setTimeout(function() {
+        var el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.style.outline = "3px solid var(--brand)";
+          el.style.outlineOffset = "2px";
+          setTimeout(function() { el.style.outline = ""; el.style.outlineOffset = ""; }, 3000);
+        }
+      }, 350);
+    }
+  }
   function closeCommonIssues() { closeOverlay("commonIssuesOverlay"); document.removeEventListener("keydown", issuesTrap); }
   function askFromIssue(text) { closeCommonIssues(); askQuestion(text); }
 
@@ -1146,6 +1198,25 @@
       return '<a href="#" onclick="goHome(); setTimeout(' + fn + ', 300); return false;" style="color:var(--brand); font-weight:600; text-decoration:underline;">' + label + '</a>';
     });
     bubble.innerHTML = html;
+  }
+
+  function showImageTooltip(imgSrc, label) {
+    var backdrop = document.getElementById("imgTooltipBackdrop");
+    var tooltip = document.getElementById("imgTooltip");
+    var img = document.getElementById("imgTooltipImg");
+    var lbl = document.getElementById("imgTooltipLabel");
+    img.src = imgSrc;
+    lbl.textContent = label;
+    backdrop.style.display = "block";
+    tooltip.style.display = "block";
+    backdrop.onclick = function() {
+      backdrop.style.display = "none";
+      tooltip.style.display = "none";
+    };
+    tooltip.onclick = function() {
+      backdrop.style.display = "none";
+      tooltip.style.display = "none";
+    };
   }
 
   function copyInviteMessage() {
