@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Listing Preview — Owlxplain QR Setup Sticker (10.1" Frameo)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #0f1111; line-height: 1.5; }
+
+  .page-banner {
+    background: #232f3e;
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .page-banner strong { color: #ff9900; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+  /* ===== SECTION LABELS ===== */
+  .section-label {
+    background: #232f3e;
+    color: #ff9900;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  /* ===== PRODUCT HEADER ===== */
+  .product-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .product-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #0f1111;
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .stars { color: #de7921; font-size: 16px; }
+  .rating-count { color: #007185; font-size: 14px; }
+
+  .price-row {
+    margin: 12px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .price { font-size: 28px; color: #0f1111; }
+  .price-label { font-size: 13px; color: #565959; }
+
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .badge-prime { background: #00457c; color: #fff; }
+  .badge-stock { background: #067d62; color: #fff; }
+
+  /* ===== IMAGE GALLERY ===== */
+  .image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .image-slot {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    position: relative;
+  }
+  .image-slot.has-asset {
+    border-style: solid;
+    border-color: #067d62;
+    background: #fff;
+  }
+  .image-slot .slot-number {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: #232f3e;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .image-slot .slot-desc {
+    font-size: 12px;
+    color: #565959;
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+  .image-slot .photo-needed {
+    font-size: 10px;
+    font-weight: 700;
+    color: #c62828;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border: 1px solid #c62828;
+    border-radius: 3px;
+  }
+  .image-slot .has-mockup {
+    font-size: 10px;
+    font-weight: 700;
+    color: #067d62;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border: 1px solid #067d62;
+    border-radius: 3px;
+  }
+  .image-slot img {
+    max-height: 100px;
+    max-width: 100%;
+    border-radius: 4px;
+  }
+  .image-slot.main-image {
+    grid-column: 1 / -1;
+    min-height: 220px;
+  }
+  .image-slot.main-image img { max-height: 160px; }
+
+  /* ===== BULLET POINTS ===== */
+  .bullets { list-style: none; padding: 0; }
+  .bullets li {
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 1.55;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .bullets li:last-child { border-bottom: none; }
+  .bullets li strong {
+    display: block;
+    font-size: 13px;
+    color: #0f1111;
+    margin-bottom: 2px;
+  }
+
+  /* ===== A+ CONTENT ===== */
+  .aplus { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  .aplus h2 {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0f1111;
+  }
+  .aplus h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #0f1111;
+  }
+
+  /* How it works — 3 steps */
+  .steps-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .step-card {
+    padding: 20px 12px;
+    border-radius: 12px;
+    background: #f7f7f7;
+  }
+  .step-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+  .step-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: #c62828;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .step-label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .step-desc {
+    font-size: 12px;
+    color: #565959;
+    margin-top: 4px;
+  }
+
+  /* Features grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .feature-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fff;
+  }
+  .feature-card .feat-icon { font-size: 22px; margin-bottom: 4px; }
+  .feature-card .feat-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .feature-card .feat-desc { font-size: 12px; color: #565959; line-height: 1.4; }
+
+  /* Comparison */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .comp-col {
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .comp-without {
+    background: #fef3f2;
+    border: 2px solid #fca5a5;
+  }
+  .comp-with {
+    background: #f0fdf4;
+    border: 2px solid #86efac;
+  }
+  .comp-col h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .comp-col .comp-step {
+    font-size: 13px;
+    padding: 4px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .comp-col .comp-step .arrow { color: #999; flex-shrink: 0; }
+
+  /* Compatibility */
+  .compat-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 14px;
+  }
+  .compat-table th {
+    background: #232f3e;
+    color: #fff;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 13px;
+  }
+  .compat-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .compat-table tr:nth-child(even) td { background: #f9f9f9; }
+  .compat-check { color: #067d62; font-weight: 700; font-size: 16px; }
+
+  /* Pain points */
+  .pain-points { margin-bottom: 32px; }
+  .pain-card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+    align-items: flex-start;
+  }
+  .pain-card .pain-icon { font-size: 28px; flex-shrink: 0; }
+  .pain-card .pain-q { font-size: 14px; font-weight: 600; color: #c62828; }
+  .pain-card .pain-a { font-size: 13px; color: #565959; margin-top: 2px; }
+
+  /* FAQ */
+  .faq-list { margin-bottom: 16px; }
+  .faq-item {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .faq-a { font-size: 13px; color: #565959; }
+
+  /* Backend keywords */
+  .keywords-box {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 13px;
+    word-break: break-all;
+    line-height: 1.6;
+    user-select: all;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 16px;
+  }
+
+  /* Desktop layout */
+  @media (min-width: 640px) {
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .image-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .features-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-banner">
+  <strong>AMAZON LISTING PREVIEW</strong> &mdash; Owlxplain QR Setup Sticker (10.1" Frameo Frames) &mdash; Iterate here, then copy to Seller Central
+</div>
+
+<div class="container">
+
+<!-- ===== PRODUCT HEADER + IMAGES ===== -->
+<div class="product-section">
+  <span class="section-label">Seller Central: Title + Images + Bullets</span>
+
+  <div class="product-layout">
+
+    <!-- LEFT: Images -->
+    <div>
+      <div class="image-grid">
+        <div class="image-slot main-image has-asset">
+          <span class="slot-number">1</span>
+          <div style="display:flex; align-items:center; gap:12px; justify-content:center;">
+            <img src="/artie-manual.png" alt="Owlxplain logo" style="max-height:80px;">
+            <img src="/qr-pastigio.svg" alt="QR code" style="max-height:100px;">
+          </div>
+          <div class="slot-desc">Main image: QR sticker on white background, product fills 85%+</div>
+          <span class="has-mockup">Mockup — needs product photo</span>
+        </div>
+        <div class="image-slot">
+          <span class="slot-number">2</span>
+          <div class="slot-desc">Sticker applied to back of frame</div>
+          <span class="photo-needed">Photo needed</span>
+        </div>
+        <div class="image-slot">
+          <span class="slot-number">3</span>
+          <div class="slot-desc">Phone scanning QR code, guide visible on screen</div>
+          <span class="photo-needed">Photo needed</span>
+        </div>
+        <div class="image-slot">
+          <span class="slot-number">4</span>
+          <div class="slot-desc">Phone screen showing Quick Start, AI chat, Common Issues</div>
+          <span class="photo-needed">Photo needed</span>
+        </div>
+        <div class="image-slot has-asset">
+          <span class="slot-number">5</span>
+          <div class="slot-desc">"How it works" 3-step infographic: Stick &rarr; Scan &rarr; Done</div>
+          <span class="has-mockup">Design below in A+ content</span>
+        </div>
+        <div class="image-slot">
+          <span class="slot-number">6</span>
+          <div class="slot-desc">Lifestyle: grandparent using frame, sticker visible on back</div>
+          <span class="photo-needed">Photo needed</span>
+        </div>
+        <div class="image-slot has-asset">
+          <span class="slot-number">7</span>
+          <div class="slot-desc">Compatibility chart: brands with checkmarks</div>
+          <span class="has-mockup">Design below in A+ content</span>
+        </div>
+        <div class="image-slot">
+          <span class="slot-number">8</span>
+          <div class="slot-desc">Before/after: confused setup vs. happy scanning</div>
+          <span class="photo-needed">Photo needed</span>
+        </div>
+        <div class="image-slot">
+          <span class="slot-number">9</span>
+          <div class="slot-desc">Gift scenario: frame + sticker in Amazon box together</div>
+          <span class="photo-needed">Photo needed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Title + Price + Bullets -->
+    <div>
+      <h1 class="product-title">Owlxplain QR Setup Sticker for Frameo Digital Picture Frames &mdash; Compatible with Pastigio, Akimart, BIGASUO 10.1" | AI-Powered Step-by-Step Guide</h1>
+
+      <div class="rating-row">
+        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="rating-count">— reviews (pending Vine enrollment)</span>
+      </div>
+
+      <div class="price-row">
+        <span class="price">$5.99</span>
+        <span class="price-label">FREE delivery with Prime</span>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge badge-prime">Prime</span>
+        <span class="badge badge-stock">In Stock</span>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #e0e0e0; margin:12px 0;">
+
+      <ul class="bullets">
+        <li>
+          <strong>AI-POWERED SETUP GUIDE THAT NEVER EXPIRES</strong>
+          Not a paper manual that gets lost in a drawer. This QR sticker links to an AI assistant trained on the official Frameo user manual, thousands of customer reviews, and real-world testing. Scan with any phone camera, ask any question, get a clear answer. Powered by Claude AI.
+        </li>
+        <li>
+          <strong>THE GIFT THAT MAKES THE GIFT WORK</strong>
+          Digital frames are the #1 gift that sits unused because the recipient can't connect WiFi. Stick this on the back before wrapping &mdash; now they can set it up themselves. No phone call to you needed.
+        </li>
+        <li>
+          <strong>ALWAYS ON THE FRAME, ALWAYS UP TO DATE</strong>
+          The sticker stays permanently on the back of the frame. No card to lose, no booklet to dig out of a drawer. And unlike a paper manual, the guide improves over time &mdash; new tips and fixes added based on real customer questions.
+        </li>
+        <li>
+          <strong>NO APP, NO LOGIN, NO SUBSCRIPTION</strong>
+          Just scan and start. Works with any phone camera &mdash; iPhone or Android. No download, no account to create, no recurring charge. Plain English, large text, numbered steps. Designed for people who aren't tech-savvy.
+        </li>
+        <li>
+          <strong>WORKS WITH ALL 10.1" FRAMEO FRAMES</strong>
+          Compatible with Pastigio, Akimart, BIGASUO, YunQiDeer, Skyrhyme, Feelcare, and all other 10.1" Frameo-powered digital picture frames. Removable matte-finish adhesive won't damage the frame.
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== A+ CONTENT ===== -->
+<div class="aplus">
+  <span class="section-label">A+ Content (requires Brand Registry)</span>
+
+  <!-- Module A: How It Works -->
+  <h2>How It Works</h2>
+  <div class="steps-strip">
+    <div class="step-card">
+      <div class="step-icon">&#x1F4CB;</div>
+      <div class="step-num">Step 1</div>
+      <div class="step-label">Stick</div>
+      <div class="step-desc">Place the QR sticker on the back of the frame, near the stand</div>
+    </div>
+    <div class="step-card">
+      <div class="step-icon">&#x1F4F1;</div>
+      <div class="step-num">Step 2</div>
+      <div class="step-label">Scan</div>
+      <div class="step-desc">Open your phone camera and point it at the QR code</div>
+    </div>
+    <div class="step-card">
+      <div class="step-icon">&#x2705;</div>
+      <div class="step-num">Step 3</div>
+      <div class="step-label">Done</div>
+      <div class="step-desc">Instant access to your AI-powered guide &mdash; no app, no login</div>
+    </div>
+  </div>
+
+  <!-- Module B: What's Inside -->
+  <h2>What's Inside the Guide</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon">&#x1F680;</div>
+      <div class="feat-title">Quick Start</div>
+      <div class="feat-desc">Step-by-step setup from unboxing to first photo. Based on real hands-on testing.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">&#x1F4AC;</div>
+      <div class="feat-title">AI Chat</div>
+      <div class="feat-desc">Ask anything about the frame in plain English. Get a clear, instant answer from Claude AI.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">&#x1F6A8;</div>
+      <div class="feat-title">Common Issues</div>
+      <div class="feat-desc">WiFi won't connect? SD card not recognized? Screen frozen? Pre-solved with step-by-step fixes.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">&#x1F4D6;</div>
+      <div class="feat-title">Quick Reference</div>
+      <div class="feat-desc">Every setting, every feature, every icon explained. All in one place.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">&#x2753;</div>
+      <div class="feat-title">Common Questions</div>
+      <div class="feat-desc">Real questions from real Amazon customers, answered clearly.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">&#x1F527;</div>
+      <div class="feat-title">Care &amp; Info</div>
+      <div class="feat-desc">Troubleshooting, specifications, backup, warranty info. Everything in one place.</div>
+    </div>
+  </div>
+
+  <!-- Module C: Stop Being Tech Support -->
+  <h2>Stop Being Tech Support</h2>
+  <div class="comparison">
+    <div class="comp-col comp-without">
+      <h4>Without Owlxplain</h4>
+      <div class="comp-step"><span class="arrow">&rarr;</span> "How do I connect to WiFi?"</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> Phone call to you</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> "What's your WiFi password?"</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> 45-minute troubleshooting call</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> Still not working</div>
+      <div class="comp-step" style="font-weight:600; color:#c62828;"><span class="arrow">&rarr;</span> Frame goes back in the box</div>
+    </div>
+    <div class="comp-col comp-with">
+      <h4>With Owlxplain</h4>
+      <div class="comp-step"><span class="arrow">&rarr;</span> Scan QR code on the back</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> Follow 5 simple steps</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> WiFi connected</div>
+      <div class="comp-step"><span class="arrow">&rarr;</span> Photos start flowing in</div>
+      <div class="comp-step" style="font-weight:600; color:#067d62;"><span class="arrow">&rarr;</span> Frame on the mantle, smiles all around</div>
+    </div>
+  </div>
+
+  <!-- Module D: Compatibility -->
+  <h2>Compatible Frames</h2>
+  <table class="compat-table">
+    <thead>
+      <tr><th>Brand</th><th>10.1"</th><th>Platform</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Pastigio</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td>Akimart (listed as "FRAMEO")</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td>BIGASUO</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td>YunQiDeer</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td>Skyrhyme</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td>Feelcare</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td>FLYRUIT</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+      <tr><td style="font-style:italic;">All other 10.1" Frameo frames</td><td><span class="compat-check">&#10003;</span></td><td>Frameo</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Module E: Real Problems, Real Answers -->
+  <h2>Real Problems, Real Answers</h2>
+  <div class="pain-points">
+    <div class="pain-card">
+      <div class="pain-icon">&#x1F4F6;</div>
+      <div>
+        <div class="pain-q">"WiFi won't connect"</div>
+        <div class="pain-a">The #1 complaint on digital frames. The guide walks through 2.4GHz vs 5GHz, password tips, router restart, and signal strength &mdash; step by step.</div>
+      </div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">&#x1F4BE;</div>
+      <div>
+        <div class="pain-q">"SD card not recognized"</div>
+        <div class="pain-a">FAT32 format required, max 32GB. The guide includes a visual comparison of full-size SD vs. Micro SD so you buy the right one, plus reformatting instructions.</div>
+      </div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">&#x1F465;</div>
+      <div>
+        <div class="pain-q">"How do I add people to send photos?"</div>
+        <div class="pain-a">The guide includes a one-tap invite message you can text to family. They download the free app, you give them a code, done.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module F: FAQ -->
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Does this work with my frame?</div>
+      <div class="faq-a">If your frame runs the Frameo app and has a 10.1" screen, yes. This includes Pastigio, Akimart, BIGASUO, YunQiDeer, Skyrhyme, Feelcare, FLYRUIT, and many others. Does NOT work with Aura, Dragon Touch, or frames that use their own app instead of Frameo.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is there a monthly fee to use the guide?</div>
+      <div class="faq-a">No. The guide is free to use forever. You're paying for the physical sticker &mdash; the AI guide it links to has no subscription, no login, and no expiration.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if my question isn't in the guide?</div>
+      <div class="faq-a">The AI chat can answer questions in real time. It's been trained on the official Frameo user manual and thousands of customer experiences. Just type your question and get an answer.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will the sticker damage my frame?</div>
+      <div class="faq-a">No. It uses repositionable matte-finish adhesive that peels off cleanly without leaving residue. Safe on plastic, metal, and wood surfaces.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I buy this as a gift along with the frame?</div>
+      <div class="faq-a">Yes &mdash; that's exactly what it's designed for. Order the sticker with the frame and stick it on the back before wrapping. When they open the gift, the guide is already there.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BACKEND KEYWORDS ===== -->
+<div class="product-section">
+  <span class="section-label">Backend Search Terms (250 bytes max &mdash; not visible to customers)</span>
+  <div class="keywords-box">frameo setup guide digital picture frame help elderly senior gift companion wifi connect pastigio akimart bigasuo yunqideer skyrhyme photo frame instructions manual sticker label</div>
+  <p style="font-size:12px; color:#888; margin-top:8px;">Click the box above to select all &mdash; paste into Seller Central &gt; Search Terms</p>
+</div>
+
+<!-- ===== DISCLAIMER ===== -->
+<div class="disclaimer">
+  Owlxplain is a third-party accessory. Not manufactured by or affiliated with Frameo, Pastigio, Akimart, or any frame manufacturer.<br>
+  Owlxplain&trade; &mdash; Owlxplain, LLC
+</div>
+
+</div>
+</body>
+</html>
