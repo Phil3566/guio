@@ -484,6 +484,12 @@ Pastigio and Akimart have identical specs on paper but **different PCBs from dif
 | Apr 2026 | Optional self-send: blue info box after setup steps tells frame owner how to download the app themselves if they also want to send photos |
 | Apr 2026 | WiFi requirement softened: "Must be 2.4GHz" → "May require 2.4GHz depending on your model" (some models have dual-band) |
 | Apr 2026 | Frameo manual disclaimer link now shows toast ("Opening in a new tab — close it to come back") before navigating |
+| Apr 2026 | Quick Reference: inline SVG icons added for Settings (gear), WiFi, Power, Moon, Hide (eye), Delete (trash+X), Fill/Fit (arrows), Add friend (person+), My Photos (3x3 grid), Adjust (wrench+photo) — all icon names bolded |
+| Apr 2026 | Quick Reference: removed "Select multiple photos" entry and "Landscape photos look best" line; changed React to "send an emoji"; Slideshow default "may vary" |
+| Apr 2026 | SD card corrected to Micro SD for M10R7 — tappable image tooltip shows Micro SD card photo popup (reusable `showImageTooltip()` function) |
+| Apr 2026 | Cross-reference scroll-to-highlight: Common Issues cards now have IDs, `openCommonIssues(targetId)` scrolls to and highlights the target card with 3s brand-colored outline |
+| Apr 2026 | All 5 overlay headers standardized: "OFFICIAL FRAMEO USER MANUAL" (all caps, hyperlinked with toast), full disclaimer, QR re-scan note |
+| Apr 2026 | Known gap: AI chat doesn't know M10R7 uses Micro SD — needs system prompt update in `lib/system-prompts.js` + FAQ seed (saved for dedicated pass) |
 | Apr 2026 | Built `frameo_catalog.py` — 3-phase pipeline: discovery (Amazon search), spec extraction (Playwright + Claude), clustering (rule-based grouping for QR sticker count) |
 | Apr 2026 | Frameo is software-only, NOT a hardware brand. Amazon sellers use "FRAMEO" as brand name but are white-label manufacturers |
 | Apr 2026 | Dragon Touch and Uhale/WONNIE confirmed NOT Frameo — they use their own apps |
@@ -644,10 +650,22 @@ Pastigio and Akimart have identical specs on paper but **different PCBs from dif
 - [x] Rewrote START HERE: 9-step setup flow based on firsthand unboxing (stand, power, update, language, WiFi, time zone, firmware, setup as new, name/location)
 - [x] Physical details: foot slot location, two screw holes (H/V), edge power port, wall outlet
 - [x] Rewrote "Adding People to the Frame": friend downloads app first, inline "Copy invite message" link, `copyInviteMessage()` JS function
-- [x] Added optional self-send box for frame owners who want to also send photos
+- [x] Added optional self-send step (Step 1) with tappable owlxplain.com/app link
 - [x] WiFi requirement softened to "May require 2.4GHz" for dual-band models
 - [x] Frameo manual disclaimer link shows toast before opening new tab
-- [ ] Embed actual Frameo "add friend" icon (need asset from user or manual)
+- [x] Add friend icon embedded as inline SVG (from user-provided screenshot)
+
+### Quick Reference polish — completed
+- [x] Inline SVG icons: Settings (gear), WiFi, Power, Moon, Hide (eye), Delete (trash+X), Fill/Fit, Add friend, My Photos (3x3 grid), Adjust (wrench+photo)
+- [x] All icon names bolded (Hide, Delete, Power, Moon, Settings)
+- [x] React changed to "send an emoji"; Slideshow "default may vary"
+- [x] Removed "Select multiple photos" entry and "Landscape photos look best"
+- [x] SD card → Micro SD card with tappable image tooltip popup (`showImageTooltip()`)
+- [x] Cross-reference links to Common Issues now scroll to and highlight target card (3s outline)
+- [x] All 11 Common Issues cards have IDs for cross-referencing
+- [x] All 5 overlay headers: "OFFICIAL FRAMEO USER MANUAL" (all caps), full disclaimer + QR re-scan note
+- [x] All overlay manual links have toast before opening new tab
+- [ ] **Dedicated pass needed**: AI chat system prompt doesn't know M10R7 uses Micro SD — fix `lib/system-prompts.js` + add FAQ seed
 
 ### Also next
 - [ ] Add sticker kit upsell section to device pages
