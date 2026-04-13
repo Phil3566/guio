@@ -256,12 +256,13 @@ app.get("/api/config", (req, res) => {
 
 // Admin settings endpoint — update configurable rate limits and caps
 const SETTINGS_SCHEMA = {
-  ip_rate_limit:           { min: 1, max: 100,   default: 10  },
-  session_creation_rate:   { min: 1, max: 50,    default: 5   },
-  session_request_cap:     { min: 1, max: 1000,  default: 50  },
-  fingerprint_lifetime_cap:{ min: 1, max: 10000, default: 200 },
-  daily_api_cap:           { min: 1, max: 10000, default: 500 },
-  session_expiry_minutes:  { min: 1, max: 1440,  default: 30  },
+  ip_rate_limit:           { min: 1, max: 100,   default: 10,   float: false },
+  session_creation_rate:   { min: 1, max: 50,    default: 5,    float: false },
+  session_request_cap:     { min: 1, max: 1000,  default: 50,   float: false },
+  fingerprint_lifetime_cap:{ min: 1, max: 10000, default: 200,  float: false },
+  daily_api_cap:           { min: 1, max: 10000, default: 500,  float: false },
+  session_expiry_minutes:  { min: 1, max: 1440,  default: 30,   float: false },
+  faq_similarity_threshold:{ min: 0.1, max: 1.0, default: 0.45, float: true  },
 };
 
 app.post("/admin/settings", (req, res) => {
@@ -279,12 +280,12 @@ app.post("/admin/settings", (req, res) => {
       errors.push(`Unknown setting: ${key}`);
       continue;
     }
-    const num = parseInt(val);
+    const num = schema.float ? parseFloat(val) : parseInt(val);
     if (isNaN(num) || num < schema.min || num > schema.max) {
-      errors.push(`${key} must be an integer between ${schema.min} and ${schema.max}`);
+      errors.push(`${key} must be between ${schema.min} and ${schema.max}`);
       continue;
     }
-    updates[key] = num;
+    updates[key] = schema.float ? Math.round(num * 100) / 100 : num;
   }
 
   if (errors.length > 0) {
@@ -301,6 +302,9 @@ app.post("/admin/settings", (req, res) => {
   }
   if (updates.session_creation_rate !== undefined) {
     sessionLimiter = buildLimiter(updates.session_creation_rate, "Too many session requests");
+  }
+  if (updates.faq_similarity_threshold !== undefined) {
+    faqCache.threshold = updates.faq_similarity_threshold;
   }
 
   res.json({ ok: true, updated: updates });
@@ -612,6 +616,10 @@ app.get("/admin/stats", (req, res) => {
       <label for="s_session_expiry_minutes">Session expiry (minutes)</label>
       <input type="number" id="s_session_expiry_minutes" value="${settingVal("session_expiry_minutes", 30)}" min="1" max="1440">
     </div>
+    <div class="setting-row">
+      <label for="s_faq_similarity_threshold">FAQ similarity threshold</label>
+      <input type="number" id="s_faq_similarity_threshold" value="${settingVal("faq_similarity_threshold", 0.45)}" min="0.1" max="1.0" step="0.05">
+    </div>
   </div>
   <div style="margin-top:16px;">
     <button class="save-btn" id="saveBtn" onclick="saveSettings()">Save Settings</button>
@@ -675,9 +683,11 @@ function saveSettings() {
   msg.className = "status-msg";
 
   var body = {};
-  var keys = ["ip_rate_limit","session_creation_rate","session_request_cap","fingerprint_lifetime_cap","daily_api_cap","session_expiry_minutes"];
+  var keys = ["ip_rate_limit","session_creation_rate","session_request_cap","fingerprint_lifetime_cap","daily_api_cap","session_expiry_minutes","faq_similarity_threshold"];
+  var floatKeys = ["faq_similarity_threshold"];
   for (var i = 0; i < keys.length; i++) {
-    body[keys[i]] = parseInt(document.getElementById("s_" + keys[i]).value);
+    var val = document.getElementById("s_" + keys[i]).value;
+    body[keys[i]] = floatKeys.indexOf(keys[i]) >= 0 ? parseFloat(val) : parseInt(val);
   }
 
   fetch("/admin/settings?key=${encodeURIComponent(req.query.key)}", {
@@ -761,6 +771,6 @@ function addResource() {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   const devices = [...faqCache.cache.keys()];
-  console.log(`FAQ cache loaded: ${devices.length ? devices.join(", ") : "no devices"}`);
+  console.log(`FAQ cache loaded: ${devices.length ? devices.join(", ") : "no devices"} (threshold: ${faqCache.threshold})`);
   faqCache.cleanOldSessions();
 });
