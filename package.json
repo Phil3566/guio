@@ -1,7 +1,7 @@
 {
   "name": "guio",
   "version": "1.0.0",
-  "description": "Ollie — AI-powered device guides",
+  "description": "Owlxplain — AI-powered device guides",
   "main": "server.js",
   "scripts": {
     "prestart": "node db/seed-panasonic.js && node db/seed-toshiba.js && node db/seed-pastigio-faq.js",

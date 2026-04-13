@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ollie — Panasonic NN-SC73LS Microwave Guide</title>
+  <title>Artie — Panasonic NN-SC73LS Microwave Guide</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -648,9 +648,9 @@
 
   <!-- Hero -->
   <div class="hero">
-    <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
+    <img src="mainlogo.png" alt="Artie the owl mascot" class="hero-logo">
     <div class="hero-text">
-      <h1>Hey! I'm <span>Ollie.</span></h1>
+      <h1>Hey! I'm <span>Artie.</span></h1>
       <p>I'm your <span class="ai-gradient">AI</span> microwave assistant. I've read every page of the <strong style="font-size:16px;">Panasonic NN-SC73LS</strong> manual — ask me anything.</p>
     </div>
   </div>
@@ -684,11 +684,11 @@
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
   </button>
 
-  <!-- Snap & Ask Ollie Button -->
+  <!-- Snap & Ask Artie Button -->
   <button class="ref-btn" onclick="openSnapAsk()" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
     <div class="ref-btn-icon" aria-hidden="true">&#x1F4F7;</div>
     <div class="ref-btn-text">
-      <div class="ref-btn-title">Snap &amp; Ask Ollie</div>
+      <div class="ref-btn-title">Snap &amp; Ask Artie</div>
       <div class="ref-btn-desc">Take a photo of a dish or food for advice</div>
     </div>
     <div class="ref-btn-chevron" aria-hidden="true">&#x203A;</div>
@@ -843,9 +843,9 @@
 </div>
 
 <!-- ===== SNAP & ASK MODE SELECTOR ===== -->
-<div class="ref-overlay" id="snapAskOverlay" role="dialog" aria-label="Snap and Ask Ollie" aria-modal="true">
+<div class="ref-overlay" id="snapAskOverlay" role="dialog" aria-label="Snap and Ask Artie" aria-modal="true">
   <div class="ref-overlay-header" style="background:linear-gradient(135deg,#f57c00,#e65100); color:white;">
-    <h2 class="ref-overlay-title">Snap &amp; Ask Ollie</h2>
+    <h2 class="ref-overlay-title">Snap &amp; Ask Artie</h2>
     <button class="ref-overlay-close" onclick="closeSnapAsk()" aria-label="Close snap and ask">&#x2190; Back</button>
   </div>
   <div class="ref-overlay-body" style="display:flex; flex-direction:column; gap:16px; padding-top:24px;">
@@ -868,7 +868,7 @@
     </button>
 
     <p style="text-align:center; color:var(--text-light); font-size:12px; margin-top:8px;">
-      Photos are sent to Ollie for analysis and are not stored.
+      Photos are sent to Artie for analysis and are not stored.
     </p>
   </div>
 </div>
@@ -884,10 +884,10 @@
 </div>
 
 <!-- Input (always visible) -->
-<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Ollie anything about your microwave</label>
+<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Artie anything about your microwave</label>
 <div class="chat-input-row">
   <input type="text" class="chat-input" id="chatInput"
-         placeholder="Ask Ollie anything..."
+         placeholder="Ask Artie anything..."
          enterkeyhint="send"
          autocomplete="off">
   <button class="chat-voice" id="chatVoice" onclick="toggleVoice()" aria-label="Voice input">&#x1F3A4;</button>
@@ -895,7 +895,7 @@
 </div>
 
 <script>
-  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Panasonic NN-SC73LS microwave oven.
+  const SYSTEM_PROMPT = `You are Artie, the ClearLabel assistant for the Panasonic NN-SC73LS microwave oven.
 
 Your job is to help users — especially older adults and people who find electronics confusing — understand how to use their microwave. Always be warm, patient, and encouraging. Never be condescending.
 
@@ -907,7 +907,7 @@ RULES:
 - Only answer questions about this microwave. For anything else, say: "I'm only set up to help with this Panasonic microwave — for other questions, a quick web search should help!"
 - Never guess. If you don't know, say so and suggest they check the manual.
 - Keep answers under 150 words. Be concise.
-- Your name is Ollie.
+- Your name is Artie.
 
 PHOTO SAFETY:
 - You may receive photos from users. ONLY respond to photos of food, dishes, cookware, containers, or this microwave.
@@ -1035,7 +1035,7 @@ RESPONSE FORMAT:
     recognition.onend = function() {
       isListening = false;
       chatVoice.classList.remove("listening");
-      chatInput.placeholder = "Ask Ollie anything...";
+      chatInput.placeholder = "Ask Artie anything...";
       if (chatInput.value.trim()) {
         sendMessage();
       }
@@ -1044,7 +1044,7 @@ RESPONSE FORMAT:
     recognition.onerror = function(event) {
       isListening = false;
       chatVoice.classList.remove("listening");
-      chatInput.placeholder = "Ask Ollie anything...";
+      chatInput.placeholder = "Ask Artie anything...";
       if (event.error !== "no-speech" && event.error !== "aborted") {
         console.error("Speech recognition error:", event.error);
       }
@@ -1059,7 +1059,7 @@ RESPONSE FORMAT:
     }
     isListening = false;
     chatVoice.classList.remove("listening");
-    chatInput.placeholder = "Ask Ollie anything...";
+    chatInput.placeholder = "Ask Artie anything...";
   }
 
   chatInput.addEventListener("keydown", (e) => {
@@ -1255,7 +1255,7 @@ RESPONSE FORMAT:
     const typing = document.createElement("div");
     typing.className = "chat-bubble typing";
     typing.setAttribute("role", "status");
-    typing.textContent = "Ollie is looking at your photo...";
+    typing.textContent = "Artie is looking at your photo...";
     chatMessages.appendChild(typing);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 

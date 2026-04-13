@@ -177,7 +177,7 @@ const faqs = [
   },
   {
     question: "Where can I find the user manual?",
-    answer: "You can find the Toshiba EM131A5C-BS user manual on the Toshiba website or by searching for your model number online.\n\nIf your microwave didn't come with a printed manual, check inside the packaging carefully \u2014 some customers report the manual being tucked between packing materials.\n\nYou're already here with Ollie though \u2014 I know everything in the manual, so feel free to ask me anything!"
+    answer: "You can find the Toshiba EM131A5C-BS user manual on the Toshiba website or by searching for your model number online.\n\nIf your microwave didn't come with a printed manual, check inside the packaging carefully \u2014 some customers report the manual being tucked between packing materials.\n\nYou're already here with Artie though \u2014 I know everything in the manual, so feel free to ask me anything!"
   },
 
   // ===== COMMON VARIANT PHRASINGS =====

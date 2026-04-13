@@ -1,6 +1,6 @@
 # Microwave Oven — Device Page Layout Template
 
-This document defines the standard layout for any microwave oven device page in the ClearLabel/Ollie platform. Follow this template exactly when creating a new microwave page.
+This document defines the standard layout for any microwave oven device page in the ClearLabel/Artie platform. Follow this template exactly when creating a new microwave page.
 
 ---
 
@@ -58,13 +58,13 @@ For each feature, document:
 
 ## Page Structure
 
-The page is a single HTML file with embedded CSS and JS. It has two views that toggle: **Home View** (scrollable content) and **Chat View** (conversation with Ollie).
+The page is a single HTML file with embedded CSS and JS. It has two views that toggle: **Home View** (scrollable content) and **Chat View** (conversation with Artie).
 
 ### 1. Hero Banner
 
 ```
 ┌──────────────────────────────────┐
-│ [Owl Logo]  Hey! I'm Ollie.     │
+│ [Owl Logo]  Hey! I'm Artie.     │
 │             I'm your AI [device │
 │             type] assistant...  │
 │             [Brand Model]       │
@@ -74,8 +74,8 @@ The page is a single HTML file with embedded CSS and JS. It has two views that t
 ```
 
 - **Background:** teal gradient (`#1a6b5a` → `#0f4a3e` → `#0a3a30`)
-- **Logo:** `mainlogo.png` (Ollie the owl), 60x60px
-- **Title:** "Hey! I'm **Ollie.**" (Ollie in gold `#f5b731`)
+- **Logo:** `mainlogo.png` (Artie the owl), 60x60px
+- **Title:** "Hey! I'm **Artie.**" (Artie in gold `#f5b731`)
 - **Subtitle:** "I'm your **AI** [device type] assistant. I've read every page of the **[Brand Model]** manual — ask me anything."
   - "AI" uses rainbow gradient text (`.ai-gradient`)
   - Brand Model in bold, slightly larger (16px)
@@ -94,7 +94,7 @@ Four full-width buttons stacked vertically with 6px gap. Each button has:
 ```
 ┌─ [Icon] Button Guide                    ›  ┐  Green  (#43a047 → #2e7d32)
 ├─ [Icon] Quick Reference                 ›  ┤  Blue   (#1e88e5 → #1565c0)
-├─ [Icon] Snap & Ask Ollie               ›  ┤  Orange (#f57c00 → #e65100)
+├─ [Icon] Snap & Ask Artie               ›  ┤  Orange (#f57c00 → #e65100)
 └─ [Icon] Care & Info                     ›  ┘  Purple (#8e24aa → #6a1b9a)
 ```
 
@@ -165,7 +165,7 @@ Task-oriented instructions grouped by what the user wants to do.
   </div>
   ```
 
-### 5. Snap & Ask Ollie Overlay
+### 5. Snap & Ask Artie Overlay
 
 Mode selector with two large tappable cards:
 
@@ -188,7 +188,7 @@ Mode selector with two large tappable cards:
 │  │ want to cook or reheat   │  │
 │  └──────────────────────────┘  │
 │                                │
-│  Photos are sent to Ollie for  │
+│  Photos are sent to Artie for  │
 │  analysis and are not stored.  │
 └────────────────────────────────┘
 ```
@@ -235,10 +235,10 @@ Hidden by default. Shown when user types a question or sends a photo.
 │  [Assistant bubble]          │
 │                              │
 ├──────────────────────────────┤
-│ Ask Ollie anything about     │
+│ Ask Artie anything about     │
 │ your [device type]           │
 │ ┌────────────────┐ [mic][▶] │
-│ │ Ask Ollie...   │           │
+│ │ Ask Artie...   │           │
 │ └────────────────┘           │
 └──────────────────────────────┘
 ```
@@ -265,7 +265,7 @@ All overlays use the same close button style:
 ## System Prompt Template
 
 ```
-You are Ollie, the ClearLabel assistant for the [Brand Model] [device type].
+You are Artie, the ClearLabel assistant for the [Brand Model] [device type].
 
 Your job is to help users — especially older adults and people who find
 electronics confusing — understand how to use their [device type]. Always be
@@ -281,7 +281,7 @@ RULES:
   questions, a quick web search should help!"
 - Never guess. If you don't know, say so and suggest the manual.
 - Keep answers under 150 words.
-- Your name is Ollie.
+- Your name is Artie.
 
 PHOTO SAFETY:
 - ONLY respond to photos of food, dishes, cookware, containers, or this device.
@@ -343,7 +343,7 @@ RESPONSE FORMAT:
 
 ## FAQ Database Template
 
-Pre-populate the SQLite `faq` table with answers for these categories. Each answer must be written in Ollie's voice (warm, concise, numbered steps, max 5 steps, under 150 words).
+Pre-populate the SQLite `faq` table with answers for these categories. Each answer must be written in Artie's voice (warm, concise, numbered steps, max 5 steps, under 150 words).
 
 ### Required FAQ Categories (~30-50 entries per device)
 
@@ -420,7 +420,7 @@ public/
   [model-slug].html           — device page (e.g., panasonic-nn-sc73ls.html)
   [model-slug].jpg             — 400px product image
   [model-slug]-full.jpg        — 1200px+ product image
-  mainlogo.png                 — shared Ollie logo (same across all devices)
+  mainlogo.png                 — shared Artie logo (same across all devices)
 
 db/
   faq.db                       — shared SQLite database (all devices)

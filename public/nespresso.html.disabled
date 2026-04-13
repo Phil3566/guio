@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ollie — Nespresso Vertuo Next Guide</title>
+  <title>Artie — Nespresso Vertuo Next Guide</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -284,9 +284,9 @@
 
   <!-- Hero -->
   <div class="hero">
-    <img src="mainlogo.png" alt="Ollie the owl mascot" class="hero-logo">
+    <img src="mainlogo.png" alt="Artie the owl mascot" class="hero-logo">
     <div class="hero-text">
-      <h1>Hey! I'm <span>Ollie.</span></h1>
+      <h1>Hey! I'm <span>Artie.</span></h1>
       <p>Your <span class="ai-gradient">AI</span> assistant for this coffee machine. I've read every page of the manual — ask me anything.</p>
     </div>
   </div>
@@ -428,17 +428,17 @@
 </div>
 
 <!-- Input -->
-<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Ollie anything about your Nespresso</label>
+<label class="chat-input-label" for="chatInput">&#x1F4AC; Ask Artie anything about your Nespresso</label>
 <div class="chat-input-row">
   <input type="text" class="chat-input" id="chatInput"
-         placeholder="Ask Ollie anything..."
+         placeholder="Ask Artie anything..."
          enterkeyhint="send" autocomplete="off"
          id="main-input">
   <button class="chat-send" id="chatSend" onclick="sendMessage()" aria-label="Send message">&#x27A4;</button>
 </div>
 
 <script>
-  const SYSTEM_PROMPT = `You are Ollie, the ClearLabel assistant for the Nespresso Vertuo Next coffee machine by De'Longhi.
+  const SYSTEM_PROMPT = `You are Artie, the ClearLabel assistant for the Nespresso Vertuo Next coffee machine by De'Longhi.
 
 Your job is to help users — especially people who find electronics confusing — understand how to use their coffee machine. Always be warm, patient, and encouraging. Never be condescending.
 
@@ -449,7 +449,7 @@ RULES:
 - Only answer questions about this coffee machine. For anything else, say: "I'm only set up to help with this Nespresso Vertuo Next — for other questions, a quick web search should help!"
 - Never guess. If you don't know, say so and suggest they contact Nespresso Club.
 - Keep answers under 150 words. Be concise.
-- Your name is Ollie.
+- Your name is Artie.
 
 DEVICE INFO:
 Model: Nespresso Vertuo Next (GCV1 / GDV1) by De'Longhi

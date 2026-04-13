@@ -1054,12 +1054,12 @@
   }
 
   const deviceFingerprint = generateFingerprint();
-  let sessionToken = localStorage.getItem("ollie_session");
+  let sessionToken = localStorage.getItem("owlxplain_session");
 
   async function initSession(force) {
     if (sessionToken && !force) return;
     sessionToken = null;
-    localStorage.removeItem("ollie_session");
+    localStorage.removeItem("owlxplain_session");
     try {
       const res = await fetch("/api/session", {
         method: "POST",
@@ -1069,7 +1069,7 @@
       if (res.ok) {
         const data = await res.json();
         sessionToken = data.token;
-        localStorage.setItem("ollie_session", sessionToken);
+        localStorage.setItem("owlxplain_session", sessionToken);
       }
     } catch (e) { /* session init failed — chat still works via IP rate limiter */ }
   }
@@ -1090,7 +1090,7 @@
     if (Date.now() - lastActivity >= SESSION_TIMEOUT && conversationHistory.length > 0) {
       conversationHistory = [];
       sessionToken = null;
-      localStorage.removeItem("ollie_session");
+      localStorage.removeItem("owlxplain_session");
       chatMessages.innerHTML = "";
       initSession();
     }
