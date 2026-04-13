@@ -443,15 +443,24 @@ app.get("/admin/stats", (req, res) => {
     : '<tr><td colspan="6" style="text-align:center;color:#888;">No cached Q&A entries</td></tr>';
 
   let requestRows = recentRequests.length > 0
-    ? recentRequests.map(r => `
+    ? recentRequests.map(r => {
+      const scores = r.off_topic ? { tri: 0, kw: 0, best: 0, matchedQ: null } : faqCache.scoreBest(r.device_id, r.question);
+      const triColor = scores.tri >= faqCache.threshold ? "#067d62" : "#888";
+      const kwColor = scores.kw >= faqCache.threshold ? "#067d62" : "#888";
+      const bestColor = scores.best >= faqCache.threshold ? "#067d62" : "#c62828";
+      return `
     <tr${r.off_topic ? ' style="background:#fff3e0;"' : ""}>
       <td>${r.created_at}</td>
       <td>${esc(r.device_id)}</td>
-      <td>${esc(r.question)}</td>
+      <td>${esc(r.question)}${scores.matchedQ ? '<br><span style="font-size:11px;color:#888;">Best match: ' + esc(scores.matchedQ).substring(0, 60) + '</span>' : ''}</td>
       <td>${r.source}</td>
+      <td style="color:${triColor};font-weight:600;">${scores.tri.toFixed(3)}</td>
+      <td style="color:${kwColor};font-weight:600;">${scores.kw.toFixed(3)}</td>
+      <td style="color:${bestColor};font-weight:600;">${scores.best.toFixed(3)}</td>
       <td>${r.off_topic ? "Yes" : ""}</td>
-    </tr>`).join("")
-    : '<tr><td colspan="5" style="text-align:center;color:#888;">No requests logged yet</td></tr>';
+    </tr>`;
+    }).join("")
+    : '<tr><td colspan="8" style="text-align:center;color:#888;">No requests logged yet</td></tr>';
 
   // Group resources by topic for display
   const resourcesByTopic = {};
@@ -560,7 +569,7 @@ app.get("/admin/stats", (req, res) => {
 
 <h2>Recent Questions (last 50)</h2>
 <table>
-  <tr><th>Date</th><th>Device</th><th>Question</th><th>Source</th><th>Off-Topic</th></tr>
+  <tr><th>Date</th><th>Device</th><th>Question</th><th>Source</th><th>Trigram</th><th>Keyword</th><th>Best</th><th>Off-Topic</th></tr>
   ${requestRows}
 </table>
 
