@@ -110,13 +110,16 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
     return res.status(400).json({ error: "Message too long — please keep questions under 2,000 characters" });
   }
 
+  // --- Compute similarity scores (used for logging and cache matching) ---
+  const scores = isTextOnly ? faqCache.scoreBest(deviceId, questionText) : null;
+
   // --- FAQ cache intercept (before session check — cached answers are free) ---
   if (isTextOnly) {
     const match = faqCache.match(deviceId, questionText);
     if (match) {
       console.log(`FAQ cache HIT (score=${match.score.toFixed(3)}): "${questionText}"`);
       faqCache.recordHit(deviceId);
-      faqCache.logRequest(deviceId, questionText, "cache", 0);
+      faqCache.logRequest(deviceId, questionText, "cache", 0, scores);
       const resources = match.topic ? faqCache.getResources(deviceId, match.topic) : null;
       return res.json({
         content: [{ type: "text", text: match.answer }],
@@ -132,7 +135,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
   const offTopic = isTextOnly ? isOffTopic(deviceId, questionText) : false;
   if (offTopic) {
     console.log(`OFF-TOPIC (blocked): "${questionText}"`);
-    faqCache.logRequest(deviceId, questionText, "off-topic", 1);
+    faqCache.logRequest(deviceId, questionText, "off-topic", 1, scores);
     return res.json({
       content: [{ type: "text", text: "I'm only set up to help with your Pastigio picture frame — for other questions, a quick web search should help!" }],
       model: "guardrail",
@@ -177,7 +180,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
   // --- Prompt injection detection ---
   if (isTextOnly && isInjection(questionText)) {
     console.log(`INJECTION BLOCKED: "${questionText}"`);
-    faqCache.logRequest(deviceId, questionText, "blocked", 1);
+    faqCache.logRequest(deviceId, questionText, "blocked", 1, scores);
     return res.json({
       content: [{ type: "text", text: "I'm only set up to help with your device — could you rephrase your question?" }],
       model: "guardrail",
@@ -223,7 +226,7 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
 
     // Log the question
     if (isTextOnly) {
-      faqCache.logRequest(deviceId, questionText, "api", false);
+      faqCache.logRequest(deviceId, questionText, "api", false, scores);
     }
 
     // Save new Q&A to cache for future use
@@ -444,19 +447,24 @@ app.get("/admin/stats", (req, res) => {
 
   let requestRows = recentRequests.length > 0
     ? recentRequests.map(r => {
-      const scores = r.off_topic ? { tri: 0, kw: 0, best: 0, matchedQ: null } : faqCache.scoreBest(r.device_id, r.question);
-      const triColor = scores.tri >= faqCache.threshold ? "#067d62" : "#888";
-      const kwColor = scores.kw >= faqCache.threshold ? "#067d62" : "#888";
-      const bestColor = scores.best >= faqCache.threshold ? "#067d62" : "#c62828";
+      const tri = r.tri_score != null ? r.tri_score : null;
+      const kw = r.kw_score != null ? r.kw_score : null;
+      const best = r.best_score != null ? r.best_score : null;
+      const triStr = tri != null ? tri.toFixed(3) : "—";
+      const kwStr = kw != null ? kw.toFixed(3) : "—";
+      const bestStr = best != null ? best.toFixed(3) : "—";
+      const triColor = tri != null && tri >= faqCache.threshold ? "#067d62" : "#888";
+      const kwColor = kw != null && kw >= faqCache.threshold ? "#067d62" : "#888";
+      const bestColor = best != null && best >= faqCache.threshold ? "#067d62" : "#c62828";
       return `
     <tr${r.off_topic ? ' style="background:#fff3e0;"' : ""}>
       <td>${r.created_at}</td>
       <td>${esc(r.device_id)}</td>
-      <td>${esc(r.question)}${scores.matchedQ ? '<br><span style="font-size:11px;color:#888;">Best match: ' + esc(scores.matchedQ).substring(0, 60) + '</span>' : ''}</td>
+      <td>${esc(r.question)}${r.matched_q ? '<br><span style="font-size:11px;color:#888;">Best match: ' + esc(r.matched_q).substring(0, 80) + '</span>' : ''}</td>
       <td>${r.source}</td>
-      <td style="color:${triColor};font-weight:600;">${scores.tri.toFixed(3)}</td>
-      <td style="color:${kwColor};font-weight:600;">${scores.kw.toFixed(3)}</td>
-      <td style="color:${bestColor};font-weight:600;">${scores.best.toFixed(3)}</td>
+      <td style="color:${triColor};font-weight:600;">${triStr}</td>
+      <td style="color:${kwColor};font-weight:600;">${kwStr}</td>
+      <td style="color:${bestColor};font-weight:600;">${bestStr}</td>
       <td>${r.off_topic ? "Yes" : ""}</td>
     </tr>`;
     }).join("")
