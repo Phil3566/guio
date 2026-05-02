@@ -3,7 +3,7 @@
 > This file is read automatically by Claude Code at session start.
 > Update it at the end of every session: what was built, what decisions
 > were made, what to work on next.
-> Last updated: April 7, 2026 (Pastigio 10.1" deep dive — 17 ASINs, sales volume analysis, CSV expanded to 22 columns)
+> Last updated: April 26, 2026 (USPTO trademark filed — Serial 99787815, sticker samples ordered from StickerGiant)
 
 ---
 
@@ -526,6 +526,13 @@ Pastigio and Akimart have identical specs on paper but **different PCBs from dif
 | Apr 2026 | Trademark search: "ARTIE" registered in Classes 9 and 42 by Artie, Inc. (AI avatar/VR software) — blocking conflict for "Artie Manual" name |
 | Apr 2026 | Rebranded from Artie Manual to **Owlxplain** — domain owlxplain.com registered, DNS configured at Porkbun, added to DigitalOcean App Platform, 301 redirects from artiemanual.com and rtfmforme.app |
 | Apr 2026 | Updated all code references: server.js CORS origin, privacy.html, terms.html, pastigio-frame.html title, system-prompts.js, admin dashboard, qr-pastigio-print.html — all now "Owlxplain" / owlxplain.com. Mascot still named "Artie" (the owl character, not the brand). |
+| Apr 2026 | Amazon Seller Central account submitted (April 24) — Professional plan ($39.99/mo), identity verified via video call, pending document re-verification (Articles of Organization + bank statement rejected, needs resubmission) |
+| Apr 2026 | GS1 GTIN purchased (April 25) — GTIN 199874844824 for 10.1" sticker, GS1 Account #30395137, bought at store.gs1us.org ($30 single GTIN) |
+| Apr 2026 | Schwab business bank account application submitted (April 24) — Schwab One Brokerage Account for Non-Incorporated Organizations, additional docs requested (W-9 with SSN, handwritten signatures, title "Member", occupation) |
+| Apr 2026 | EIN confirmed from IRS Notice CP575G — EIN 42-1797315, dated April 8, 2026 |
+| Apr 2026 | Sticker samples ordered from StickerGiant — kiss cut, BOPP material, matte finish, permanent adhesive, 4"x2" size |
+| Apr 2026 | USPTO trademark filed (April 26) — "Owlxplain" Standard Character Mark, Class 9, Section 1(a) Use in Commerce, Serial 99787815, $350. Filed at teas.uspto.gov, identity verified via ID.me. Specimen: screenshot of owlxplain.com. Signatory: Philippe Sochoux, Member. |
+| Apr 2026 | Trademark enables Amazon Brand Registry enrollment with pending serial number — unlocks A+ Content, Vine, Sponsored Brands, Brand Store |
 
 ---
 
@@ -672,13 +679,26 @@ Pastigio and Akimart have identical specs on paper but **different PCBs from dif
 - [ ] Add product images to Emeril page
 - [ ] Implement server-side guardrails (see Companion files/GUARDRAILS.md)
 
+### Business setup — in progress
+- [x] File Owlxplain, LLC in California (Doc B20260169375, April 8, 2026)
+- [x] Obtain EIN from IRS (42-1797315, April 8, 2026)
+- [x] Register domain owlxplain.com (Porkbun, April 8, 2026)
+- [x] Submit Amazon Seller Central account (April 24, 2026 — pending re-verification of documents)
+- [x] Purchase GS1 GTIN for 10.1" sticker (199874844824, April 25, 2026)
+- [x] Order sticker samples from StickerGiant (kiss cut, 4"x2", matte BOPP, April 26, 2026)
+- [x] File USPTO trademark — "Owlxplain" Serial 99787815, Class 9, $350 (April 26, 2026)
+- [ ] Resubmit Amazon seller verification documents (Articles of Organization + bank statement)
+- [ ] Complete Schwab business bank account (W-9 + signatures resubmitted, waiting for approval)
+- [ ] Enroll in Amazon Brand Registry with serial number 99787815
+- [ ] Sign and store Operating Agreement
+- [ ] File Statement of Information (LLC-12) — due by July 7, 2026
+- [ ] Test sticker samples when they arrive (scan QR, check adhesive residue on frame)
+
 ### Near-term
-- [ ] Register domain: clearlabel.com (or clearlabel.co, getclrlabel.com)
-- [ ] Find sticker/label print supplier (Sticker Mule, StickerGiant, Lightning Labels for Amazon FBA)
-- [ ] Create Amazon seller account and claim New Seller Incentives
-  ($50 coupon credits + $200 ad credit + free Vine enrollment — expire 90 days)
 - [ ] Design 3 QR sticker variants: SSA 10.1" + Somy 10.1" + 15.6" (pending physical validation — see Frameo catalog research tasks)
-- [ ] File ClearLabel trademark application (enables Amazon Brand Registry — see Legal Section 6a)
+- [ ] Take product photos for Amazon listing (sticker on white background, sticker on frame, phone scanning QR)
+- [ ] Order poly bags for FBA packaging
+- [ ] Design and print backer cards (Vistaprint, ~$20–40 for 500)
 
 ### Later
 - [ ] Build Aura Carver device page (separate from Frameo — proprietary software)

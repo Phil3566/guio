@@ -117,9 +117,9 @@ app.post("/api/chat", chatLimiterMiddleware, async (req, res) => {
   if (isTextOnly) {
     const match = faqCache.match(deviceId, questionText);
     if (match) {
-      console.log(`FAQ cache HIT (score=${match.score.toFixed(3)}): "${questionText}"`);
+      console.log(`FAQ ${match.matchType} (score=${match.score.toFixed(3)}): "${questionText}"`);
       faqCache.recordHit(deviceId);
-      faqCache.logRequest(deviceId, questionText, "cache", 0, scores);
+      faqCache.logRequest(deviceId, questionText, match.matchType, 0, scores);
       const resources = match.topic ? faqCache.getResources(deviceId, match.topic) : null;
       return res.json({
         content: [{ type: "text", text: match.answer }],

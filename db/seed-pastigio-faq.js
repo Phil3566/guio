@@ -13,15 +13,15 @@ const faqs = [
   },
   {
     question: "How do I set up the frame for the first time?",
-    answer: "Here's the first-time setup:\n\n1. **Plug in** the frame and wait for it to turn on\n2. **Select your language**\n3. **Connect to WiFi** — pick your network and enter the password (must be 2.4GHz, not 5GHz)\n4. If it asks to **update the software**, tap Yes and wait — this can take a few minutes\n5. **Enter your name** and location (like \"Grandma's living room\")\n\nAfter setup, tap the screen and tap **\"Add friend\"** to get a code. Share that code with a family member so they can send you photos!"
+    answer: "Here's the first-time setup:\n\n1. **Plug in** the frame and wait for it to turn on\n2. **Select your language**\n3. **Connect to WiFi** — pick your network and enter the password. Most frames need **2.4GHz WiFi** (if your network name appears twice, tap the one without \"5G\")\n4. If it asks to **update the software**, tap Yes and wait — this can take a few minutes\n5. **Enter your name** and location (like \"Grandma's living room\")\n\nAfter setup, tap the screen and tap **\"Add friend\"** to get a code. Share that code with a family member so they can send you photos!"
   },
   {
     question: "How do I connect to WiFi?",
-    answer: "Here's how to connect your frame to WiFi:\n\n1. During setup (or in **Settings → WiFi**), you'll see a list of networks\n2. Tap your WiFi network name\n3. Type in your WiFi password — use the **eye icon** to check your typing\n4. Tap **Connect**\n\n**Important:** Your frame only works with **2.4GHz WiFi**. Think of it like AM/FM radio — your router sends out two signals, and the frame can only pick up the slower one (2.4GHz). If you don't see your network, you may need to ask your internet provider to set up a separate 2.4GHz name."
+    answer: "Here's how to connect your frame to WiFi:\n\n1. During setup (or in **Settings → WiFi**), you'll see a list of networks\n2. Tap your WiFi network name\n3. Type in your WiFi password — use the **eye icon** [EYEICON] to check your typing\n4. Tap **Connect**\n\n**Important:** Most Frameo frames only work with **2.4GHz WiFi**. If your network name appears twice, tap the one **without** \"5G\" at the end. If you don't see your network, you may need to ask your internet provider to set up a separate 2.4GHz name."
   },
   {
     question: "My frame won't connect to WiFi",
-    answer: "This is the most common issue and usually fixable.\n\n1. **Check the signal type:** Your frame only works with **2.4GHz WiFi**. When you see the list of WiFi networks on the frame, if your WiFi name appears twice, tap the one **without** \"5G\" at the end. If you only see one WiFi name, your router may be combining both signals — you or someone familiar with routers can log into the router and create a separate 2.4GHz network (see the support videos or articles shown below).\n2. **Double-check the password:** Tap the **eye icon** next to the password field on the frame to see what you're typing. Passwords are case-sensitive — watch for capital letters and spaces.\n3. **Restart both devices:** Unplug your frame for a minute, then plug it back in. For your router, unplug it for 30 seconds, then plug it back in and wait 2 minutes for it to fully restart.\n4. **Move the frame closer to the router** during setup — a weak signal can cause the connection to fail. You can move it to its permanent spot after it connects.\n5. **Check for updates:** Tap the screen → Settings → About → Check for updates. Newer software can fix WiFi problems.\n\nIf your WiFi name doesn't appear in the list at all, your network may be hidden or using a security type the frame doesn't support — see Technical details below.\n\n[TECHNICAL]**Supported:** 2.4GHz 802.11 b/g/n only. WPA2-PSK (AES) or WPA/WPA2 mixed mode. Channels 1–11.\n\n**Not supported:** 5GHz networks, WPA3-only encryption, hidden SSIDs (the frame cannot connect to networks with hidden names), channels 12–14.\n\n**Band steering / mesh networks:** If your router uses a single SSID for both 2.4GHz and 5GHz (band steering, Smart Connect, or SON), the frame may fail to connect or drop connection. Create a dedicated 2.4GHz SSID with a different name. For mesh networks (Eero, Google Wifi, etc.), disable band steering in the mesh app settings.\n\n**Router settings to check:** Channel width should be 20MHz (not 40MHz). Disable client/AP isolation (blocks device communication). Disable MAC filtering or add the frame's MAC address. Use DHCP (not static IP) on the frame.\n\n**Diagnostic test:** If nothing works, try connecting the frame to a phone hotspot (Settings → Hotspot on your phone, set to 2.4GHz). If the frame connects to the hotspot but not your router, the issue is a router setting — not the frame.[/TECHNICAL]"
+    answer: "This is the most common issue and usually fixable.\n\n1. **Check the signal type:** Most Frameo frames only work with **2.4GHz WiFi**. When you see the list of WiFi networks on the frame, if your WiFi name appears twice, tap the one **without** \"5G\" at the end. If you only see one WiFi name, your router may be combining both signals — you or someone familiar with routers can log into the router and create a separate 2.4GHz network (see the support videos or articles shown below).\n2. **Double-check the password:** Tap the **eye icon** [EYEICON] next to the password field on the frame to see what you're typing. Passwords are case-sensitive — watch for capital letters and spaces.\n3. **Restart both devices:** Unplug your frame for a minute, then plug it back in. For your router, unplug it for 30 seconds, then plug it back in and wait 2 minutes for it to fully restart.\n4. **Move the frame closer to the router** during setup — a weak signal can cause the connection to fail. You can move it to its permanent spot after it connects.\n5. **Check for updates:** Tap the screen → Settings → About → Check for updates. Newer software can fix WiFi problems.\n\nIf your WiFi name doesn't appear in the list at all, your network may be hidden or using a security type the frame doesn't support — see Technical details below.\n\nBelow you'll find videos, articles, and official Frameo support links that walk through WiFi troubleshooting step by step.\n\n[TECHNICAL]**Most models support:** 2.4GHz 802.11 b/g/n only. Some newer or larger frames (e.g., BIGASUO 21.5\") support both 2.4GHz and 5GHz. WPA2-PSK (AES) or WPA/WPA2 mixed mode. Channels 1–11.\n\n**Generally not supported:** WPA3-only encryption, hidden SSIDs (the frame cannot connect to networks with hidden names), channels 12–14.\n\n**Band steering / mesh networks:** If your router uses a single SSID for both 2.4GHz and 5GHz (band steering, Smart Connect, or SON), the frame may fail to connect or drop connection. Create a dedicated 2.4GHz SSID with a different name. For mesh networks (Eero, Google Wifi, etc.), disable band steering in the mesh app settings.\n\n**Router settings to check:** Channel width should be 20MHz (not 40MHz). Disable client/AP isolation (blocks device communication). Disable MAC filtering or add the frame's MAC address. Use DHCP (not static IP) on the frame.\n\n**Diagnostic test:** If nothing works, try connecting the frame to a phone hotspot (Settings → Hotspot on your phone, set to 2.4GHz). If the frame connects to the hotspot but not your router, the issue is a router setting — not the frame.[/TECHNICAL]"
   },
   {
     question: "What is 2.4GHz WiFi?",
@@ -129,27 +129,27 @@ const faqs = [
   // ===== SUBSCRIPTION / FRAMEO+ =====
   {
     question: "Do I need a subscription to use my frame?",
-    answer: "**No! Your frame works perfectly without any subscription.**\n\nEverything important is free:\n- Receiving photos from family\n- Viewing your slideshow\n- Sleep schedule\n- Backing up to an SD card\n\nThe optional **Frameo+** subscription ($1.99/month) adds extras like sending 100 photos at once (instead of 10), longer videos, and cloud backup. But these are nice-to-haves, not must-haves.\n\n**Tip:** If you want to load lots of photos at once without a subscription, use an SD card — you can load hundreds at a time!"
+    answer: "**No! Your frame works perfectly without any subscription.**\n\nEverything important is free:\n- Receiving photos from family\n- Viewing your slideshow\n- Sleep schedule\n- Backing up to a microSD card\n\nThe optional **Frameo+** subscription ($1.99/month) adds extras like sending 100 photos at once (instead of 10), longer videos, and cloud backup. But these are nice-to-haves, not must-haves.\n\n**Tip:** If you want to load lots of photos at once without a subscription, use a microSD card — you can load hundreds at a time!"
   },
   {
     question: "What is Frameo Plus?",
-    answer: "**Frameo+** is an optional paid subscription. Here's what you get:\n\n**Free (without subscription):**\n- Receive unlimited photos\n- Slideshow, sleep schedule\n- Send up to 10 photos at a time from the app\n- 15-second videos\n- SD card backup\n\n**Frameo+ ($1.99/month or $16.99/year):**\n- Send up to 100 photos at once\n- Longer videos\n- Cloud backup\n- Manage photos on the frame from your phone\n\n**Bottom line:** Your frame works great without it. The subscription is nice but not necessary."
+    answer: "**Frameo+** is an optional paid subscription. Here's what you get:\n\n**Free (without subscription):**\n- Receive unlimited photos\n- Slideshow, sleep schedule\n- Send up to 10 photos at a time from the app\n- 15-second videos\n- microSD card backup\n\n**Frameo+ ($1.99/month or $16.99/year):**\n- Send up to 100 photos at once\n- Longer videos\n- Cloud backup\n- Manage photos on the frame from your phone\n\n**Bottom line:** Your frame works great without it. The subscription is nice but not necessary."
   },
   {
     question: "What is the 10 photo limit?",
-    answer: "Without a Frameo+ subscription, the Frameo app lets you send **up to 10 photos at a time** to a frame.\n\nThis doesn't mean you can only have 10 photos! It just means you send them in batches:\n- Select 10 photos → Send\n- Select 10 more → Send\n- Repeat as many times as you want\n\n**Workaround:** To load lots of photos at once, use an **SD card**. Copy photos to the card from a computer, insert it into the frame, and tap Import. No limit, no subscription needed!"
+    answer: "Without a Frameo+ subscription, the Frameo app lets you send **up to 10 photos at a time** to a frame.\n\nThis doesn't mean you can only have 10 photos! It just means you send them in batches:\n- Select 10 photos → Send\n- Select 10 more → Send\n- Repeat as many times as you want\n\n**Workaround:** To load lots of photos at once, use a **microSD card**. Copy photos to the card from a computer, insert it into the frame, and tap Import. No limit, no subscription needed!"
   },
   {
     question: "How do I send more than 10 photos at once?",
-    answer: "There are two ways:\n\n**Option 1: Send in batches (free)**\nIn the Frameo app, select 10 photos and send. Then select 10 more and send again. Repeat until done!\n\n**Option 2: Use an SD card (free, best for lots of photos)**\n1. Copy photos from your computer to an SD card (must be FAT32 format, max 32GB)\n2. Insert the SD card into the frame\n3. Tap **Import**\n4. Choose which photos to add — no limit!\n\n**Option 3: Frameo+ subscription ($1.99/month)**\nLets you send up to 100 photos at once from the app."
+    answer: "There are two ways:\n\n**Option 1: Send in batches (free)**\nIn the Frameo app, select 10 photos and send. Then select 10 more and send again. Repeat until done!\n\n**Option 2: Use a microSD card (free, best for lots of photos)**\n1. Copy photos from your computer to a microSD card (must be FAT32 format, max 32GB)\n2. Insert the microSD card into the frame\n3. Tap **Import**\n4. Choose which photos to add — no limit!\n\n**Option 3: Frameo+ subscription ($1.99/month)**\nLets you send up to 100 photos at once from the app."
   },
   {
     question: "What is the difference between free and paid features?",
-    answer: "**Free (no subscription needed):**\n- Receive unlimited photos from family\n- Full slideshow with all settings\n- Sleep schedule\n- Brightness and display controls\n- SD card backup\n- Send up to 10 photos at a time from the app\n- Videos up to 15 seconds\n\n**Paid — Frameo+ ($1.99/month or $16.99/year):**\n- Send up to 100 photos at once\n- Longer videos\n- Cloud backup\n- Manage frame photos remotely from app\n\n**Your frame works fully without paying anything.** The 10-photo limit just means sending in batches."
+    answer: "**Free (no subscription needed):**\n- Receive unlimited photos from family\n- Full slideshow with all settings\n- Sleep schedule\n- Brightness and display controls\n- microSD card backup\n- Send up to 10 photos at a time from the app\n- Videos up to 15 seconds\n\n**Paid — Frameo+ ($1.99/month or $16.99/year):**\n- Send up to 100 photos at once\n- Longer videos\n- Cloud backup\n- Manage frame photos remotely from app\n\n**Your frame works fully without paying anything.** The 10-photo limit just means sending in batches."
   },
   {
     question: "Is the Frameo subscription worth it?",
-    answer: "For most people, **no — the free version is all you need.**\n\nThe main reason to subscribe is if you want to:\n- Send more than 10 photos at once (though you can send in batches for free)\n- Send longer videos\n- Back up to the cloud\n- Manage the frame remotely from your phone\n\n**Free workaround for bulk photos:** Use an SD card to load hundreds of photos at once — no subscription needed.\n\nIf you're sending a few photos here and there from the app, the free version works great."
+    answer: "For most people, **no — the free version is all you need.**\n\nThe main reason to subscribe is if you want to:\n- Send more than 10 photos at once (though you can send in batches for free)\n- Send longer videos\n- Back up to the cloud\n- Manage the frame remotely from your phone\n\n**Free workaround for bulk photos:** Use a microSD card to load hundreds of photos at once — no subscription needed.\n\nIf you're sending a few photos here and there from the app, the free version works great."
   },
 
   // ===== TROUBLESHOOTING =====
@@ -163,7 +163,7 @@ const faqs = [
   },
   {
     question: "My WiFi keeps disconnecting",
-    answer: "This is a common issue and usually fixable.\n\n1. **Restart the frame:** Unplug it for a minute, then plug it back in\n2. **Restart your router** (the box with blinking lights from your internet company) — unplug it for 30 seconds, plug it back in\n3. **Check the signal:** Make sure the frame is connected to **2.4GHz WiFi**, not 5GHz\n4. **Move the frame closer** to the router if possible — walls and distance weaken the signal\n\nIf it drops every few days even after restarting, the WiFi chip inside the frame may be faulty. Contact the seller through your Amazon order for a warranty replacement."
+    answer: "This is a common issue and usually fixable.\n\n1. **Restart the frame:** Unplug it for a minute, then plug it back in\n2. **Restart your router** (the box with blinking lights from your internet company) — unplug it for 30 seconds, plug it back in\n3. **Check the signal:** Most frames need **2.4GHz WiFi** — if your network name appears twice, make sure the frame is connected to the one without \"5G\" at the end\n4. **Move the frame closer** to the router if possible — walls and distance weaken the signal\n\nIf it drops every few days even after restarting, the WiFi chip inside the frame may be faulty. Contact the seller through your Amazon order for a warranty replacement."
   },
   {
     question: "Photos are not showing up on my frame",
@@ -179,7 +179,7 @@ const faqs = [
   },
   {
     question: "How do I factory reset my frame?",
-    answer: "**Warning: A factory reset deletes EVERYTHING — all photos, settings, and friend connections!**\n\nOnly do this as a last resort:\n\n1. Find the **small reset hole** on the back of the frame\n2. Use a **toothpick or paperclip** to press the button inside\n3. Hold it for **5 seconds**\n4. The frame will restart and go back to the first-time setup\n\nAfter a reset, you'll need to set up WiFi again, and all family members will need to reconnect with new friend codes.\n\n**Back up first** if possible: Settings → Backup → Backup to external storage (you'll need an SD card)."
+    answer: "**Warning: A factory reset deletes EVERYTHING — all photos, settings, and friend connections!**\n\nOnly do this as a last resort:\n\n1. Find the **small reset hole** on the back of the frame\n2. Use a **toothpick or paperclip** to press the button inside\n3. Hold it for **5 seconds**\n4. The frame will restart and go back to the first-time setup\n\nAfter a reset, you'll need to set up WiFi again, and all family members will need to reconnect with new friend codes.\n\n**Back up first** if possible: Settings → Backup → Backup to external storage (you'll need a microSD card)."
   },
   {
     question: "The clock or time is wrong on my frame",
@@ -214,24 +214,28 @@ const faqs = [
 
   // ===== LOADING PHOTOS WITHOUT APP =====
   {
+    question: "What kind of SD card does this frame use?",
+    answer: "Your Pastigio frame uses a **microSD** card — the small one (about the size of a fingernail). It does NOT use a full-size SD card.\n\n**What to buy:** Any **microSD** card up to **32GB**, formatted as **FAT32**. A basic 32GB microSD card costs about $5–$8.\n\n**Important:** Most microSD cards come with a full-size adapter (a larger shell the small card clicks into). You do NOT need the adapter for the frame — just insert the small microSD card directly.\n\n**If you already have a full-size SD card**, it won't fit. You'll need a microSD card instead."
+  },
+  {
     question: "Can I use an SD card to load photos?",
-    answer: "Yes! An SD card is the easiest way to load lots of photos at once:\n\n1. **Copy photos** from your computer to an SD card\n2. **Insert the card** into the SD card slot on your frame\n3. Tap **Import** when prompted\n4. Choose which photos to add\n\n**Important:**\n- The SD card must be **FAT32 format** (most new cards already are)\n- Maximum **32GB** card size\n- This is the best way to load hundreds of photos without a subscription!"
+    answer: "Yes! A microSD card is the easiest way to load lots of photos at once:\n\n1. **Copy photos** from your computer to a microSD card\n2. **Insert the card** into the microSD slot on your frame\n3. Tap **Import** when prompted\n4. Choose which photos to add\n\n**Important:**\n- Your frame uses a **microSD** card (the small one, about the size of a fingernail) — NOT a full-size SD card\n- The card must be **FAT32 format** (most new cards already are)\n- Maximum **32GB** card size\n- This is the best way to load hundreds of photos without a subscription!"
   },
   {
     question: "Can I load photos from my computer?",
-    answer: "Yes, but it depends on your computer:\n\n**Windows or Linux:** You can connect a USB cable from the frame to your computer and transfer photos directly.\n\n**Mac:** USB transfer does **NOT** work with Mac. Instead:\n- Use the **Frameo phone app** to send photos from your iPhone\n- Or copy photos to an **SD card**, insert it into the frame, and tap Import\n\n**Easiest method for any computer:** Copy photos to an SD card (FAT32 format, max 32GB), put it in the frame, and tap Import."
+    answer: "Yes, but it depends on your computer:\n\n**Windows or Linux:** You can connect a USB cable from the frame to your computer and transfer photos directly.\n\n**Mac:** USB transfer does **NOT** work with Mac. Instead:\n- Use the **Frameo phone app** to send photos from your iPhone\n- Or copy photos to a **microSD card**, insert it into the frame, and tap Import\n\n**Easiest method for any computer:** Copy photos to a microSD card (FAT32 format, max 32GB), put it in the frame, and tap Import."
   },
   {
     question: "Does USB transfer work with Mac?",
-    answer: "**No, unfortunately USB transfer from a Mac is not supported.** The frame only recognizes USB connections from Windows and Linux computers.\n\n**Alternatives for Mac users:**\n1. **Frameo app** — download the free app on your iPhone, send photos from there\n2. **SD card** — copy photos to an SD card (FAT32 format, max 32GB), insert into the frame, tap Import\n\nThe SD card method is actually the fastest way to load lots of photos regardless of what computer you have."
+    answer: "**No, unfortunately USB transfer from a Mac is not supported.** The frame only recognizes USB connections from Windows and Linux computers.\n\n**Alternatives for Mac users:**\n1. **Frameo app** — download the free app on your iPhone, send photos from there\n2. **microSD card** — copy photos to a microSD card (FAT32 format, max 32GB), insert into the frame, tap Import\n\nThe microSD card method is actually the fastest way to load lots of photos regardless of what computer you have."
   },
   {
     question: "How do I load lots of photos at once?",
-    answer: "The fastest way is with an **SD card**:\n\n1. Insert the SD card into your computer\n2. Copy all the photos you want onto the card\n3. Eject the card safely from your computer\n4. Insert it into the frame's SD card slot\n5. Tap **Import** and select the photos to add\n\nYou can load **hundreds or thousands** of photos this way — no subscription needed!\n\n**SD card requirements:** FAT32 format, maximum 32GB. Most new SD cards from the store are already FAT32.\n\nAlternatively, family members can send photos in batches of 10 through the free Frameo app."
+    answer: "The fastest way is with a **microSD card**:\n\n1. Insert the microSD card into your computer (you may need the adapter that came with it)\n2. Copy all the photos you want onto the card\n3. Eject the card safely from your computer\n4. Insert it into the frame's microSD slot\n5. Tap **Import** and select the photos to add\n\nYou can load **hundreds or thousands** of photos this way — no subscription needed!\n\n**microSD card requirements:** FAT32 format, maximum 32GB. Most new microSD cards from the store are already FAT32.\n\nAlternatively, family members can send photos in batches of 10 through the free Frameo app."
   },
   {
     question: "What format does the SD card need to be?",
-    answer: "The SD card must be **FAT32 format** and no larger than **32GB**.\n\n**What is FAT32?** It's a way of organizing files on the card. Most new SD cards you buy from the store are already FAT32, so you probably don't need to do anything.\n\n**If the frame doesn't recognize your card:**\n- It might be formatted differently (like exFAT or NTFS)\n- Ask a tech-savvy family member to reformat it as FAT32\n- Or buy a new 32GB SD card — they're inexpensive\n\n**Note:** Your frame uses a **microSD** card slot. If your card is full-size, you'll need an adapter."
+    answer: "Your frame uses a **microSD** card (the small one). It must be **FAT32 format** and no larger than **32GB**.\n\n**What is FAT32?** It's a way of organizing files on the card. Most new microSD cards you buy from the store are already FAT32, so you probably don't need to do anything.\n\n**If the frame doesn't recognize your card:**\n- Make sure it's a **microSD** card (not a full-size SD card — that won't fit)\n- It might be formatted differently (like exFAT or NTFS) — ask a tech-savvy family member to reformat it as FAT32\n- Or buy a new 32GB microSD card — they're about $5–$8"
   },
 
   // ===== GENERAL =====
@@ -241,13 +245,13 @@ const faqs = [
   },
   {
     question: "Does the frame work without WiFi?",
-    answer: "**Yes — once photos are loaded, your frame works perfectly without WiFi!**\n\nWiFi is only needed to:\n- Receive new photos from the Frameo app\n- Download software updates\n- Set the clock automatically\n\nPhotos already on the frame will continue to play in the slideshow even if WiFi disconnects. You can also load photos via **SD card** without any WiFi at all.\n\n**Tip:** If you're placing the frame somewhere without WiFi (like a cabin), load all the photos via SD card first."
+    answer: "**Yes — once photos are loaded, your frame works perfectly without WiFi!**\n\nWiFi is only needed to:\n- Receive new photos from the Frameo app\n- Download software updates\n- Set the clock automatically\n\nPhotos already on the frame will continue to play in the slideshow even if WiFi disconnects. You can also load photos via **microSD card** without any WiFi at all.\n\n**Tip:** If you're placing the frame somewhere without WiFi (like a cabin), load all the photos via microSD card first."
   },
 
   // ===== COMMON VARIANT PHRASINGS =====
   {
     question: "How do I get photos on my frame?",
-    answer: "There are three ways to get photos on your frame:\n\n**1. Frameo app (most common)**\nA family member downloads the free Frameo app, connects with a friend code from your frame, and sends photos from their phone.\n\n**2. SD card**\nCopy photos from a computer to an SD card (FAT32, max 32GB), insert into the frame, tap Import.\n\n**3. USB cable (Windows/Linux only)**\nConnect the frame to a computer with a USB cable and transfer photos directly. Note: does NOT work with Mac.\n\nMost families use the app — it lets people send photos from anywhere in the world!"
+    answer: "There are three ways to get photos on your frame:\n\n**1. Frameo app (most common)**\nA family member downloads the free Frameo app, connects with a friend code from your frame, and sends photos from their phone.\n\n**2. microSD card**\nCopy photos from a computer to a microSD card (FAT32, max 32GB), insert into the frame, tap Import.\n\n**3. USB cable (Windows/Linux only)**\nConnect the frame to a computer with a USB cable and transfer photos directly. Note: does NOT work with Mac.\n\nMost families use the app — it lets people send photos from anywhere in the world!"
   },
   {
     question: "How do I turn off the frame?",
@@ -259,7 +263,7 @@ const faqs = [
   },
   {
     question: "How do I back up my photos?",
-    answer: "The easiest way to back up is with an **SD card**:\n\n1. Insert an SD card into the frame (FAT32 format, max 32GB)\n2. Tap the screen → **Settings**\n3. Look for **Backup**\n4. Tap **Backup to external storage**\n\nThe frame can also do **automatic backups** — it will back up within 30 hours of any changes if an SD card is inserted.\n\n**Cloud backup** is available with a Frameo+ subscription ($1.99/month), but the SD card method is free and works great."
+    answer: "The easiest way to back up is with a **microSD card**:\n\n1. Insert a microSD card into the frame (FAT32 format, max 32GB)\n2. Tap the screen → **Settings**\n3. Look for **Backup**\n4. Tap **Backup to external storage**\n\nThe frame can also do **automatic backups** — it will back up within 30 hours of any changes if a microSD card is inserted.\n\n**Cloud backup** is available with a Frameo+ subscription ($1.99/month), but the microSD card method is free and works great."
   },
   {
     question: "Can my family see what photos are on my frame?",
@@ -269,15 +273,15 @@ const faqs = [
   // ===== ADDITIONAL VARIANT PHRASINGS (improve cache hit rate) =====
   {
     question: "Is a subscription required?",
-    answer: "**No! Your frame works perfectly without any subscription.**\n\nEverything important is free:\n- Receiving photos from family\n- Viewing your slideshow\n- Sleep schedule\n- Backing up to an SD card\n\nThe optional **Frameo+** subscription ($1.99/month) adds extras like sending 100 photos at once (instead of 10), longer videos, and cloud backup. But these are nice-to-haves, not must-haves.\n\n**Tip:** If you want to load lots of photos at once without a subscription, use an SD card — you can load hundreds at a time!"
+    answer: "**No! Your frame works perfectly without any subscription.**\n\nEverything important is free:\n- Receiving photos from family\n- Viewing your slideshow\n- Sleep schedule\n- Backing up to a microSD card\n\nThe optional **Frameo+** subscription ($1.99/month) adds extras like sending 100 photos at once (instead of 10), longer videos, and cloud backup. But these are nice-to-haves, not must-haves.\n\n**Tip:** If you want to load lots of photos at once without a subscription, use a microSD card — you can load hundreds at a time!"
   },
   {
     question: "How do I set up WiFi?",
-    answer: "Here's how to connect your frame to WiFi:\n\n1. During setup (or in **Settings → WiFi**), you'll see a list of networks\n2. Tap your WiFi network name\n3. Type in your WiFi password — use the **eye icon** to check your typing\n4. Tap **Connect**\n\n**Important:** Your frame only works with **2.4GHz WiFi**. Think of it like AM/FM radio — your router sends out two signals, and the frame can only pick up the slower one (2.4GHz). If you don't see your network, you may need to ask your internet provider to set up a separate 2.4GHz name."
+    answer: "Here's how to connect your frame to WiFi:\n\n1. During setup (or in **Settings → WiFi**), you'll see a list of networks\n2. Tap your WiFi network name\n3. Type in your WiFi password — use the **eye icon** [EYEICON] to check your typing\n4. Tap **Connect**\n\n**Important:** Most Frameo frames only work with **2.4GHz WiFi**. If your network name appears twice, tap the one **without** \"5G\" at the end. If you don't see your network, you may need to ask your internet provider to set up a separate 2.4GHz name."
   },
   {
     question: "Can I transfer photos from a Mac?",
-    answer: "**No, unfortunately USB transfer from a Mac is not supported.** The frame only recognizes USB connections from Windows and Linux computers.\n\n**Alternatives for Mac users:**\n1. **Frameo app** — download the free app on your iPhone, send photos from there\n2. **SD card** — copy photos to an SD card (FAT32 format, max 32GB), insert into the frame, tap Import\n\nThe SD card method is actually the fastest way to load lots of photos regardless of what computer you have."
+    answer: "**No, unfortunately USB transfer from a Mac is not supported.** The frame only recognizes USB connections from Windows and Linux computers.\n\n**Alternatives for Mac users:**\n1. **Frameo app** — download the free app on your iPhone, send photos from there\n2. **microSD card** — copy photos to a microSD card (FAT32 format, max 32GB), insert into the frame, tap Import\n\nThe microSD card method is actually the fastest way to load lots of photos regardless of what computer you have."
   },
   {
     question: "How do I connect my phone to the frame?",
@@ -289,11 +293,11 @@ const faqs = [
   },
   {
     question: "How do I change WiFi network?",
-    answer: "To switch to a different WiFi network:\n\n1. Tap the screen once to open the menu\n2. Tap **Settings** (gear icon)\n3. Look for **WiFi** or **Network**\n4. Tap your new network and enter the password\n\n**Remember:** The frame only works with **2.4GHz WiFi**. If you've changed your router or password, you'll need to reconnect here.\n\n**Tip:** If your WiFi password changed, this is the same place to reconnect."
+    answer: "To switch to a different WiFi network:\n\n1. Tap the screen once to open the menu\n2. Tap **Settings** (gear icon)\n3. Look for **WiFi** or **Network**\n4. Tap your new network and enter the password\n\n**Remember:** Most Frameo frames only work with **2.4GHz WiFi**. If your network name appears twice, tap the one without \"5G\" at the end.\n\n**Tip:** If your WiFi password changed, this is the same place to reconnect."
   },
   {
     question: "How do I send photos to the frame?",
-    answer: "To send photos, you need the free **Frameo** app on your phone:\n\n1. Download **Frameo** from the App Store (iPhone) or Google Play (Android)\n2. Get a **friend code** from the frame (tap the screen → \"Add friend\")\n3. In the app, tap **+** and enter the code\n4. Select photos and tap **Send**\n\nPhotos appear on the frame within seconds! You can send up to 10 photos at a time with the free version.\n\n**No phone?** You can also load photos via **SD card** from a computer."
+    answer: "To send photos, you need the free **Frameo** app on your phone:\n\n1. Download **Frameo** from the App Store (iPhone) or Google Play (Android)\n2. Get a **friend code** from the frame (tap the screen → \"Add friend\")\n3. In the app, tap **+** and enter the code\n4. Select photos and tap **Send**\n\nPhotos appear on the frame within seconds! You can send up to 10 photos at a time with the free version.\n\n**No phone?** You can also load photos via **microSD card** from a computer."
   },
   {
     question: "My photos look blurry",
@@ -317,7 +321,7 @@ const faqs = [
   },
   {
     question: "How do I change my WiFi password on the frame?",
-    answer: "If your WiFi password changed, you'll need to reconnect:\n\n1. Tap the screen once to open the menu\n2. Tap **Settings** (gear icon)\n3. Look for **WiFi** or **Network**\n4. Tap your WiFi network name\n5. Enter your new password (use the **eye icon** to see what you're typing)\n6. Tap **Connect**\n\nIf you changed to a new router entirely, you'll see the new network name in the list — just tap it and enter the password."
+    answer: "If your WiFi password changed, you'll need to reconnect:\n\n1. Tap the screen once to open the menu\n2. Tap **Settings** (gear icon)\n3. Look for **WiFi** or **Network**\n4. Tap your WiFi network name\n5. Enter your new password (use the **eye icon** [EYEICON] to see what you're typing)\n6. Tap **Connect**\n\nIf you changed to a new router entirely, you'll see the new network name in the list — just tap it and enter the password."
   },
 ];
 
