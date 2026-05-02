@@ -1311,16 +1311,7 @@
     }
   }
 
-  async function sendMessage() {
-    const text = chatInput.value.trim();
-    if (!text || isWaiting) return;
-    showChat();
-    addBubble(text, "user");
-    chatInput.value = "";
-    isWaiting = true;
-    chatSend.disabled = true;
-    conversationHistory.push({ role: "user", content: text });
-
+  async function sendChatRequest(text, retried) {
     const typing = document.createElement("div");
     typing.className = "chat-bubble typing";
     typing.setAttribute("role", "status");
@@ -1345,14 +1336,9 @@
       if (response.status === 429) {
         var errData = {};
         try { errData = await response.json(); } catch(e) {}
-        if (errData.reason === "invalid_session") {
+        if (errData.reason === "invalid_session" && !retried) {
           await initSession(true);
-          isWaiting = false;
-          chatSend.disabled = false;
-          conversationHistory.pop();
-          chatInput.value = text;
-          addBubble("Session refreshed — please send your question again.", "assistant");
-          return;
+          return sendChatRequest(text, true);
         }
         addBubble("I've been getting a lot of questions! Please wait a moment and try again.", "assistant");
         isWaiting = false;
@@ -1377,6 +1363,18 @@
     isWaiting = false;
     chatSend.disabled = false;
     chatInput.focus();
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || isWaiting) return;
+    showChat();
+    addBubble(text, "user");
+    chatInput.value = "";
+    isWaiting = true;
+    chatSend.disabled = true;
+    conversationHistory.push({ role: "user", content: text });
+    await sendChatRequest(text);
   }
 </script>
 
