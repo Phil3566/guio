@@ -215,7 +215,7 @@ const faqs = [
   // ===== LOADING PHOTOS WITHOUT APP =====
   {
     question: "What kind of SD card does this frame use?",
-    answer: "Your Pastigio frame uses a **microSD** card — the small one (about the size of a fingernail). It does NOT use a full-size SD card.\n\n**What to buy:** Any **microSD** card up to **32GB**, formatted as **FAT32**. A basic 32GB microSD card costs about $5–$8.\n\n**Important:** Most microSD cards come with a full-size adapter (a larger shell the small card clicks into). You do NOT need the adapter for the frame — just insert the small microSD card directly.\n\n**If you already have a full-size SD card**, it won't fit. You'll need a microSD card instead."
+    answer: "Your frame uses a **microSD** card — the small one (about the size of a fingernail). It does NOT use a full-size SD card.\n\n**What to buy:** Any **microSD** card up to **32GB**, formatted as **FAT32**. A basic 32GB microSD card costs about $5–$8.\n\n**Important:** Most microSD cards come with a full-size adapter (a larger shell the small card clicks into). You do NOT need the adapter for the frame — just insert the small microSD card directly.\n\n**If you already have a full-size SD card**, it won't fit. You'll need a microSD card instead."
   },
   {
     question: "Can I use an SD card to load photos?",
@@ -241,7 +241,7 @@ const faqs = [
   // ===== GENERAL =====
   {
     question: "Where do I get help or customer support?",
-    answer: "Here's where to get help:\n\n**For software questions (Frameo app, settings, features):**\n- Visit **support.frameo.com**\n- Frameo YouTube tutorials are also helpful\n\n**For hardware problems (screen broken, won't turn on, frame is dead):**\n- Contact the **seller through your Amazon order** — they handle warranty replacements\n- Frameo only makes the software, not the physical frame\n\n**Note:** Pastigio (the frame manufacturer) can be hard to reach. Your best bet for hardware issues is contacting the seller directly through Amazon."
+    answer: "Here's where to get help:\n\n**For software questions (Frameo app, settings, features):**\n- Visit **support.frameo.com**\n- Frameo YouTube tutorials are also helpful\n\n**For hardware problems (screen broken, won't turn on, frame is dead):**\n- Contact the **seller through your Amazon order** — they handle warranty replacements\n- Frameo only makes the software, not the physical frame\n\n**Note:** Frame manufacturers can be hard to reach. Your best bet for hardware issues is contacting the seller directly through Amazon."
   },
   {
     question: "Does the frame work without WiFi?",
